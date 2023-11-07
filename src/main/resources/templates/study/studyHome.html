@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공부 기록</title>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h1>DMS</h1>
+        <p>공부 기록</p>
+        <p>
+            <a href="/study/studyCreate">공부 기록 추가</a>
+        </p>
+        <table>
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>날짜</th>
+                <th><a th:href="@{/study/studyHome/sortByTitle}">제목 순 정렬</a></th>
+                <th><a th:href="@{/study/studyHome}">날짜 순 정렬</a></th>
+            </tr>
+            </thead>
+            <!-- tymeleaf 문법 -->
+                <!-- 루프를 돌면서 Model의 값 꺼내기 ($ : 모델) -->
+                <tr th:each="study : ${studys}">
+                    <td th:name="studyId" th:text="${study.id}"></td>
+                    <td>
+                        <a th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}"></a>
+                    </td>
+                    <td th:text="${study.date}"></td>
+                </tr>
+                    <!-- tymeleaf 문법 -->
+        </table>
+        <nav style="text-align: center">
+            <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
+                <a th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}"></a>
+
+            </th:each>
+        </nav>
+
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

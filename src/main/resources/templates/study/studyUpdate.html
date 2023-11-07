@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공부 기록 수정</title>
+</head>
+<body>
+<form action="/studyUpdateComplete" method="post">
+    <div class="form-group">
+        <p>공부 기록</p>
+        <div style="display: none">
+            <input type="text" id="id" name="id" th:value="${studyId}">></div>
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title" th:value="${studyTitle}">
+        <br>
+        <label for="content">내용</label>
+        <input type="text" id="content" name="content" th:value="${studyContent}">
+        <br>
+        <label for="date">작성일</label>
+        <input type="text" id="date" name="date" th:value="${studyDate}">
+        <br>
+        <label for="url">동영상rul</label>
+        <input type="text" id="url" name="url" th:value="${studyUrl}">
+        <br>
+        <label for="file">파일</label>
+        <input type="text" id="file" name="file" th:value="${studyFile}">
+        <br>
+    </div>
+    <button type="submit">수정</button>
+</form>
+</body>
+</html>
