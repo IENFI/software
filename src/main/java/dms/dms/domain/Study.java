@@ -1,4 +1,4 @@
-package dmz.dmz.domain;
+package dms.dms.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

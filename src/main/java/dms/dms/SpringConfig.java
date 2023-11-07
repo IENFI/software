@@ -1,13 +1,9 @@
-package dmz.dmz;
+package dms.dms;
 
-import dmz.dmz.repository.StudyRepository;
-import dmz.dmz.service.StudyService;
-import jakarta.persistence.EntityManager;
-import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration;
+import dms.dms.repository.StudyRepository;
+import dms.dms.service.StudyService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.sql.DataSource;
 
 @Configuration
 public class SpringConfig {

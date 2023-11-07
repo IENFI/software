@@ -1,12 +1,11 @@
-package dmz.dmz.service;
+package dms.dms.service;
 
-import dmz.dmz.domain.Study;
-import dmz.dmz.repository.StudyRepository;
+import dms.dms.domain.Study;
+import dms.dms.repository.StudyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Transactional
