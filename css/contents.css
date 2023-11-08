@@ -1,0 +1,29 @@
+#contents{
+    height:1000px;
+    
+}
+#contents>.inner{
+    margin:50px auto;
+}
+#contents_container{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(2,400px);
+    grid-template-areas:
+    "calendar calendar"
+    "playing board";
+    grid-row-gap: 30px;
+    grid-column-gap: 30px;
+}
+.calendar{
+    grid-area:calendar;
+    border:solid;
+}
+.playing{
+    grid-area:playing;
+    border:solid;
+}
+.board{
+    grid-area:board;
+    border:solid;
+}
