@@ -1,6 +1,7 @@
 package dms.dms.repository;
 
-import dms.dms.entity.MemberEntity;
+import dms.dms.domain.MemberEntity;
+import dms.dms.domain.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

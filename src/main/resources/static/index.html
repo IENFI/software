@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="footer.css">
     <title>Welcome to DMS</title>
 </head>
 <body>
@@ -20,7 +20,7 @@
         </ul>
         <span id="messege"><img src="img/messege.png" id = messege_icon onclick=""></span>
         <span id="profile">
-                   <li><a href="#"><img src="img/profile.png" id = profile_icon  onclick=""></a>
+                   <li><a href="#"><img src="img/profile.png" id = profile_icon onclick=""></a>
                        <ul id="profile_dropdown">
                           <li><a href="#" class="dropdown_item">내 정보</a></li>
                           <li><a href="#" class="dropdown_item">로그아웃</a></li>
@@ -39,8 +39,8 @@
                 <div id="login_inner">
                     <form id="login_form" action="/member/login" method="post">
                         <ul class="login_item">
-                            <li><input name="memberEmail" class="item" type="text" placeholder="아이디를 입력하세요."></li>
-                            <li><input name="memberPassword" class="item" type="password" placeholder="비밀번호를 입력하세요."></li>
+                            <li><input name="memberEmail" id="ID" class="item" type="text" placeholder="아이디를 입력하세요."></li>
+                            <li><input name="memberPassword" id="PW" class="item" type="password" placeholder="비밀번호를 입력하세요."></li>
                             <input id="login_button" class="item" type="submit" value="로그인">
                             <a href="/member/save">회원가입</a>
                             <a href="#" id="find_id_pw">아이디/비밀번호 찾기</a>

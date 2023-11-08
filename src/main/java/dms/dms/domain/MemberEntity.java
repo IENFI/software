@@ -1,4 +1,4 @@
-package dms.dms.entity;
+package dms.dms.domain;
 
 import dms.dms.dto.MemberDTO;
 import jakarta.persistence.*;

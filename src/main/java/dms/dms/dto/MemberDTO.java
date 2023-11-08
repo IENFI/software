@@ -1,6 +1,7 @@
 package dms.dms.dto;
 
-import dms.dms.entity.MemberEntity;
+import dms.dms.domain.MemberEntity;
+import dms.dms.domain.MemberEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
