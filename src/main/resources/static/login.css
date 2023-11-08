@@ -1,10 +1,13 @@
 #header,#footer,.calendar,.plan,.playing{
     pointer-events: none;
 }
-
+a{
+    color:black;
+    text-decoration:none;
+}
 #contents{
     height:1000px;
-    
+
 }
 #contents>.inner{
     margin:50px auto;
@@ -19,11 +22,54 @@
     grid-row-gap: 30px;
     grid-column-gap: 30px;
 }
+.login_item{
+    padding:0;
+}
+#login_form{
 
+    width:300px;
+    height:200px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#login_inner{
+    border:solid red;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:400px;
+
+}
+#ID{
+    width:200px;
+    height:50px;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    border: solid 1px;
+    border-bottom:none;
+}
+#PW{
+    width:200px;
+    height:50px;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+    border: solid 1px;
+}
+#find_id_pw{
+    font-size:12px;
+}
+#login_button{
+    width:200px;
+    display:block;
+    margin-top:10px;
+    height:30px;
+    margin-left:3px;
+}
 .login{
     grid-area:login;
-    border:solid;
-   
+
 }
 .calendar{
     grid-area:calendar;
@@ -38,6 +84,9 @@
     grid-area:board;
     border:solid;
 }
+
+
+
 /*.un{
     width: 300px;
     color: rgb(38, 50, 56);
