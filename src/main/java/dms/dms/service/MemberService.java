@@ -24,10 +24,10 @@ public class MemberService {
     }
 
     public MemberDTO login(MemberDTO memberDTO) { // entity 객체는 service에서만
-        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberDTO.getMemberEmail());
-        if(byMemberEmail.isPresent()){
+        Optional<MemberEntity> byMemberId = memberRepository.findByMemberId(memberDTO.getMemberId());
+        if(byMemberId.isPresent()){
             // 조회 결과가 있다
-            MemberEntity memberEntity = byMemberEmail.get(); // Optional에서 꺼냄
+            MemberEntity memberEntity = byMemberId.get(); // Optional에서 꺼냄
             if(memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())){
                 // 비밀번호 일치
                 // entity -> dto 변환 후 리턴
