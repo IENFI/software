@@ -34,10 +34,12 @@ public class MemberController {
 
     @PostMapping("/member/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
+        System.out.println("memberController.login");
+        System.out.println("memberDTO = "+memberDTO);
         MemberDTO loginResult = memberService.login(memberDTO);
         if (loginResult != null) {
             // login 성공
-            session.setAttribute("loginEmail", loginResult.getMemberEmail());
+            session.setAttribute("loginId", loginResult.getMemberId());
             return "main";
         } else {
             // login 실패
