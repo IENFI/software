@@ -28,7 +28,8 @@ import java.util.UUID;
 
 @Controller
 public class StudyController {
-    private final String fileDir = "C:/Users/user/dms_file/";
+    private final String fileDir = "C:/Users/user/dms_file";
+//    각자 변경해야할 부분4
     private final StudyService studyService;
 
     @Autowired

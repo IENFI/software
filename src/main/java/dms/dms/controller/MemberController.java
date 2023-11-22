@@ -5,6 +5,7 @@ import dms.dms.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,20 +29,28 @@ public class MemberController {
         System.out.println("memberDTO = " + memberDTO);
         memberService.save(memberDTO);
 
-        return "index";
+        return "redirect:/";
     }
 
 
     @PostMapping("/member/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
+    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model){
+        System.out.println("memberController.login");
+        System.out.println("memberDTO = "+memberDTO);
         MemberDTO loginResult = memberService.login(memberDTO);
         if (loginResult != null) {
             // login 성공
-            session.setAttribute("loginEmail", loginResult.getMemberEmail());
-            return "main";
+            session.setAttribute("loginId", loginResult.getMemberId());
+            model.addAttribute("memberID", memberDTO.getMemberId());
+            return "redirect:/main";
         } else {
             // login 실패
-            return "index";
+            return "redirect:/";
         }
+    }
+
+    @GetMapping("/main")
+    public String main() {
+        return "main";
     }
 }

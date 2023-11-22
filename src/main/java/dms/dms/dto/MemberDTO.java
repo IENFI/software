@@ -12,7 +12,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class MemberDTO { // 회원 정보를 필드로 정의
-    private Long id;
+    private Long memberSequence;
+    private String memberId;
     private String memberEmail;
     private String memberPassword;
     private String memberName;
@@ -21,7 +22,8 @@ public class MemberDTO { // 회원 정보를 필드로 정의
 
     public static MemberDTO toMemberDTO(MemberEntity memberEntity){
         MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setId(memberEntity.getId());
+        memberDTO.setMemberSequence(memberEntity.getMemberSequence());
+        memberDTO.setMemberId(memberEntity.getMemberId());
         memberDTO.setMemberEmail(memberEntity.getMemberEmail());
         memberDTO.setMemberName(memberEntity.getMemberName());
         memberDTO.setMemberPassword(memberEntity.getMemberPassword());
