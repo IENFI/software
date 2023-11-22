@@ -32,11 +32,11 @@
 #dms{
     padding-left:10px;
 }
-#messege{
+#message{
     margin-right:20px;
 }
-#messege_icon{
-    height :30px;
+#message_icon{
+    height:30px;
     width:30px;
 }
 #profile{
@@ -73,7 +73,7 @@
 .nav_item:hover, .nav_item:focus{
     border-bottom:solid 2px red;
 }
-#messege:hover img {
+#message:hover img {
     -webkit-transform: scale(1.2);
     -moz-transform: scale(1.2);
     -ms-transform: scale(1.2);

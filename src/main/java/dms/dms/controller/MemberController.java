@@ -40,10 +40,15 @@ public class MemberController {
         if (loginResult != null) {
             // login 성공
             session.setAttribute("loginId", loginResult.getMemberId());
-            return "main";
+            return "redirect:/main";
         } else {
             // login 실패
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/main")
+    public String main() {
+        return "main";
     }
 }

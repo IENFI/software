@@ -1,18 +1,86 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Save</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; action : form에 작성한 데이터를 어디로 보낼지 지정 &ndash;&gt;-->
+<!--<form action="/member/save" method="post">-->
+<!--    &lt;!&ndash; name : 서버로 전송 할 때 변수 이름의 역할 &ndash;&gt;-->
+<!--    ID: <input type="text" name="memberId"> <br>-->
+<!--    비밀번호: <input type="password" name="memberPassword"> <br>-->
+<!--    이메일: <input type="text" name="memberEmail"> <br>-->
+<!--    이름: <input type="text" name="memberName"> <br>-->
+<!--    <input type="submit" value="회원가입">-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+<!---->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Save</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/signup.css">
 </head>
 <body>
-<!-- action : form에 작성한 데이터를 어디로 보낼지 지정 -->
-<form action="/member/save" method="post">
-    <!-- name : 서버로 전송 할 때 변수 이름의 역할 -->
-    ID: <input type="text" name="memberId"> <br>
-    비밀번호: <input type="password" name="memberPassword"> <br>
-    이메일: <input type="text" name="memberEmail"> <br>
-    이름: <input type="text" name="memberName"> <br>
-    <input type="submit" value="회원가입">
+<form id="signup_form" action="/member/save" method="post">
+    <div id="signup_border">
+        <div id="main">
+            <div id="DMS_img">
+                <img src="/img/DMS.png">
+            </div>
+            <ul>
+                <div id="ID_div" class="ID_tel_code_div">
+                    <li><label for="ID">아이디<img src="/img/ID.png" id="ID_img" class="information_img" style ="height:30px; width:30px;"></label>
+                        <input type="text" id="ID" name="memberId" class="text" placeholder="아이디를 입력해주세요." required></li>
+                    <button type="submit" id="double_check" class="inner_button">중복 확인</button>
+                </div>
+
+                <li><label for="PW">비밀번호<img src="/img/PW.png" id="PW_img" class="information_img" style ="height:30px; width:30px;"></label>
+                    <input type="password" id="PW" name="memberPassword" class="text" placeholder="비밀번호를 입력해주세요." required></li>
+
+                <li><label for="PW_clear">비밀번호 확인</label>
+                    <input type="password" id="PW_clear" name="PW_clear" class="text" placeholder="비밀번호를 입력해주세요." required></li>
+
+                <li><label for="User_name">이름</label>
+                    <input type="text" id="User_name" name="memberName" class="text" placeholder="이름을 입력해주세요." required></li>
+
+                <li><label for="email">이메일</label>
+                    <input type="email" id="email" name="memberEmail" class="text" placeholder="이메일을 입력해주세요." required></li>
+
+                <div id="tel_div" class="ID_tel_code_div">
+                    <li><label for="tel">전화번호</label>
+                        <input type="tel" id="tel" name="tel" class="text" placeholder="전화번호를 입력해주세요." required></li>
+                    <button type="submit" id="submit_code" class="inner_button">인증번호 전송</button>
+                </div>
+
+                <div id="code_div" class="ID_tel_code_div">
+                    <li><label for="verification_code">인증번호</label>
+                        <input type="text" id="verification_code" name="verification_code" class="text" placeholder="인증번호를 입력해주세요." required></li>
+                    <button id="code_clear" class="inner_button">인증번호 인증</button>
+                </div>
+
+                <li><label for="school_information">학적정보</label>
+                    <input type="text" id="school_information" name="school_information" class="text" placeholder="ex) 영남대학교 수학과" required></li>
+
+                <li><label for="favorite">관심분야</label>
+                    <input type="text" id="favorite" name="favorite"class="text" placeholder="ex) 수학, 코딩" required></li>
+
+                <span id="personal_information">
+                        개인정보 수집에 동의합니다.
+                        <input type="checkbox"required>
+                    </span>
+            </ul>
+            <span id="last_button">
+                    <button type="reset" id="cancel_button">취소</button>
+                    <button type="submit" id="signup_button">회원가입</button>
+                </span>
+
+        </div>
+    </div>
 </form>
 </body>
 </html>
