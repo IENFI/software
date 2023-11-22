@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <title>Welcome to DMS</title>
+
+    <style>
+       .calendar{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+       }
+       table{
+            border-spacing: 0;
+        }
+       td{
+        border:solid black 1px !important;
+        height:50px;
+        width:70px;
+        position:relative;
+        vertical-align: top;
+       }
+       .Sat{
+            font-weight: bold;
+            color:blue;
+        }
+        .Sun{
+            font-weight: bold;
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">       
+        <div class="inner">
+            <a href="index.html" id="dms"><img src="img/DMS.png" height="80" onclick=""></a>
+            <ul class="nav">
+                 <li><a href="board.html" class="nav_item">게시판</a></li>
+                 <li><a href="study.html" class="nav_item">공부기록</a></li>
+                 <li><a href="plan.html" class="nav_item">일정</a></li>
+            </ul>
+             <span id="message"><img src="img/message.png" id = message_icon onclick=""></span>
+             <span id="profile">
+                   <li><a href="#"><img src="img/profile.png" id = profile_icon  onclick=""></a>
+                       <ul id="profile_dropdown">
+                          <li><a href="#" class="dropdown_item">내 정보</a></li>
+                          <li><a href="#" class="dropdown_item">로그아웃</a></li>
+                       </ul>                 
+                 </li>
+            </span>
+        </div>      
+    </header>
+    <section id="contents">
+        <div class="inner">
+            <div id="contents_container">
+                <div class="detail">디테일 일정</div>
+                <div class="calendar">
+                    <div id="plan_container">
+                        <span id="currentYearMonth"></span>
+                    <button class="prev" onclick="showCalendar(-1)">이전 월</button>
+                    <button class="next" onclick="showCalendar(1)">다음 월</button>
+                    
+                        <div id="Calendar_Container"></div>
+                        
+                    </div>
+                </div>
+                <div class="playing">공모전</div>
+                <div class="board">게시판</div>
+            </div> 
+            <form id="login_form" action="">
+                <div class="login_div">
+                    <div id="login_inner">
+                        <div id="DMS_img">
+                            <img src="img/DMS.png">
+                        </div>
+                        <ul class="login_item">
+                            <li><input id="ID" class="item" type="text" placeholder="아이디를 입력하세요."></li>
+                            <li><input id="PW" class="item" type="password" placeholder="비밀번호를 입력하세요."></li>
+                            <input id="login_button" class="item" type="submit" value="로그인">
+                            <a href="#" id="find_id_pw">아이디/비밀번호 찾기</a>
+                            <a href="signup.html" id="signup_button">회원가입</a>                              
+                        </ul>       
+                    </div>
+                </div>                  
+            </form>         
+        </div>
+    </section>
+    <footer id="footer">
+        <div class="inner">
+            <div id="footer_container">
+                footer
+            </div>
+        </div>
+        
+    </footer>
+    <script src="calendar.js"></script>
+</body>
+</html>
