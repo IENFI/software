@@ -14,10 +14,6 @@ public class Schedule {
     private String title;
     @Column
     private String date;
-    @Column
-    private String studyID;
-    @Column
-    private String sutdyTitle;
 
     public Long getId() {
         return id;
@@ -49,21 +45,5 @@ public class Schedule {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public String getStudyID() {
-        return studyID;
-    }
-
-    public void setStudyID(String studyID) {
-        this.studyID = studyID;
-    }
-
-    public String getSutdyTitle() {
-        return sutdyTitle;
-    }
-
-    public void setSutdyTitle(String sutdyTitle) {
-        this.sutdyTitle = sutdyTitle;
     }
 }

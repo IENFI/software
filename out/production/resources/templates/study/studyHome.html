@@ -10,7 +10,7 @@
         <h1>DMS</h1>
         <p>공부 기록</p>
         <p>
-            <a href="/study/studyCreate">공부 기록 추가</a>
+            <a th:href="@{/study/studyCreate(memberID=${session.loginId})}">공부 기록 추가</a>
         </p>
         <table>
             <thead>
@@ -23,15 +23,15 @@
             </tr>
             </thead>
             <!-- tymeleaf 문법 -->
-                <!-- 루프를 돌면서 Model의 값 꺼내기 ($ : 모델) -->
-                <tr th:each="study : ${studys}">
-                    <td th:name="studyId" th:text="${study.id}"></td>
-                    <td>
-                        <a th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}"></a>
-                    </td>
-                    <td th:text="${study.date}"></td>
-                </tr>
-                    <!-- tymeleaf 문법 -->
+            <!-- 루프를 돌면서 Model의 값 꺼내기 ($ : 모델) -->
+            <tr th:each="study : ${studys}">
+                <td th:name="studyId" th:text="${study.id}"></td>
+                <td>
+                    <a th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}"></a>
+                </td>
+                <td th:text="${study.date}"></td>
+            </tr>
+            <!-- tymeleaf 문법 -->
         </table>
         <nav style="text-align: center">
             <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">

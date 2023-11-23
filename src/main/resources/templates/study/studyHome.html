@@ -10,7 +10,7 @@
         <h1>DMS</h1>
         <p>공부 기록</p>
         <p>
-            <a href="/study/studyCreate">공부 기록 추가</a>
+            <a th:href="@{/study/studyCreate(memberID=${session.loginId})}">공부 기록 추가</a>
         </p>
         <table>
             <thead>

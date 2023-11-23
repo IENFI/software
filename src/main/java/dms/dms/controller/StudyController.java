@@ -38,9 +38,9 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyHome")
-    public String studyListByUserId(Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
+    public String studyListByMemberID(@RequestParam String memberID, Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
 
-        Page<Study> list = studyService.findByUserIdStudies(pageable);
+        Page<Study> list = studyService.findStudiesByMemberID(memberID, pageable);
         int nowPage = list.getPageable().getPageNumber()+1;
         int startPage = Math.max(nowPage-4,1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
@@ -71,14 +71,17 @@ public class StudyController {
 //    }
 
     @GetMapping(value="/study/studyCreate")
-    public String studyInsert() { // 추가 화면 띄우기
+    public String studyInsert(@RequestParam String memberID, Model model) { // 추가 화면 띄우기
+        model.addAttribute("memberID", memberID);
         return "/study/studyCreate";
     }
 
     @PostMapping(value="/study/studyCreates")
-    public String insert(Study studyInfo, MultipartFile files) throws IOException { // 공부 기록 추가 메소드
+    public String insert(@RequestParam String memberID, Study studyInfo, MultipartFile files) throws IOException { // 공부 기록 추가 메소드
 
         Study study = new Study();
+        System.out.println(memberID);
+        study.setMemberID(memberID);
         study.setTitle(studyInfo.getTitle());
         study.setContent(studyInfo.getContent());
 
@@ -107,7 +110,7 @@ public class StudyController {
 
         studyService.saveStudy(study);
 
-        return "redirect:/study/studyHome";
+        return "redirect:/study/studyHome?memberID="+memberID;
     }
 
     @GetMapping(value="/study/studyContent")

@@ -5,7 +5,6 @@ import dms.dms.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -18,8 +17,8 @@ public class ScheduleService {
         this.scheduleRepository = scheduleRepository;
     }
 
-    public List<Schedule> findByUserSchedules(Schedule schedule) {
-        return scheduleRepository.findAll();
+    public Optional<Schedule> findSchedulesByMemberID(String memberID) {
+        return scheduleRepository.findSchedulesByMemberID(memberID);
     }
 
     public void saveSchedule(Schedule schedule) {

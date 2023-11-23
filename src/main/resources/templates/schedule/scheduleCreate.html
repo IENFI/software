@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공부 기록 추가</title>
+</head>
+<body>
+<div class="container">
+    <form action="/schedule/scheduleCreates" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <p>공부 기록</p>
+            <label for="memberID">아이디</label>
+            <textarea id="memberID" name="memberID" th:text="${memberID}"></textarea>
+            <br>
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
+            <br>
+            <label for="date">날짜</label>
+            <input type="text" id="date" name="date" placeholder="날짜을 입력하세요"></input>
+            <br>
+            <br>
+
+        </div>
+        <button type="submit">등록</button>
+    </form>
+</div> <!-- /container -->
+
+</body>
+</html>
