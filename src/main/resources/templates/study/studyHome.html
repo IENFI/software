@@ -22,7 +22,7 @@
                 <th><a th:href="@{/study/studyHome}">날짜 순 정렬</a></th>
             </tr>
             </thead>
-            <!-- tymeleaf 문법 -->
+            <!-- thymeleaf 문법 -->
             <!-- 루프를 돌면서 Model의 값 꺼내기 ($ : 모델) -->
             <tr th:each="study : ${studys}">
                 <td th:name="studyId" th:text="${study.id}"></td>
@@ -31,11 +31,11 @@
                 </td>
                 <td th:text="${study.date}"></td>
             </tr>
-            <!-- tymeleaf 문법 -->
+            <!-- thymeleaf 문법 -->
         </table>
         <nav style="text-align: center">
             <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
-                <a th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}"></a>
+                <a style="color:red;" th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}"></a>
 
             </th:each>
         </nav>

@@ -38,7 +38,7 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyHome")
-    public String studyListByUserId(Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
+    public String studyListByUserId(Model model, @PageableDefault(page = 0, size = 2, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
 
         Page<Study> list = studyService.findByUserIdStudies(pageable);
         int nowPage = list.getPageable().getPageNumber()+1;

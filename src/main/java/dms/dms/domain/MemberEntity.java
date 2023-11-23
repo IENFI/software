@@ -28,6 +28,17 @@ public class MemberEntity { // table 역할
     @Column
     private String memberName;
 
+    @Column
+    private String memberPhoneNumber;
+
+    @Column
+    private String memberDept;
+
+    @Column
+    private String memberInterest;
+
+
+
     public static MemberEntity toMemberEntity(MemberDTO memberDTO){
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setMemberSequence(memberDTO.getMemberSequence());
@@ -35,6 +46,9 @@ public class MemberEntity { // table 역할
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberPhoneNumber(memberDTO.getMemberPhoneNumber());
+        memberEntity.setMemberDept(memberDTO.getMemberDept());
+        memberEntity.setMemberInterest(memberDTO.getMemberInterest());
         return memberEntity;
     }
 }

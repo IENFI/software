@@ -17,6 +17,9 @@ public class MemberDTO { // 회원 정보를 필드로 정의
     private String memberEmail;
     private String memberPassword;
     private String memberName;
+    private String memberPhoneNumber;
+    private String memberDept;
+    private String memberInterest;
 
     //lombok 어노테이션으로 getter,setter,생성자,toString 메서드 생략 가능
 
@@ -27,7 +30,9 @@ public class MemberDTO { // 회원 정보를 필드로 정의
         memberDTO.setMemberEmail(memberEntity.getMemberEmail());
         memberDTO.setMemberName(memberEntity.getMemberName());
         memberDTO.setMemberPassword(memberEntity.getMemberPassword());
-
+        memberDTO.setMemberPhoneNumber(memberEntity.getMemberPhoneNumber());
+        memberDTO.setMemberDept(memberEntity.getMemberDept());
+        memberDTO.setMemberInterest(memberEntity.getMemberInterest());
         return memberDTO;
     }
 }
