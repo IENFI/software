@@ -24,14 +24,14 @@
         <input type="text" id="url" name="url" th:value="${studyUrl}">
         <br>
         <label for="fileSaveName">파일</label>
-        <input type="text" id="fileSaveName" name="fileSaveName" th:value="${studyFile}">
+        <input type="text" id="fileSaveName" name="fileSaveName" th:value="${studyFileSaveName}">
         <br>
         <div style="display: none">
-        <label for="fileSaveName">파일경로</label>
-        <input type="text" id="fileSaveName" name="fileSaveName" th:value="${studyFile}">
+        <label for="fileOriginName">파일경로</label>
+        <input type="text" id="fileOriginName" name="fileOriginName" th:value="${studyFileSavePath}">
         <br>
-        <label for="fileSaveName">파일저장경로</label>
-        <input type="text" id="fileSaveName" name="fileSaveName" th:value="${studyFile}">
+        <label for="fileSavePath">파일저장경로</label>
+        <input type="text" id="fileSavePath" name="fileSavePath" th:value="${studyOriginName}">
         <br>
         </div>
     </div>

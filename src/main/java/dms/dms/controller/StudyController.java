@@ -156,8 +156,9 @@ public class StudyController {
         model.addAttribute("studyContent", study.getContent());
         model.addAttribute("studyDate", study.getDate());
         model.addAttribute("studyUrl", study.getUrl());
-        model.addAttribute("studyFile", study.getFilesavepath());
+        model.addAttribute("studyFileSavePath", study.getFilesavepath());
         model.addAttribute("studyFileSaveName", study.getFilesavename());
+        model.addAttribute("studyOriginName", study.getFileoriginname());
         model.addAttribute("studyMemberID", study.getMemberId());
         return "/study/studyUpdate";
     }
@@ -173,6 +174,7 @@ public class StudyController {
         study.setDate(studyInfo.getDate());
         study.setFilesavename(studyInfo.getFilesavename());
         study.setFilesavepath(studyInfo.getFilesavepath());
+        study.setFileoriginname(studyInfo.getFileoriginname());
 
         studyService.saveStudy(study);
 
