@@ -1,33 +1,3 @@
-#contents{
-height:1000px;
-
-}
-#contents>.inner{
-margin:50px auto;
-}
-#contents_container{
-display:grid;
-grid-template-columns: repeat(2,1fr);
-grid-template-rows: repeat(2,400px);
-grid-template-areas:
-"calendar calendar"
-"playing board";
-grid-row-gap: 30px;
-grid-column-gap: 30px;
-}
-.calendar{
-grid-area:calendar;
-border:solid;
-}
-.playing{
-grid-area:playing;
-border:solid;
-}
-.board{
-grid-area:board;
-border:solid;
-}
-
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -52,7 +22,7 @@ border:solid;
     <a th:href="@{/download(studyId=${studyId})}"><div th:text="${studyFileName}"/></a>
 </div>
 <br>
-<button type="button" onclick="location.href='/study/studyHome'">목록으로</button>
+<button type="button" onclick="location.href='/study/studyHome(member)'">목록으로</button>
 <button type="button" th:onclick="|location.href='@{/study/studyUpdate(id=${studyId})}'|">수정</button>
 <button type="button" th:onclick="|location.href='@{/study/studyDelete(id=${studyId})}'|">삭제</button>
 

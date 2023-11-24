@@ -9,11 +9,15 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String memberID;
+    private String memberId;
     @Column
     private String title;
     @Column
-    private String date;
+    private String year;
+    @Column
+    private String month;
+    @Column
+    private String day;
 
     public Long getId() {
         return id;
@@ -23,12 +27,12 @@ public class Schedule {
         this.id = id;
     }
 
-    public String getMemberID() {
-        return memberID;
+    public String getMemberId() {
+        return memberId;
     }
 
-    public void setMemberID(String memberID) {
-        this.memberID = memberID;
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
     public String getTitle() {
@@ -39,11 +43,27 @@ public class Schedule {
         this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public String getYear() {
+        return year;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 }

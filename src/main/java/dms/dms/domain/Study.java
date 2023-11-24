@@ -10,7 +10,7 @@ public class Study {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String memberID;
+    private String memberId;
     @Column
     private String title;
     @Column
@@ -34,12 +34,12 @@ public class Study {
         this.id = id;
     }
 
-    public String getMemberID() {
-        return memberID;
+    public String getMemberId() {
+        return memberId;
     }
 
-    public void setMemberID(String memberID) {
-        this.memberID = memberID;
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
     public String getTitle() {

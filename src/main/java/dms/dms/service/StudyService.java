@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-
+@Transactional
 @Service
 public class StudyService {
 
@@ -24,7 +24,7 @@ public class StudyService {
     }
 
     public Page<Study> findStudiesByMemberID(String memberID, Pageable pageable) {
-        return studyRepository.findStudiesByMemberID(memberID, pageable);
+        return studyRepository.findStudiesByMemberId(memberID, pageable);
     }
 
     // user 식별해서 해당 user의 게시글만 보여주기 => findByUserIdStudies

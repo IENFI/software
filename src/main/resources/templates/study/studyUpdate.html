@@ -9,7 +9,8 @@
     <div class="form-group">
         <p>공부 기록</p>
         <div style="display: none">
-            <input type="text" id="id" name="id" th:value="${studyId}">></div>
+            <input type="text" id="id" name="id" th:value="${studyId}">
+            <input type="text" id="memberId" name="memberId" th:value="${studyMemberID}"></div>
         <label for="title">제목</label>
         <input type="text" id="title" name="title" th:value="${studyTitle}">
         <br>
@@ -22,9 +23,17 @@
         <label for="url">동영상rul</label>
         <input type="text" id="url" name="url" th:value="${studyUrl}">
         <br>
-        <label for="file">파일</label>
-        <input type="text" id="file" name="file" th:value="${studyFile}">
+        <label for="fileSaveName">파일</label>
+        <input type="text" id="fileSaveName" name="fileSaveName" th:value="${studyFile}">
         <br>
+        <div style="display: none">
+        <label for="fileSaveName">파일경로</label>
+        <input type="text" id="fileSaveName" name="fileSaveName" th:value="${studyFile}">
+        <br>
+        <label for="fileSaveName">파일저장경로</label>
+        <input type="text" id="fileSaveName" name="fileSaveName" th:value="${studyFile}">
+        <br>
+        </div>
     </div>
     <button type="submit">수정</button>
 </form>

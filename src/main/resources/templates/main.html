@@ -30,8 +30,8 @@ session 값 확인 : <p th:text="${session.loginId}" style="color: red"></p>
             <a href="main" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
             <ul class="nav">
                  <li><a href="board.html" class="nav_item">게시판</a></li>
-                 <li><a th:href="@{/study/studyHome(memberID=${session.loginId})}" class="nav_item">공부기록</a></li>
-                 <li><a th:href="@{/schedule/plan(memberID=${session.loginId})}" class="nav_item">일정</a></li>
+                 <li><a th:href="@{/study/studyHome(memberId=${session.loginId})}" class="nav_item">공부기록</a></li>
+                 <li><a th:href="@{/schedule/scheduleHome(memberID=${session.loginId})}" class="nav_item">일정</a></li>
             </ul>
              <span id="message"><a href="/message"><img src="/img/message.png" id = message_icon onclick=""></a></span>
              <span id="profile">
@@ -64,4 +64,3 @@ session 값 확인 : <p th:text="${session.loginId}" style="color: red"></p>
     </footer>
 </body>
 </html>
->>>>>>> main

@@ -1,46 +1,76 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>공부 기록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <title>나의 공부기록 | DMS</title>
+    <header id="header">
+        <div class="inner">
+            <a href="index.html" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
+            <ul class="nav">
+                <li><a href="board.html" class="nav_item">게시판</a></li>
+                <li><a href="study.html" class="nav_item">공부기록</a></li>
+                <li><a href="plan.html" class="nav_item">일정</a></li>
+            </ul>
+            <span id="message"><img src="/img/message.png" id = message_icon onclick=""></span>
+            <span id="profile">
+                   <li><a href="#"><img src="/img/profile.png" id = profile_icon  onclick=""></a>
+                       <ul id="profile_dropdown">
+                          <li><a href="#" class="dropdown_item">내 정보</a></li>
+                          <li><a href="#" class="dropdown_item">로그아웃</a></li>
+                       </ul>
+                 </li>
+            </span>
+        </div>
+    </header>
 </head>
 <body>
-<div class="container">
-    <div>
-        <h1>DMS</h1>
-        <p>공부 기록</p>
-        <p>
-            <a th:href="@{/study/studyCreate(memberID=${session.loginId})}">공부 기록 추가</a>
-        </p>
-        <table>
-            <thead>
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>날짜</th>
-                <th><a th:href="@{/study/studyHome/sortByTitle}">제목 순 정렬</a></th>
-                <th><a th:href="@{/study/studyHome}">날짜 순 정렬</a></th>
-            </tr>
-            </thead>
-            <!-- tymeleaf 문법 -->
-            <!-- 루프를 돌면서 Model의 값 꺼내기 ($ : 모델) -->
-            <tr th:each="study : ${studys}">
-                <td th:name="studyId" th:text="${study.id}"></td>
-                <td>
-                    <a th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}"></a>
-                </td>
-                <td th:text="${study.date}"></td>
-            </tr>
-            <!-- tymeleaf 문법 -->
-        </table>
-        <nav style="text-align: center">
-            <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
-                <a th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}"></a>
+<link rel="stylesheet" href="/list.css">
+<table class="board_wrap">
+    <tr class="board_title">
+        <td>나의 공부기록 | DMS</td>
+    </tr>
+    <table class="board_list_wrap">
+        <tr class="board_list">
+            <th class="num">번호</th>
+            <th class="title">제목</th>
+            <th class="writer">글쓴이</th>
+            <th class="date">작성일</th>
+        </tr>
+        <tr th:each="study : ${studys}">
+            <td class="num" th:name="studyId" th:text="${study.id}">1</td>
+            <td class="title"><a th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}">글 제목이 들어갑니다.</a></td>
+            <td class="writer" th:text="${study.memberId}">DMS</td>
+            <td class="date" th:text="${study.date}">2023.11.08</td>
+        </tr>
+    </table>
+    <br>
+    <table class="board_page">
+        <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
+            <td>
+                <a class="num" th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}">1</a>
+            </td>
+        </th:each>
+    </table>
+    <!--  <table class="board_page">-->
+    <!--    <td class="bottom_first"><a href="#"> << </a></td>-->
+    <!--    <td class="bottom_prev"><a href="#"> < </a></td>-->
+    <!--    <td class="num on"><a href="#"> 1 </a></td>-->
+    <!--    <td class="num"><a href="#"> 2 </a></td>-->
+    <!--    <td class="num"><a href="#"> 3 </a></td>-->
+    <!--    <td class="num"><a href="#"> 4 </a></td>-->
+    <!--    <td class="num"><a href="#"> 5 </a></td>-->
+    <!--    <td class="bottom_next"><a href="#"> > </a></td>-->
+    <!--    <td class="bottom_last"><a href="#"> >> </a></td>-->
+    <!--  </table>-->
 
-            </th:each>
-        </nav>
-
-    </div>
-</div> <!-- /container -->
+    <table class="bottom_wrap">
+        <td class="on"><a th:href="@{/study/studyCreate(memberId=${session.loginId})}">쓰기</a></td>
+    </table>
+</table>
 </body>
 </html>

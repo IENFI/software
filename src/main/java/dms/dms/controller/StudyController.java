@@ -38,9 +38,9 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyHome")
-    public String studyListByMemberID(@RequestParam String memberID, Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
+    public String studyListByMemberID(@RequestParam String memberId, Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
 
-        Page<Study> list = studyService.findStudiesByMemberID(memberID, pageable);
+        Page<Study> list = studyService.findStudiesByMemberID(memberId, pageable);
         int nowPage = list.getPageable().getPageNumber()+1;
         int startPage = Math.max(nowPage-4,1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
@@ -71,17 +71,17 @@ public class StudyController {
 //    }
 
     @GetMapping(value="/study/studyCreate")
-    public String studyInsert(@RequestParam String memberID, Model model) { // 추가 화면 띄우기
-        model.addAttribute("memberID", memberID);
+    public String studyInsert(@RequestParam String memberId, Model model) { // 추가 화면 띄우기
+        model.addAttribute("memberID", memberId);
         return "/study/studyCreate";
     }
 
     @PostMapping(value="/study/studyCreates")
-    public String insert(@RequestParam String memberID, Study studyInfo, MultipartFile files) throws IOException { // 공부 기록 추가 메소드
+    public String insert(@RequestParam String memberId, Study studyInfo, MultipartFile files) throws IOException { // 공부 기록 추가 메소드
 
         Study study = new Study();
-        System.out.println(memberID);
-        study.setMemberID(memberID);
+        System.out.println(memberId);
+        study.setMemberId(memberId);
         study.setTitle(studyInfo.getTitle());
         study.setContent(studyInfo.getContent());
 
@@ -110,7 +110,7 @@ public class StudyController {
 
         studyService.saveStudy(study);
 
-        return "redirect:/study/studyHome?memberID="+memberID;
+        return "redirect:/study/studyHome?memberId="+memberId;
     }
 
     @GetMapping(value="/study/studyContent")
@@ -150,26 +150,33 @@ public class StudyController {
     public String studyUpdate(@RequestParam("id") Long id, Model model) { // 공부 기록 수정 화면 띄우기
         Study study = studyService.findOneStudy(id)
                 .orElseThrow(NullPointerException::new);
+
         model.addAttribute("studyId", study.getId());
         model.addAttribute("studyTitle", study.getTitle());
         model.addAttribute("studyContent", study.getContent());
         model.addAttribute("studyDate", study.getDate());
         model.addAttribute("studyUrl", study.getUrl());
         model.addAttribute("studyFile", study.getFilesavepath());
+        model.addAttribute("studyFileSaveName", study.getFilesavename());
+        model.addAttribute("studyMemberID", study.getMemberId());
         return "/study/studyUpdate";
     }
 
     @PostMapping(value="/studyUpdateComplete")
-    public String update(Study studyInfo) { // 공부 기록 추가 메소드
-//파일 수정 구현
+    public String update(Study studyInfo,  MultipartFile files) throws IOException { // 공부 기록 추가 메소드
+    //파일 수정 구현
         Study study = new Study();
         study.setId(studyInfo.getId());
+        study.setMemberId(studyInfo.getMemberId());
         study.setTitle(studyInfo.getTitle());
         study.setContent(studyInfo.getContent());
+        study.setDate(studyInfo.getDate());
+        study.setFilesavename(studyInfo.getFilesavename());
+        study.setFilesavepath(studyInfo.getFilesavepath());
 
         studyService.saveStudy(study);
 
-        return "redirect:/study/studyHome";
+        return "redirect:/study/studyHome?memberId="+study.getMemberId();
     }
 
 }
