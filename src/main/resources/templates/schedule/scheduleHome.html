@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table{
+            border-spacing: 0;
+        }
+        td{
+            border:solid black 1px !important;
+            height:150px;
+            width:200px;
+            position:relative;
+            vertical-align: top;
+
+        }
+        .plan_div{
+            border:solid 1px;
+            height:100px;
+            margin:5px;
+
+        }
+        .inner{
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .today{
+            margin:5px;
+            color: green;
+        }
+        .normal_day{
+            margin:5px;
+            color: black;
+        }
+        .sat{
+            color: blue;
+        }
+        .sun{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <form name="scheduleHome" id="scheduleHome" method="GET">
+        <div>
+
+<!--            <a th:href="@{/schedule/scheduleHomes(year=${(todayInfo.search_year)-1},-->
+<!--            month=${(todayInfo.search_month)-1})}">이전해</a>-->
+            <span>
+                <button th:href="@{/schedule/scheduleHomes(year=${todayInfo.before_year}, month=${todayInfo.before_month})}">이전달</button>
+                <span style="font-size: 50px" th:text="${(todayInfo.search_month)+1}"></span>
+                <button th:href="@{/schedule/scheduleHomes(year=${todayInfo.after_year}, month=${todayInfo.after_month})}">다음달</button>
+            </span>
+
+<!--            <a th:href="@{/schedule/scheduleHomes(year=${(todayInfo.search_year)+1},-->
+<!--            month=${(todayInfo.search_month)-1})}">다음해</a>-->
+
+        </div>
+        <a th:href="@{/schedule/scheduleCreate(memberID=${session.loginId})}">일정 추가</a>
+
+        <table>
+            <tr>
+                <th>일요일</th>
+                <th>월요일</th>
+                <th>화요일</th>
+                <th>수요일</th>
+                <th>목요일</th>
+                <th>금요일</th>
+                <th>토요일</th>
+            </tr>
+
+            <th:block th:each="dateList, dateListStat : ${dateList}">
+                <td th:if="${dateListStat.count<8}">
+                    <div th:if="${dateList.value==null}"></div>
+                    <div class="today" th:if="${dateList.value=='today'}" th:text="${dateList.date}"></div>
+                    <div class="normal_day" th:if="${dateList.value=='normal_date'}" th:text="${dateList.date}"></div>
+                    <div class="plan_div">
+                    <th:block th:each="scheduleList, scheduleListStat : ${scheduleList}">
+                        <div class="plan_div" th:if="${scheduleListStat.current.getDay()==dateList.date}">
+                            <a th:href="@{/schedule/scheduleContent(id=${scheduleList.id})}" th:text="${scheduleListStat.current.getTitle()}"></a>
+                        </div>
+                    </th:block>
+                    </div>
+                </td>
+            </th:block>
+            <tr></tr>
+            <th:block th:each="dateList, dateListStat : ${dateList}">
+                <td th:if="${dateListStat.index>=7 && dateListStat.index<14}">
+                    <div th:if="${dateList.value==null}"></div>
+                    <div class="today" th:if="${dateList.value=='today'}" th:text="${dateList.date}"></div>
+                    <div class="normal_day" th:if="${dateList.value=='normal_date'}" th:text="${dateList.date}"></div>
+                    <div class="plan_div">
+                    <th:block th:each="scheduleList, scheduleListStat : ${scheduleList}">
+                        <div class="plan_div" th:if="${scheduleListStat.current.getDay()==dateList.date}">
+                            <a th:href="@{/schedule/scheduleContent(id=${scheduleList.id})}" th:text="${scheduleListStat.current.getTitle()}"></a>
+                        </div>
+                    </th:block>
+                    </div>
+                </td>
+            </th:block>
+            <tr></tr>
+            <th:block th:each="dateList, dateListStat : ${dateList}">
+                <td th:if="${dateListStat.index>=14 && dateListStat.index<21}">
+                    <div th:if="${dateList.value==null}"></div>
+                    <div class="today" th:if="${dateList.value=='today'}" th:text="${dateList.date}"></div>
+                    <div class="normal_day" th:if="${dateList.value=='normal_date'}" th:text="${dateList.date}"></div>
+                    <div class="plan_div">
+                    <th:block th:each="scheduleList, scheduleListStat : ${scheduleList}">
+                        <div th:if="${scheduleListStat.current.getDay()==dateList.date}">
+                            <a th:href="@{/schedule/scheduleContent(id=${scheduleList.id})}" th:text="${scheduleListStat.current.getTitle()}"></a>
+                        </div>
+                    </th:block>
+                    </div>
+                </td>
+            </th:block>
+            <tr></tr>
+            <th:block th:each="dateList, dateListStat : ${dateList}">
+                <td th:if="${dateListStat.index>=21 && dateListStat.index<28}">
+                    <div th:if="${dateList.value==null}"></div>
+                    <div class="today" th:if="${dateList.value=='today'}" th:text="${dateList.date}"></div>
+                    <div class="normal_day" th:if="${dateList.value=='normal_date'}" th:text="${dateList.date}"></div>
+                    <div class="plan_div">
+                    <th:block th:each="scheduleList, scheduleListStat : ${scheduleList}">
+                        <div th:if="${scheduleListStat.current.getDay()==dateList.date}">
+                            <a th:href="@{/schedule/scheduleContent(id=${scheduleList.id})}" th:text="${scheduleListStat.current.getTitle()}"></a>
+                        </div>
+                    </th:block>
+                    </div>
+                </td>
+            </th:block>
+            <tr></tr>
+            <th:block th:each="dateList, dateListStat : ${dateList}">
+                <td th:if="${dateListStat.index>=28}">
+                    <div th:if="${dateList.value==null}"></div>
+                    <div class="today" th:if="${dateList.value=='today'}" th:text="${dateList.date}"></div>
+                    <div class="normal_day" th:if="${dateList.value=='normal_date'}" th:text="${dateList.date}"></div>
+                    <div class="plan_div">
+                    <th:block th:each="scheduleList, scheduleListStat : ${scheduleList}">
+                        <div th:if="${scheduleListStat.current.getDay()==dateList.date}">
+                            <a th:href="@{/schedule/scheduleContent(id=${scheduleList.id})}" th:text="${scheduleListStat.current.getTitle()}"></a>
+                        </div>
+                    </th:block>
+                    </div>
+                </td>
+            </th:block>
+        <div th:text="${today}"></div>
+        </table>
+    </form>
+
+</body>
+<script th:inline="javascript">
+    let abc = [[${dateList}]]
+
+    console.log(abc[3]);
+    //console.log(abc);
+
+
+</script>
+</html>

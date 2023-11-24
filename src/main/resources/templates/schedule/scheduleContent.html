@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>일정 상세 보기</title>
+</head>
+<body>
+<p>공부 기록 상세 보기</p>
+<div>제목</div>
+<div th:text="${scheduleTitle}">제목</div>
+<br>
+<div>날짜</div>
+<div th:text="${scheduleDate}">날짜</div>
+<br>
+<button type="button" th:onclick="|location.href='@{/schedule/scheduleHome(memberID=${scheduleMemberID})}'|">목록으로</button>
+<button type="button" th:onclick="|location.href='@{/schedule/scheduleUpdate(id=${scheduleID})}'|">수정</button>
+<button type="button" th:onclick="|location.href='@{/schedule/scheduleDelete(id=${scheduleID})}'|">삭제</button>
+
+</body>
+</html>
