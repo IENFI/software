@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/login.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <title>공부기록 작성 | DMS</title>
+        <header id="header">       
+            <div class="inner">
+                <a href="index.html" id="dms"><img src="img/DMS.png" height="80" onclick=""></a>
+                <ul class="nav">
+                     <li><a href="board.html" class="nav_item">게시판</a></li>
+                     <li><a href="study.html" class="nav_item">공부기록</a></li>
+                     <li><a href="plan.html" class="nav_item">일정</a></li>
+                </ul>
+                 <span id="message"><img src="img/message.png" id = message_icon onclick=""></span>
+                 <span id="profile">
+                       <li><a href="#"><img src="img/profile.png" id = profile_icon  onclick=""></a>
+                           <ul id="profile_dropdown">
+                              <li><a href="#" class="dropdown_item">내 정보</a></li>
+                              <li><a href="#" class="dropdown_item">로그아웃</a></li>
+                           </ul>                 
+                     </li>
+                </span>
+            </div>        
+        </header>
+    </head>
+<body>
+<link rel="stylesheet" href="css/studycreate.css">
+<div class="container">
+    <form action="/study/studyCreates" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <p>공부 기록</p>
+            <label for="memberID"> + ID</label>
+            <textarea id="memberID" name="memberID" th:text="${memberID}"></textarea>
+            <br>
+            <label for="title"> + 제목</label>
+            <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
+            <br>
+            <label for="content"></label>
+            <textarea type="text" id="content" name="content" placeholder="내용을 입력하세요"></textarea>
+            <br>
+            <label for="url">+ 동영상url</label>
+            <input type="text" id="url" name="url" placeholder="동영상 url 입력">
+            <br>
+            <div>
+                <div class="file_input">
+                    <input type="text" name="fileoriginname" />
+                    <label>
+                        <input type="file" name="files" onchange="selectFile(this);" />
+                    </label>
+                    
+                </div>
+            </div>
+            <div>
+                <div class="button">
+                    <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>파일 추가</span></button>
+                    <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+                    <button type="submit">등록</button>
+                </div>
+            </div>
+            
+        </div>
+        <script>
+            // 파일 선택
+            function selectFile(element) {
+
+                const file = element.files[0];
+                const filename = element.closest('.file_input').firstElementChild;
+
+                // 1. 파일 선택 창에서 취소 버튼이 클릭된 경우
+                if ( !file ) {
+                    filename.value = '';
+                    return false;
+                }
+
+                // 2. 파일 크기가 10MB를 초과하는 경우
+                const fileSize = Math.floor(file.size / 1024 / 1024);
+                if (fileSize > 10) {
+                    alert('10MB 이하의 파일로 업로드해 주세요.');
+                    filename.value = '';
+                    element.value = '';
+                    return false;
+                }
+
+                // 3. 파일명 지정
+                filename.value = file.name;
+            }
+
+
+            // 파일 추가
+            function addFile() {
+                const fileDiv = document.createElement('div');
+                fileDiv.innerHTML =`
+            <div class="file_input">
+                <input type="text" readonly />
+                <label> 첨부파일
+                    <input type="file" name="files" onchange="selectFile(this);" />
+                </label>
+            </div>
+            <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+        `;
+                document.querySelector('.file_list').appendChild(fileDiv);
+            }
+
+
+            // 파일 삭제
+            function removeFile(element) {
+                const fileAddBtn = element.nextElementSibling;
+                if (fileAddBtn) {
+                    const inputs = element.previousElementSibling.querySelectorAll('input');
+                    inputs.forEach(input => input.value = '')
+                    return false;
+                }
+                element.parentElement.remove();
+            }
+
+        </script>
+        
+    </form>
+</div> <!-- /container -->
+
+</body>
+</html>

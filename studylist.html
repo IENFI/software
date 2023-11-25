@@ -29,83 +29,50 @@
     </header>
 </head>
 <body>
-    <link rel="stylesheet" href="css/list.css">
-    <div class="board_wrap">
-        <div class="board_title">
-            <strong>나의 공부기록 | DMS</strong>
-        </div>
-        <div class="board_list_wrap">
-            <div class="board_list">
-                <div class="top">
-                    <div class="num">번호</div>
-                    <div class="title">제목</div>
-                    <div class="writer">글쓴이</div>
-                    <div class="date">작성일</div>
-                </div>
-                <div>
-                    <div class="num">1</div>
-                    <div class="title"><a href="view.html">글 제목이 들어갑니다.</a></div>
-                    <div class="writer">DMS</div>
-                    <div class="date">2023.11.08</div>
-                </div>
-            </div>
-            <div class="board_page">
-                <a href="#" class="bottom first"><<</a>
-                <a href="#" class="bottom prev"><</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="num">4</a>
-                <a href="#" class="num">5</a>
-                <a href="#" class="bottom next">></a>
-                <a href="#" class="bottom last">>></a>
-            </div>
-            <div class="bottom_wrap">
-                <a href="write.html" class="on">글쓰기</a>
-            </div>
-        </div>
-    </div>
+    <link rel="stylesheet" href="css/studylist.css">
+    <table class="board_wrap">
+        <tr class="board_title">
+            <td>나의 공부기록 | DMS</td>
+        </tr>
+        <table class="board_list_wrap">
+            <tr class="board_list">
+                <th class="num">번호</th>
+                <th class="title">제목</th>
+                <th class="writer">글쓴이</th>
+                <th class="date">작성일</th>
+            </tr>
+            <tr class="board_list_under">
+                <tr>
+                    <td class="num">1</td>
+                    <td class="title"><a href="studycontent.html">글 제목이 들어갑니다.</a></td>
+                    <td class="writer">DMS</td>
+                    <td class="date">2023.11.08</td>
+                </tr>
+                <tr>
+                    <td class="num">2</td>
+                    <td class="title"><a href="studycontent.html">글 제목이 들어갑니다.</a></td>
+                    <td class="writer">DMS</td>
+                    <td class="date">2023.11.15</td>
+                </tr>
+            </tr>
+        </table>
+       
+        <table class="board_page">
+            <td class="bottom_first"><a href="#"> << </a></td>
+            <td class="bottom_prev"><a href="#"> < </a></td>
+            <td class="num on"><a href="#"> 1 </a></td>
+            <td class="num"><a href="#"> 2 </a></td>
+            <td class="num"><a href="#"> 3 </a></td>
+            <td class="num"><a href="#"> 4 </a></td>
+            <td class="num"><a href="#"> 5 </a></td>
+            <td class="bottom_next"><a href="#"> > </a></td>
+            <td class="bottom_last"><a href="#"> >> </a></td>
+        </table>
 
-
-    <div class="intro_bg2" style="margin-top: 60px;"></div>
-    <ul class="amount2">
-        <li>
-            <div class="contents1">
-                <a href=./Timetable.php style="color:black;">월간일정</a>
-            </div>
-        </li>
-    </ul>
-    <div class="calendar_box">
-        <div id='calendar'></div>
-        <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="taskId" class="col-form-label">일정 내용</label>
-                            <input type="text" class="form-control" id="calendar_content" name="calendar_content">
-                            <label for="taskId" class="col-form-label">날짜</label>
-                            <input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-warning" id="addCalendar">추가</button>
-                        <button type="button" class="btn btn-warning" id="deleteCalendar">삭제</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            id="sprintSettingModalClose">취소</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
+        <table class="bottom_wrap">
+            <td class="on"><a href="studycreate.html">쓰기</a></td>
+        </table>
+        
+    </table>
 </body>
 </html>

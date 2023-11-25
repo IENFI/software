@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/login.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <title>공부기록 수정 | DMS</title>
+        <header id="header">       
+            <div class="inner">
+                <a href="index.html" id="dms"><img src="img/DMS.png" height="80" onclick=""></a>
+                <ul class="nav">
+                     <li><a href="board.html" class="nav_item">게시판</a></li>
+                     <li><a href="study.html" class="nav_item">공부기록</a></li>
+                     <li><a href="plan.html" class="nav_item">일정</a></li>
+                </ul>
+                 <span id="message"><img src="img/message.png" id = message_icon onclick=""></span>
+                 <span id="profile">
+                       <li><a href="#"><img src="img/profile.png" id = profile_icon  onclick=""></a>
+                           <ul id="profile_dropdown">
+                              <li><a href="#" class="dropdown_item">내 정보</a></li>
+                              <li><a href="#" class="dropdown_item">로그아웃</a></li>
+                           </ul>                 
+                     </li>
+                </span>
+            </div>        
+        </header>
+    </head>
+<body>
+    <link rel="stylesheet" href="css/studyupdate.css">
+    <form action="/studyUpdateComplete" method="post">
+    <div class="form-group">
+        <p>공부 기록 수정</p>
+        <label for="title"> + 제목</label>
+        <input type="text" id="title" name="title" th:value="${studyTitle}">
+        <br>
+        <input type="text" id="date" name="date" th:value="${studyDate}">
+        <br>
+        <input type="text" id="content" name="content" th:value="${studyContent}">
+        <br>
+        <label for="url"> + 동영상url</label>
+        <input type="text" id="url" name="url" th:value="${studyUrl}">
+        <br>
+        <input type="text" id="file" name="file" th:value="${studyFile}">
+        <label>
+            <input type="file" name="files" onchange="selectFile(this);" />
+        </label>
+        <br>
+        <div>
+            <div class="button">
+                <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>파일 추가</span></button>
+                <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+                <button type="submit">수정</button>
+            </div>
+        </div>
+    </div>
+    
+</form>
+</body>
+</html>
