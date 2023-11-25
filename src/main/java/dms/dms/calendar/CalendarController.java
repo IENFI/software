@@ -1,7 +1,10 @@
 package dms.dms.calendar;
 
 import dms.dms.domain.Schedule;
+import dms.dms.domain.ScheduleInfo;
+import dms.dms.domain.Study;
 import dms.dms.service.ScheduleService;
+import dms.dms.service.StudyService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +19,22 @@ import java.util.*;
 public class CalendarController {
 
     private final ScheduleService scheduleService;
+    private final StudyService studyService;
 
-    public CalendarController(ScheduleService scheduleService) {
+    public CalendarController(ScheduleService scheduleService, StudyService studyService) {
         this.scheduleService = scheduleService;
+        this.studyService = studyService;
     }
 
     @GetMapping(value = "/schedule/plan")
-    public String scheduleHome() {
+    public String scheduleHome(@RequestParam String memberID, Model model) {
+        // 일정 불러오기
+        List<Schedule> schedules = scheduleService.findSchedulesByMemberID(memberID);
+        List<Study> studyList = studyService.findStudiesByMemberID(memberID);
+        model.addAttribute("scheduleList", schedules);
+        model.addAttribute("studyList", studyList);
+        model.addAttribute("memberId", memberID);
+
         return "/schedule/plan";
     }
 
@@ -32,19 +44,28 @@ public class CalendarController {
         return "/schedule/scheduleCreate";
     }
 
+    @GetMapping(value="/schedule/ww")
+    public String schedule() {
+        return "/schedule/ww";
+    }
+
     @PostMapping(value = "/schedule/scheduleCreates")
-    public String insert(@RequestParam String memberID, Schedule scheduleInfo) {
+    public String insert(ScheduleInfo scheduleInfo) {
 
         Schedule schedule = new Schedule();
-        schedule.setMemberId(memberID);
+        schedule.setMemberId(scheduleInfo.getMemberId());
         schedule.setTitle(scheduleInfo.getTitle());
-        schedule.setYear(scheduleInfo.getYear());
-        schedule.setMonth(scheduleInfo.getMonth());
-        schedule.setDay(scheduleInfo.getDay());
+
+        String date = scheduleInfo.getDate();
+        System.out.println(date);
+
+        schedule.setYear(scheduleInfo.getDate().substring(0,4));
+        schedule.setMonth(scheduleInfo.getDate().substring(5,7));
+        schedule.setDay(scheduleInfo.getDate().substring(8));
 
         scheduleService.saveSchedule(schedule);
 
-        return "redirect:/schedule/scheduleHome?memberID="+memberID;
+        return "redirect:/schedule/plan?memberID="+schedule.getMemberId();
 
     }
 
@@ -205,33 +226,36 @@ public class CalendarController {
         return "redirect:/schedule/scheduleHome?memberID="+memberID;
     }
 
-    @GetMapping(value = "/schedule/scheduleUpdate")
-    public String scheduleUpdate(@RequestParam("id") Long id, Model model) {
-        Schedule schedule = scheduleService.findOneSchedule(id)
-                .orElseThrow(NullPointerException::new);
-        model.addAttribute("scheduleMemberID", schedule.getMemberId());
-        model.addAttribute("scheduleId", schedule.getId());
-        model.addAttribute("scheduleTitle", schedule.getTitle());
-        model.addAttribute("scheduleYear", schedule.getYear());
-        model.addAttribute("scheduleMonth", schedule.getMonth());
-        model.addAttribute("scheduleDay", schedule.getDay());
-        return "/schedule/scheduleUpdate";
-    }
+//    @GetMapping(value = "/schedule/scheduleUpdate")
+//    public String scheduleUpdate(@RequestParam("id") Long id, Model model) {
+//        Schedule schedule = scheduleService.findOneSchedule(id)
+//                .orElseThrow(NullPointerException::new);
+//        model.addAttribute("scheduleMemberID", schedule.getMemberId());
+//        model.addAttribute("scheduleId", schedule.getId());
+//        model.addAttribute("scheduleTitle", schedule.getTitle());
+//        model.addAttribute("scheduleYear", schedule.getYear());
+//        model.addAttribute("scheduleMonth", schedule.getMonth());
+//        model.addAttribute("scheduleDay", schedule.getDay());
+//        return "/schedule/scheduleUpdate";
+//    }
 
-    @PostMapping(value="/scheduleUpdateComplete")
-    public String update(Schedule scheduleInfo) {
+    @PostMapping(value="/scheduleUpdate")
+    public String update(ScheduleInfo scheduleInfo) {
         Schedule schedule = new Schedule();
         schedule.setMemberId(scheduleInfo.getMemberId());
         schedule.setId(scheduleInfo.getId());
         schedule.setTitle(scheduleInfo.getTitle());
-        schedule.setYear(scheduleInfo.getYear());
-        schedule.setMonth(scheduleInfo.getMonth());
-        schedule.setDay(scheduleInfo.getDay());
+
+        String date = scheduleInfo.getDate();
+
+        schedule.setYear(scheduleInfo.getDate().substring(0,4));
+        schedule.setMonth(scheduleInfo.getDate().substring(5,7));
+        schedule.setDay(scheduleInfo.getDate().substring(8));
 
         scheduleService.deleteSchedule(schedule.getId());
         scheduleService.saveSchedule(schedule);
 
-        return "redirect:/schedule/scheduleHome?memberID="+schedule.getMemberId();
+        return "redirect:/schedule/plan?memberID="+schedule.getMemberId();
     }
 
 
