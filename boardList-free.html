@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <title>게시판(공지사항) | DMS</title>
+    <header id="header">       
+        <div class="inner">
+            <a href="index.html" id="dms"><img src="img/DMS.png" height="80" onclick=""></a>
+            <ul class="nav">
+                 <li><a href="board.html" class="nav_item">게시판</a></li>
+                 <li><a href="study.html" class="nav_item">공부기록</a></li>
+                 <li><a href="plan.html" class="nav_item">일정</a></li>
+            </ul>
+             <span id="message"><img src="img/message.png" id = message_icon onclick=""></span>
+             <span id="profile">
+                   <li><a href="#"><img src="img/profile.png" id = profile_icon  onclick=""></a>
+                       <ul id="profile_dropdown">
+                          <li><a href="#" class="dropdown_item">내 정보</a></li>
+                          <li><a href="#" class="dropdown_item">로그아웃</a></li>
+                       </ul>                 
+                 </li>
+            </span>
+        </div>        
+    </header>
+</head>
+<body>
+    <link rel="stylesheet" href="css/boardlist-free.css">
+    <table class="board_wrap">
+        <tr class="board_title">
+            <td class="notice"><a href="boardlist-notice.html">공지사항</a> </td>
+            <td class="contest"><a href="boardlist-contest.html">공모전</a></td>
+            <td class="free-board"><a href="boardlist-free.html">자유게시판</a></td>
+        </tr>
+        <table class="board_list_wrap">
+            <tr class="board_list">
+                <th class="num">번호</th>
+                <th class="title">제목</th>
+                <th class="writer">글쓴이</th>
+                <th class="date">작성일</th>
+            </tr>
+            <tr class="board_list_under">
+                <tr>
+                    <td class="num">1</td>
+                    <td class="title"><a href="boardcontent.html">글 제목이 들어갑니다.</a></td>
+                    <td class="writer">작성자1</td>
+                    <td class="date">2023.11.08</td>
+                </tr>
+                <tr>
+                    <td class="num">2</td>
+                    <td class="title"><a href="boardcontent.html">글 제목이 들어갑니다.</a></td>
+                    <td class="writer">작성자2</td>
+                    <td class="date">2023.11.15</td>
+                </tr>
+            </tr>
+            <table class="board_page">
+                <td class="bottom_first"><a href="#"> << </a></td>
+                <td class="bottom_prev"><a href="#"> < </a></td>
+                <td class="num on"><a href="#"> 1 </a></td>
+                <td class="num"><a href="#"> 2 </a></td>
+                <td class="num"><a href="#"> 3 </a></td>
+                <td class="num"><a href="#"> 4 </a></td>
+                <td class="num"><a href="#"> 5 </a></td>
+                <td class="bottom_next"><a href="#"> > </a></td>
+                <td class="bottom_last"><a href="#"> >> </a></td>
+            </table>
+        
+            <table class="bottom_wrap">
+                <td class="on"><a href="boardcreate.html">쓰기</a></td>
+            </table>
+        </table>   
+    </table>
+    
+</body>
+</html>
