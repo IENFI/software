@@ -3,10 +3,141 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="|${pageName}|"></title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body{
+            display:flex;
+            justify-content: center;
+        }
+        .userContent{
+            display:flex;
+            flex-direction: row;
+        }
+        label{
+            float:left;
+            width:90px;
+        }
+        .fa-solid, .fa-regular{
+            width:25px;
+            position:relative;
+            top:4px;
+        }
+        .userItem{
+            width:200px;
+        }
+
+        #userEmailInput, #userDeptInput, #userInterestInput{
+            width:192px;
+            display:none;
+
+            border:solid 1px;
+        }
+        #userHeader{
+            text-align: center;
+            border-bottom:solid 1px;
+            margin:0 auto;
+            border:2;
+            width:98%;
+        }
+        .userContent{
+            margin:40px 0 40px 0;
+        }
+        #userInformation{
+            height:700px;
+            border-radius: 4px;
+            width:550px;
+            margin-top:120px;
+            box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
+        }
+        #userInner{
+            padding:0 0 0 70px;
+            margin-top:60px;
+        }
+        .cancelBtn, .confirmBtn, .doubleBtn{
+            display:none;
+        }
+        #userEmail{
+            display:inline-block;
+        }
+        #userFooter{
+            display:flex;
+            justify-content: center;
+        }
+
+    </style>
 </head>
 <body>
-<div>
+<div id="userInformation">
+    <div id="userHeader">
+        <h2>회원 정보</h2>
+    </div>
+    <div id="userInner">
+        <div id="userContents">
+            <div id="userID_div" class="userContent">
+                <i class="fa-regular fa-user"></i>
+                <label for="userID">아이디</label>
+                <div id="userID" class="userItem" th:text="|${member.memberId}|"></div>
+            </div>
+
+            <div id="userName_div" class="userContent">
+                <i class="fa-solid fa-user"></i>
+                <label for="userName">이름</label>
+                <div id="userName"  class="userItem"th:text="|${member.memberName}|"></div>
+            </div>
+
+            <form id="userEmail_div" class="userContent" action="/member/editEmail" method="post">
+                <i class="fa-regular fa-envelope"></i>
+                <label for="userEmail">이메일</label>
+                <div id="userEmail"  class="userItem" th:text="|${member.memberEmail}|"></div>
+                <input type="email" id="userEmailInput">
+                <button type="button" onclick="editUserEmail()" class="editBtn" id="editEmailBtn">수정</button>
+                <button type="button" onclick="cancelUserEmail()" class="cancelBtn" id="cancelEmailBtn">취소</button>
+                <button type="button" onclick="doubleCheckEmail()" class="doubleBtn" id="doubleBtn">중복체크</button>
+                <button type="submit" onclick="confirmUserEmail()" class="confirmBtn" id="confirmEmailBtn">확인</button>
+            </form>
+
+            <div id="userPhoneNumber_div" class="userContent">
+                <i class="fa-solid fa-phone"></i>
+                <label for="userPhoneNumber">전화번호</label>
+                <div id="userPhoneNumber"  class="userItem"th:text="|${member.memberPhoneNumber}|"></div>
+            </div>
+
+            <form id="userDept_div" class="userContent" action="/member/editDept" th:method="post">
+                <i class="fa-solid fa-school"></i>
+                <label for="userDept">학적정보</label>
+                <div id="userDept"  class="userItem"th:text="|${member.memberDept}|"></div>
+                <input type="text" id="userDeptInput">
+                <button type="button" onclick="editUserDept()" class="editBtn" id="editDeptBtn">수정</button>
+                <button type="button" onclick="cancelUserDept()" class="cancelBtn" id="cancelDeptBtn">취소</button>
+                <button type="submit" class="confirmBtn" id="confirmDeptBtn">확인</button>
+            </form>
+
+            <form id="userInterest_div" class="userContent" action="/member/editInterest" th:method="post">
+                <i class="fa-regular fa-star"></i>
+                <label for="userInterest">관심분야</label>
+                <div id="userInterest"  class="userItem"th:text="|${member.memberInterest}|"></div>
+                <input type="text" id="userInterestInput">
+                <button type="button" onclick="editUserInterest()" class="editBtn" id="editInterestBtn">수정</button>
+                <button type="button" onclick="cancelUserInterest()" class="cancelBtn" id="cancelInterestBtn">취소</button>
+                <button type="submit" class="confirmBtn" id="confirmInterestBtn">확인</button>
+            </form>
+
+            <div id="userRole_div" class="userContent">
+                <i class="fa-solid fa-circle-info"></i>
+                <label for="userRole">회원상태</label>
+                <div id="userRole"  class="userItem"th:text="|${member.memberRole}|">User</div>
+            </div>
+        </div>
+    </div>
+    <div id="userFooter">
+        <a href="/member/delete">회원탈퇴</a>
+    </div>
+</div>
+
+
+
+<!--<div>
     <h1><a th:href="|/|">[[${pageName}]]</a></h1> <hr/>
     <h2>유저 정보</h2>
     <div>
@@ -20,6 +151,141 @@
         <a href="/member/delete">회원탈퇴</a>
         <a href="/member/update">회원정보 수정</a>
     </div>
-</div>
+</div>-->
+
+
+<script>
+
+    //UserEmail 수정,취소,확인 함수
+    function editUserEmail(){
+        document.getElementById('userEmail').style.display = 'none';
+        document.getElementById('userEmailInput').style.display = 'inline-block';
+        document.getElementById('userEmailInput').value = document.getElementById('userEmail').innerText;
+
+        document.getElementById('editEmailBtn').style.display = 'none';
+        document.getElementById('cancelEmailBtn').style.display = 'inline-block';
+        document.getElementById('confirmEmailBtn').style.display = 'inline-block';
+        document.getElementById('confirmEmailBtn').disabled = true;
+        document.getElementById('doubleBtn').style.display = 'inline-block';
+    }
+    function cancelUserEmail(){
+        document.getElementById('userEmail').style.display = 'inline-block';
+        document.getElementById('userEmailInput').style.display = 'none';
+
+        document.getElementById('editEmailBtn').style.display = 'inline-block';
+        document.getElementById('cancelEmailBtn').style.display = 'none';
+        document.getElementById('confirmEmailBtn').style.display = 'none';
+        document.getElementById('doubleBtn').style.display = 'none';
+    }
+    function doubleCheckEmail(){
+        let EmailCheck = false;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/check-emailDuplicate?memberEmail=' + encodeURIComponent(document.getElementById('userEmailInput').value), true);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var responseData = xhr.responseText;
+
+                if (responseData == 'EMPTY'){
+                    alert('이메일을 입력해주세요.');
+                    EmailCheck = false;
+                    document.getElementById('confirmEmailBtn').disabled = true;
+                }
+                else if (responseData === 'DUPLICATE') {
+                    alert('이메일이 이미 등록되어 있습니다.');
+                    EmailCheck = false;
+                    document.getElementById('confirmEmailBtn').disabled = true;
+                }
+                else {
+                    alert('이메일을 사용할 수 있습니다.');
+                    EmailCheck = true;
+                    document.getElementById('confirmEmailBtn').disabled = false;
+                }
+            }
+            else {
+                console.error('Failed to check for duplicate');
+            }
+        };
+        xhr.send();
+
+    }
+    function confirmUserEmail(){
+        var newUserEmail = document.getElementById('userEmailInput').value;
+        document.getElementById('userEmail').innerText = newUserEmail;
+        document.getElementById('userEmailInput').style.display = 'none';
+        document.getElementById('userEmail').style.display = 'inline-block';
+
+        document.getElementById('editEmailBtn').style.display = 'inline-block';
+        document.getElementById('cancelEmailBtn').style.display = 'none';
+        document.getElementById('confirmEmailBtn').style.display = 'none';
+    }
+
+
+
+    //UserDept 수정,취소,확인 함수
+    function editUserDept(){
+        document.getElementById('userDept').style.display = 'none';
+        document.getElementById('userDeptInput').style.display = 'inline-block';
+        document.getElementById('userDeptInput').value = document.getElementById('userDept').innerText;
+
+        document.getElementById('editDeptBtn').style.display = 'none';
+        document.getElementById('cancelDeptBtn').style.display = 'inline-block';
+        document.getElementById('confirmDeptBtn').style.display = 'inline-block';
+    }
+    function cancelUserDept(){
+        document.getElementById('userDept').style.display = 'inline-block';
+        document.getElementById('userDeptInput').style.display = 'none';
+
+        document.getElementById('editDeptBtn').style.display = 'inline-block';
+        document.getElementById('cancelDeptBtn').style.display = 'none';
+        document.getElementById('confirmDeptBtn').style.display = 'none';
+
+
+    }
+    function confirmUserDept(){
+        var newUserDept = document.getElementById('userDeptInput').value;
+        document.getElementById('userDept').innerText = newUserDept;
+        document.getElementById('userDeptInput').style.display = 'none';
+        document.getElementById('userDept').style.display = 'inline-block';
+
+        document.getElementById('editDeptBtn').style.display = 'inline-block';
+        document.getElementById('cancelDeptBtn').style.display = 'none';
+        document.getElementById('confirmDeptBtn').style.display = 'none';
+    }
+
+
+
+    //UserInterest 수정,취소,확인 함수
+    function editUserInterest(){
+        document.getElementById('userInterest').style.display = 'none';
+        document.getElementById('userInterestInput').style.display = 'inline-block';
+        document.getElementById('userInterestInput').value = document.getElementById('userInterest').innerText;
+
+        document.getElementById('editInterestBtn').style.display = 'none';
+        document.getElementById('cancelInterestBtn').style.display = 'inline-block';
+        document.getElementById('confirmInterestBtn').style.display = 'inline-block';
+    }
+    function cancelUserInterest(){
+        document.getElementById('userInterest').style.display = 'inline-block';
+        document.getElementById('userInterestInput').style.display = 'none';
+
+        document.getElementById('editInterestBtn').style.display = 'inline-block';
+        document.getElementById('cancelInterestBtn').style.display = 'none';
+        document.getElementById('confirmInterestBtn').style.display = 'none';
+
+
+    }
+    function confirmUserInterest(){
+        var newUserInterest = document.getElementById('userInterestInput').value;
+        document.getElementById('userInterest').innerText = newUserInterest;
+        document.getElementById('userInterestInput').style.display = 'none';
+        document.getElementById('userInterest').style.display = 'inline-block';
+
+        document.getElementById('editInterestBtn').style.display = 'inline-block';
+        document.getElementById('cancelInterestBtn').style.display = 'none';
+        document.getElementById('confirmInterestBtn').style.display = 'none';
+    }
+</script>
 </body>
 </html>

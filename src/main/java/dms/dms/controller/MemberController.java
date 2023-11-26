@@ -203,7 +203,7 @@ public class MemberController {
     }
 
     @GetMapping("member/info")
-    public String userInfo(@SessionAttribute(name = "memberId", required = false) String memberId, Model model){
+    public String memberInfo(@SessionAttribute(name = "memberId", required = false) String memberId, Model model){
         model.addAttribute("loginType", "dms");
         model.addAttribute("pageName","세션 로그인");
 
@@ -216,6 +216,11 @@ public class MemberController {
         model.addAttribute("member", loginMember);
         return "/member/info";
     }
+
+//    @PostMapping("/member/edit")
+//    public String editInfo (
+//            return "";
+//    )
 
     @GetMapping("/admin")
     public  String adminPage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model){
