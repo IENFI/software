@@ -1,22 +1,29 @@
 package dms.dms.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "study")
 public class Study {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
+    private String memberId;
+    @Column
     private String title;
+    @Column
     private String content;
+    @Column
     private String date;
+    @Column
     private String url;
+    @Column
     private String fileoriginname; // 원본 파일명
+    @Column
     private String filesavename; // 저장 파일명
+    @Column
     private String filesavepath;
 
     public Long getId() {
@@ -25,6 +32,14 @@ public class Study {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
     public String getTitle() {

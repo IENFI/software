@@ -23,9 +23,10 @@ public class StudyService {
         studyRepository.save(study);
     }
 
-    public Page<Study> findByUserIdStudies(Pageable pageable) {
-        return studyRepository.findAll(pageable);
+    public Page<Study> findStudiesByMemberID(String memberID, Pageable pageable) {
+        return studyRepository.findStudiesByMemberId(memberID, pageable);
     }
+
     // user 식별해서 해당 user의 게시글만 보여주기 => findByUserIdStudies
     public Optional<Study> findOneStudy(Long studyId) {
         return studyRepository.findById(studyId);
@@ -34,7 +35,6 @@ public class StudyService {
     public void deleteStudy(Long studyId) {
         studyRepository.deleteById(studyId);
     }
-
 
 
 }

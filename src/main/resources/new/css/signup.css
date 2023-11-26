@@ -1,0 +1,117 @@
+body{
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    background-color: #fff;
+}
+li{
+    list-style-type: none;
+    height:40px;
+    width:300px;
+    border-bottom:1px gray solid;
+    line-height:40px;
+    margin:5px 0 0 0;
+}
+ul{
+    margin-top:40px;
+    display:flex;
+    flex-direction: column;
+}
+.information_img{
+    position:relative;
+    top:8px;
+    left:5px;
+}
+label{
+    float:left;
+    width:130px;
+    font-size:15px;
+}
+.ID_tel_code_div{
+    display:flex;
+    flex-direction: row;
+    
+}
+#PW_div{
+    display:flex;
+    flex-direction: row;
+}
+
+.inner_button{
+    margin-left:20px;
+    height:25px;
+    background-color: white;
+    color:black;
+    border:1px solid;
+    border-radius: 4px;
+    cursor:pointer;
+    position:relative;
+    top:15px;
+}
+.inner_button:hover{
+    background-color: black;
+    color:white;
+    transition-duration: 0.2s;
+}
+#signup_form{
+    width:500px;   
+    margin-top:80px;
+}
+#signup_border{
+    border-radius: 4px;
+    /*border:solid 1px;*/
+    height:720px;
+    box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
+    
+}
+#last_button{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top:50px;
+}
+#cancel_button{
+    margin-right:5px;
+    background-color: black;
+    color:white;
+    cursor:pointer;
+}
+#cancel_button:hover{
+    background-color: white;
+    color:black;
+    transition-duration: 0.2s;
+}
+#signup_button{
+    margin-left:5px;
+    background-color: black;
+    color:white;
+    cursor:pointer;
+}
+#signup_button:hover{
+    background-color: white;
+    color:black;
+    transition-duration: 0.2s;
+   
+    
+}
+#personal_information{
+    font-size:12px;
+}
+#DMS_img{
+    text-align: center;
+    padding-bottom:20px;
+    border-bottom: solid 1px;
+}
+#main{
+    margin:20px 10px 10px 10px;
+    
+}
+.text{
+    border:none;
+}
+#caution{
+    width:30px;
+    text-align: center;
+    display:none;
+}
