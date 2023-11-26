@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|${pageName}|"></title>
+</head>
+<body>
+<div>
+    <h1><a th:href="|/|">[[${pageName}]]</a></h1> <hr/>
+    <h2>유저 정보</h2>
+    <div>
+        <div th:text="|id : ${member.memberId}|"/>
+        <div th:text="|name : ${member.memberName}|"/>
+        <div th:text="|email : ${member.memberEmail}|"/>
+        <div th:text="|dept : ${member.memberDept}|"/>
+        <div th:text="|interest : ${member.memberInterest}|"/>
+        <div th:text="|phoneNumber : ${member.memberPhoneNumber}|"/>
+        <div th:text="|role : ${member.memberRole}|"/>
+        <a href="/member/delete">회원탈퇴</a>
+        <a href="/member/update">회원정보 수정</a>
+    </div>
+</div>
+</body>
+</html>
