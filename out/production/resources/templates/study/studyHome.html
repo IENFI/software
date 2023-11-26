@@ -13,8 +13,8 @@
             <a href="/" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
             <ul class="nav">
                 <li><a href="board.html" class="nav_item">게시판</a></li>
-                <li><a th:href="@{/study/studyHome(memberId=${session.memberId})}" class="nav_item">공부기록</a></li>
-                <li><a th:href="@{/schedule/scheduleHome(memberID=${session.memberId})}"  class="nav_item">일정</a></li>
+                <li><a href="/study/studyHome" class="nav_item">공부기록</a></li>
+                <li><a href="/schedule/plan" class="nav_item">일정</a></li>
             </ul>
             <span id="message"><img src="/img/message.png" id = message_icon onclick=""></span>
             <span id="profile">
@@ -29,48 +29,57 @@
     </header>
 </head>
 <body>
-<link rel="stylesheet" href="/list.css">
+<link rel="stylesheet" href="/css/list.css">
 <table class="board_wrap">
     <tr class="board_title">
         <td>나의 공부기록 | DMS</td>
     </tr>
-    <table class="board_list_wrap">
+    <table id="studyNum" class="board_list_wrap">
+        <tbody>
         <tr class="board_list">
             <th class="num">번호</th>
             <th class="title">제목</th>
             <th class="writer">글쓴이</th>
             <th class="date">작성일</th>
         </tr>
-        <tr th:each="study : ${studys}">
-            <td class="num" th:name="studyId" th:text="${study.id}">1</td>
+        <tr class="index" th:each="study : ${studys}">
+            <td class="num" th:name="studyId">0</td>
             <td class="title"><a th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}">글 제목이 들어갑니다.</a></td>
             <td class="writer" th:text="${study.memberId}">DMS</td>
             <td class="date" th:text="${study.date}">2023.11.08</td>
         </tr>
+        </tbody>
     </table>
     <br>
-    <table class="board_page">
-        <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
-            <td>
-                <a class="num" th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}">1</a>
-            </td>
-        </th:each>
-    </table>
-    <!--  <table class="board_page">-->
-    <!--    <td class="bottom_first"><a href="#"> << </a></td>-->
-    <!--    <td class="bottom_prev"><a href="#"> < </a></td>-->
-    <!--    <td class="num on"><a href="#"> 1 </a></td>-->
-    <!--    <td class="num"><a href="#"> 2 </a></td>-->
-    <!--    <td class="num"><a href="#"> 3 </a></td>-->
-    <!--    <td class="num"><a href="#"> 4 </a></td>-->
-    <!--    <td class="num"><a href="#"> 5 </a></td>-->
-    <!--    <td class="bottom_next"><a href="#"> > </a></td>-->
-    <!--    <td class="bottom_last"><a href="#"> >> </a></td>-->
-    <!--  </table>-->
-
+        <table class="board_page">
+            <td class="bottom_first"><a th:href="@{/study/studyHome(page=${startPage}-1)}"> << </a></td>
+            <td class="bottom_prev"><a th:if="${nowPage}>1" th:href="@{/study/studyHome(page=${nowPage}-2)}"> < </a>
+            <a th:unless="${nowPage}>1"> < </a></td>
+            <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
+                <td class="num">
+                    <a th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}"><script> let page = [[${page}]]</script></a>
+                </td>
+            </th:each>
+            <td class="bottom_next"><a th:if="${nowPage}<${endPage}" th:href="@{/study/studyHome(page=${nowPage})}"> > </a>
+            <a th:unless="${nowPage}<${endPage}"> > </a></td>
+            <td class="bottom_last"><a th:href="@{/study/studyHome(page=${endPage}-1)}"> >> </a></td>
+        </table>
     <table class="bottom_wrap">
-        <td class="on"><a th:href="@{/study/studyCreate(memberId=${session.memberId})}">쓰기</a></td>
+        <td class="on"><a href="/study/studyCreate">쓰기</a></td>
     </table>
 </table>
 </body>
 </html>
+
+<script th:inline="javascript">
+    let page = [[${nowPage}]];
+    function studyNumSet() {
+        let studyNum = 1;
+
+        for(let i=1; i<=10; i++) {
+            document.getElementById("studyNum").getElementsByTagName("tr")[i].getElementsByTagName("td")[0].innerHTML = (page-1)*10 + studyNum;
+            studyNum++;
+        }
+    }
+    studyNumSet();
+</script>
