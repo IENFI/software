@@ -6,6 +6,7 @@ import dms.dms.domain.MemberEntity;
 import dms.dms.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -15,6 +16,10 @@ public class MemberService {
 
     private final MemberRepository memberRepository; // 먼저 jpa, mysql dependency 추가
 
+    public MemberEntity getMember(String memberId){
+        return memberRepository.findByMemberId(memberId).get();
+    }
+
     public void save(MemberDTO memberDTO) {
         // repository의 save 메서드 호출
         MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
@@ -23,7 +28,33 @@ public class MemberService {
 
     }
 
-    public MemberDTO login(MemberDTO memberDTO) { // entity 객체는 service에서만
+    // 탈퇴 기능
+    @Transactional
+    public Boolean delete(String memberId, String nowPassword) {
+        MemberEntity memberEntity = memberRepository.findByMemberId(memberId).get();
+        System.out.println("MemberService.delete");
+        if (memberEntity.getMemberPassword().equals(nowPassword)) {
+
+            // 게시글, 댓글, 일정, 포스트 등을 전부 삭제하는 코드 구현
+//            List<Like> likes = likeRepository.findAllByUserLoginId(loginId);
+//            for (Like like : likes) {
+//                like.getBoard().likeChange( like.getBoard().getLikeCnt() - 1 );
+//            }
+//
+//            List<Comment> comments = commentRepository.findAllByUserLoginId(loginId);
+//            for (Comment comment : comments) {
+//                comment.getBoard().commentChange( comment.getBoard().getCommentCnt() - 1 );
+//            }
+
+            memberRepository.delete(memberEntity);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public MemberEntity login(MemberDTO memberDTO) { // entity 객체는 service에서만
+        System.out.println("로그인 시도 중");
         Optional<MemberEntity> byMemberId = memberRepository.findByMemberId(memberDTO.getMemberId());
         if(byMemberId.isPresent()){
             // 조회 결과가 있다
@@ -31,15 +62,44 @@ public class MemberService {
             if(memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())){
                 // 비밀번호 일치
                 // entity -> dto 변환 후 리턴
-                MemberDTO dto = MemberDTO.toMemberDTO(memberEntity);
-                return dto;
+                return memberEntity;
             } else {
                 // 비밀번호 불일치
                 return null;
             }
+
         } else {
+            System.out.println("로그인 시도 중");
             // 조회 결과가 없다
             return null;
         }
+    }
+
+    // ID 중복체크
+    public boolean checkMemberIdDuplicate(String memberId){
+        return memberRepository.existsByMemberId(memberId);
+    }
+    public boolean checkMemberEmailDuplicate(String memberEmail){
+        return memberRepository.existsByMemberEmail(memberEmail);
+    }
+
+    // Sequence를 이용하여 Member를 return 해주는 기능
+//    public MemberEntity getLoginUserById(Long memberSequence){
+//        if (memberSequence == null) return null;
+//
+//        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberSequence(memberSequence);
+//        if (optionalMemberEntity.isEmpty()) return null;
+//
+//        return optionalMemberEntity.get();
+//    }
+
+    // Id를 이용하여 Member를 return 해주는 기능
+    public MemberEntity getLoginUserByLoginId(String memberId){
+        if (memberId == null) return null;
+
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberId(memberId);
+        if (optionalMemberEntity.isEmpty()) return null;
+
+        return optionalMemberEntity.get();
     }
 }
