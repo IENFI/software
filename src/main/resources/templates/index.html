@@ -15,7 +15,7 @@
         <a href="index.html" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
         <ul class="nav">
             <li><a href="board.html" class="nav_item">게시판</a></li>
-            <li><a href="/study/studyHome" class="nav_item">공부기록</a></li>
+            <li><a href="study.html" class="nav_item">공부기록</a></li>
             <li><a href="plan.html" class="nav_item">일정</a></li>
         </ul>
         <span id="message"><img src="/img/message.png" id = message_icon onclick=""></span>
@@ -34,7 +34,9 @@
 <section id="contents">
     <div class="inner">
         <div id="contents_container">
-            <div class="calendar">달력</div>
+            <div class="calendar">달력<br>
+                <div id="Calendar_Container"></div>
+            </div>
             <div class="login">
                 <div id="login_inner">
                     <form id="login_form" action="/member/login" method="post">
@@ -63,5 +65,80 @@
     </div>
 
 </footer>
+<script src="/javascript/planModal.js"></script>
 </body>
 </html>
+
+<script>
+    //달력 생성 함수
+    function generateCalendar(year, month){
+
+        const today = new Date();
+        const dayInMonth = new Date(year, month, 0).getDate(); //달의 일수
+        const firstDay = new Date(year, month - 1, 1).getDay(); //달의 첫 요일
+
+
+        let calendarHTML = '<table>';
+        calendarHTML += '<tr id="calendarDate"><th class="Sun">일요일</th><th>월요일</th><th>화요일</th><th>수요일</th><th>목요일</th><th>금요일</th><th class="Sat">토요일</th></tr>'
+        let dayCounter = 1;
+
+
+
+        for(let i = 0; i < 6; i++) {
+
+            calendarHTML += '<tr>';
+
+            for(let j = 0; j < 7; j++) {
+                const holiday = new Date(year, month - 1, dayCounter).getDay();
+                if(i == 0 && j < firstDay){
+                    calendarHTML += '<td></td>';
+                }
+                else if(dayCounter > dayInMonth){
+                    calendarHTML += '<td></td>';
+                }
+                else {
+                    if(dayCounter == today.getDate() && year == today.getFullYear() && month == today.getMonth() + 1){
+                        //calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
+                        if(holiday == 0){
+                            calendarHTML += `<td><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
+                        }
+                        else if(holiday == 6){
+                            calendarHTML += `<td id="today"><div class="Sat">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
+                        }
+                        else{
+                            calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
+                        }
+                    }
+                    else if(holiday == 0){
+                        calendarHTML += `<td><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
+                    }
+                    else if(holiday == 6){
+                        calendarHTML += `<td><div class="Sat">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
+                    }
+
+                    else{
+                        calendarHTML += `<td>${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
+                    }
+                    dayCounter++;
+                }
+
+            }
+
+            calendarHTML += '</tr>';
+        }
+
+        calendarHTML += '</table>';
+
+        document.getElementById('Calendar_Container').innerHTML = calendarHTML;
+
+        if(month == 0){
+            document.getElementById('currentYearMonth').innerHTML = `${year - 1}년 ${month + 12}월`;
+        }
+        else{
+            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month}월`;
+        }
+
+    }
+
+    generateCalendar(pos.getFullYear(), pos.getMonth());
+</script>

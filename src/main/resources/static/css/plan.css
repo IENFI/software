@@ -16,7 +16,9 @@ table{
     border:solid gray 0.5px;
 }
 .plan_div{
+    overflow: auto;
     border:solid 1px;
+    width: 120px;
     height:120px;
     margin:5px;
 }

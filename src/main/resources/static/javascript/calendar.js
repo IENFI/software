@@ -1,6 +1,4 @@
 //달력 생성 함수
-let abc = [[${scheduleList}]];
-console.log(abc.at(0).day)
 function generateCalendar(year, month){
 
     const today = new Date();

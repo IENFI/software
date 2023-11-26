@@ -18,8 +18,8 @@
         <a href="index.html" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
         <ul class="nav">
             <li><a href="board.html" class="nav_item">게시판</a></li>
-            <li><a href="study.html" class="nav_item">공부기록</a></li>
-            <li><a href="plan.html" class="nav_item">일정</a></li>
+            <li><a href="/study/studyHome" class="nav_item">공부기록</a></li>
+            <li><a href="/schedule/plan" class="nav_item">일정</a></li>
         </ul>
         <span id="message"><img src="/img/message.png" id = message_icon onclick=""></span>
         <span id="profile">
@@ -105,7 +105,7 @@
                     </div>
 
                     <div id="planWriteFooterUpdate">
-                        <button type="">삭제</button>
+                        <button type="" formaction="/scheduleDelete">삭제</button>
                         <button type="submit" onclick="updatePlan()">수정</button>
                     </div>
                     </div>
@@ -156,7 +156,7 @@
                     if(dayCounter == today.getDate() && year == today.getFullYear() && month == today.getMonth() + 1){
                         //calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
                         if(holiday == 0){
-                            calendarHTML += `<td><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
+                            calendarHTML += `<td id="today"><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
                             for(let s=0; s<abc.length; s++) {
                                 if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
                                     let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
@@ -290,10 +290,10 @@
         document.getElementById('Calendar_Container').innerHTML = calendarHTML;
 
         if(month == 0){
-            document.getElementById('currentYearMonth').innerHTML = `${year - 1}년 ${month + 12}월 ${abc.at(0)}`;
+            document.getElementById('currentYearMonth').innerHTML = `${year - 1}년 ${month + 12}월`;
         }
         else{
-            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month}월 ${abc.at(0).title}`;
+            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month}월`;
         }
 
     }

@@ -5,7 +5,7 @@
     <title>공부 기록 수정</title>
 </head>
 <body>
-<form action="/studyUpdateComplete" method="post">
+<form action="/studyUpdateComplete" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <p>공부 기록</p>
         <div style="display: none">
@@ -23,18 +23,41 @@
         <label for="url">동영상rul</label>
         <input type="text" id="url" name="url" th:value="${studyUrl}">
         <br>
-        <label for="fileSaveName">파일</label>
-        <input type="text" id="fileSaveName" name="fileSaveName" th:value="${studyFileSaveName}">
-        <br>
-        <div style="display: none">
-        <label for="fileOriginName">파일경로</label>
-        <input type="text" id="fileOriginName" name="fileOriginName" th:value="${studyFileSavePath}">
-        <br>
-        <label for="fileSavePath">파일저장경로</label>
-        <input type="text" id="fileSavePath" name="fileSavePath" th:value="${studyOriginName}">
-        <br>
+        <div>
+            <div class="file_input">
+                <input id="fileInput1" th:if="${studyOriginName} != null" type="text" name="fileoriginname" th:value="${studyOriginName}"/>
+                <input id="fileInput2" th:unless="${studyOriginName} != null" type="text" name="fileoriginname">
+                    <label> 첨부파일
+                    <input type="file" name="files" onchange="selectFile(this);" />
+                </label>
+                <button type="button" onclick="deleteFile()">X</button>
+            </div>
         </div>
     </div>
+    <script>
+        // 파일 선택
+        function selectFile(element) {
+
+            const file = element.files[0];
+            const filename = element.closest('.file_input').firstElementChild;
+
+            // 파일 크기가 10MB를 초과하는 경우
+            const fileSize = Math.floor(file.size / 1024 / 1024);
+            if (fileSize > 10) {
+                alert('10MB 이하의 파일로 업로드해 주세요.');
+                filename.value = '';
+                element.value = '';
+                return false;
+            }
+
+            // 파일명 지정
+            filename.value = file.name;
+        }
+        function deleteFile() {
+            document.getElementById('fileInput1').value = null;
+            document.getElementById('fileInput2').value = null;
+        }
+    </script>
     <button type="submit">수정</button>
 </form>
 </body>

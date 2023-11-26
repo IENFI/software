@@ -1,4 +1,4 @@
-package dms.dms.calendar;
+package dms.dms.domain;
 
 public class DateData {
     String year = "";

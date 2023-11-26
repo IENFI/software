@@ -42,4 +42,13 @@ public class MemberService {
             return null;
         }
     }
+
+    public MemberEntity getLoginUserByLoginId(String memberId){
+        if (memberId == null) return null;
+
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberId(memberId);
+        if (optionalMemberEntity.isEmpty()) return null;
+
+        return optionalMemberEntity.get();
+    }
 }
