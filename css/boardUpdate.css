@@ -1,5 +1,5 @@
 .form-group {
-    font-size:20px;
+    font-size:18px;
     margin-left : 25%;
     margin-right:25%;
     margin-top:100px;
@@ -10,19 +10,20 @@
     border-bottom : 2px solid #ddd;
 }
 
-.form-group input[id="title"] {
+.form-group input[type="category"] {
+    width : 150px;
+    height:20px;
+    font-size:18px;
+}
+
+.form-group input[name="title"] {
     margin-top : 20px;
     width : 500px;
     height:20px;
     font-size:18px;
 }
 
-.form-group input[id="date"] {
-    font-size:18px;
-    float:right;
-}
-
-.form-group input[name="content"] {
+.form-group textarea[name="content"] {
     margin-top:20px;
     font-size:25px;
     width:950px;
@@ -37,10 +38,8 @@
     font-size:18px;
 }
 
-.form-group input[id="file"] {
-    font-size:18px;
+.form-group .file_input{
     margin-top:20px;
-    width:300px;
 }
 
 .button {

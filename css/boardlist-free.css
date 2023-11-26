@@ -17,18 +17,24 @@ a {
 }
 
 .board_wrap {
-    margin-left : 15%;
+    margin-left : 25%;
     margin-top : 100px;
 }
 
 .board_title td{
-    font-size : 30px;
+    font-size : 20px;
+    padding-right:40px;
+    font-weight:bold;
 }
 
+.board_title .free-board {
+    color:red;
+}
 
 .board_list_wrap {
-    margin-left:15%;
-    width: 40%;
+    margin-left:25%;
+    margin-right:25%;
+    width: 50%;
     border-collapse: collapse;
     text-align:center;
     margin-top: 20px;
@@ -102,8 +108,7 @@ a {
 }
 
 .board_page {
-    margin-top:30px;
-    margin-left:28%;
+    margin:30px auto;
 }
 
 .board_page td {
@@ -160,7 +165,7 @@ a {
     margin-top: 20px;
     text-align: center;
     font-size: 0;
-    margin-left: 31.5%;
+    margin:0 auto;
 }
 
 .bottom_wrap a {
