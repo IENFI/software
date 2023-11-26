@@ -2,6 +2,7 @@ package dms.dms.controller;
 
 import dms.dms.domain.MemberEntity;
 import dms.dms.domain.MemberRole;
+import dms.dms.dto.AlertDTO;
 import dms.dms.dto.MemberDTO;
 import dms.dms.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,6 +58,9 @@ public class MemberController {
     public String userDeletePage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model) {
         model.addAttribute("loginType", "dms");
         model.addAttribute("pageName", "세션 로그인");
+        if (memberId == null){
+            return "redirect:/";
+        }
 
         model.addAttribute("deleteError", "none");
 
@@ -189,9 +193,15 @@ public class MemberController {
 
 
     @GetMapping("/member/logout")
-    public String logout(HttpServletRequest request, Model model){
+    public String logout(@SessionAttribute(name = "memberId", required = false) String memberId, HttpServletRequest request, Model model){
         model.addAttribute("loginType", "dms");
         model.addAttribute("pageName", "세션 로그인");
+
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+
+        if (loginMember == null){
+            return "redirect:/";
+        }
 
         System.out.println("memberController.logout");
 
@@ -202,25 +212,93 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("member/info")
-    public String memberInfo(@SessionAttribute(name = "memberId", required = false) String memberId, Model model){
+    @GetMapping("/member/info")
+    public String memberInfo(@SessionAttribute(name = "memberId", required = false) String memberId,
+                             Model model){
         model.addAttribute("loginType", "dms");
         model.addAttribute("pageName","세션 로그인");
 
         MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
 
         if (loginMember == null){
-            return "redirect:/login";
+            return "redirect:/";
         }
 
         model.addAttribute("member", loginMember);
-        return "/member/info";
+        return "member/info";
     }
 
-//    @PostMapping("/member/edit")
-//    public String editInfo (
-//            return "";
-//    )
+    // 사용자에게 메시지를 전달하고, 페이지를 리다이렉트 한다.
+    private String showMessageAndRedirect(final AlertDTO params, Model model) {
+        model.addAttribute("params", params);
+        return "alert/alertRedirect";
+    }
+    // 출처: https://congsong.tistory.com/22 [Let's develop:티스토리]
+
+    @PostMapping("/member/editEmail")
+    public String editMemberEmail (@SessionAttribute(name = "memberId", required = false) String memberId,
+                            @RequestParam("memberEmail") String memberEmail, Model model)
+    {
+        System.out.println("MemberController.editEmail");
+
+        String editToken = memberService.editMemberEmail(memberId, memberEmail);
+        if (editToken == "success"){
+            AlertDTO message = new AlertDTO("이메일 수정이 완료되었습니다.", "/member/info", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else if (editToken == "equal"){
+            AlertDTO message = new AlertDTO("새로고침 오류", "/member/info", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else {
+            AlertDTO message = new AlertDTO("이메일 수정을 실패하였습니다.", "/member/info", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+    }
+
+    @PostMapping("/member/editDept")
+    public String editMemberInterest (@SessionAttribute(name = "memberId", required = false) String memberId,
+                            @RequestParam("memberDept") String memberDept, Model model)
+    {
+        System.out.println("MemberController.editDept");
+
+        String editToken = memberService.editMemberDept(memberId, memberDept);
+
+        if (editToken == "success"){
+            AlertDTO message = new AlertDTO("학적정보 수정이 완료되었습니다.", "/member/info", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else if (editToken == "equal"){
+            AlertDTO message = new AlertDTO("새로고침 오류", "/member/info", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else {
+            AlertDTO message = new AlertDTO("학적정보 수정을 실패하였습니다.", "/member/info", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+    }
+
+    @PostMapping("/member/editInterest")
+    public String editMemberDept (@SessionAttribute(name = "memberId", required = false) String memberId,
+                                  @RequestParam("memberInterest") String memberInterest, Model model)
+    {
+        System.out.println("MemberController.editInterest");
+
+        String editToken = memberService.editMemberInterest(memberId, memberInterest);
+
+        if (editToken == "success"){
+            AlertDTO message = new AlertDTO("관심분야 수정이 완료되었습니다.", "/member/info", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else if (editToken == "equal"){
+            AlertDTO message = new AlertDTO("새로고침 오류", "/member/info", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else {
+            AlertDTO message = new AlertDTO("관심분야 수정을 실패하였습니다.", "/member/info", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+    }
 
     @GetMapping("/admin")
     public  String adminPage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model){

@@ -90,7 +90,7 @@
                 <i class="fa-regular fa-envelope"></i>
                 <label for="userEmail">이메일</label>
                 <div id="userEmail"  class="userItem" th:text="|${member.memberEmail}|"></div>
-                <input type="email" id="userEmailInput">
+                <input type="email" id="userEmailInput" name="memberEmail">
                 <button type="button" onclick="editUserEmail()" class="editBtn" id="editEmailBtn">수정</button>
                 <button type="button" onclick="cancelUserEmail()" class="cancelBtn" id="cancelEmailBtn">취소</button>
                 <button type="button" onclick="doubleCheckEmail()" class="doubleBtn" id="doubleBtn">중복체크</button>
@@ -107,7 +107,7 @@
                 <i class="fa-solid fa-school"></i>
                 <label for="userDept">학적정보</label>
                 <div id="userDept"  class="userItem"th:text="|${member.memberDept}|"></div>
-                <input type="text" id="userDeptInput">
+                <input type="text" id="userDeptInput" name="memberDept">
                 <button type="button" onclick="editUserDept()" class="editBtn" id="editDeptBtn">수정</button>
                 <button type="button" onclick="cancelUserDept()" class="cancelBtn" id="cancelDeptBtn">취소</button>
                 <button type="submit" class="confirmBtn" id="confirmDeptBtn">확인</button>
@@ -117,7 +117,7 @@
                 <i class="fa-regular fa-star"></i>
                 <label for="userInterest">관심분야</label>
                 <div id="userInterest"  class="userItem"th:text="|${member.memberInterest}|"></div>
-                <input type="text" id="userInterestInput">
+                <input type="text" id="userInterestInput" name="memberInterest">
                 <button type="button" onclick="editUserInterest()" class="editBtn" id="editInterestBtn">수정</button>
                 <button type="button" onclick="cancelUserInterest()" class="cancelBtn" id="cancelInterestBtn">취소</button>
                 <button type="submit" class="confirmBtn" id="confirmInterestBtn">확인</button>
