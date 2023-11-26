@@ -43,7 +43,7 @@ function addPlan(){
     }
 }
 
-function updatePlan(){
+function updatePlan() {
     var id = document.getElementById('plan_Id').value;
     var memberId = document.getElementById('plan_memberId1').value;
     var date = document.getElementById('date_select1').value;
@@ -51,13 +51,18 @@ function updatePlan(){
 
     console.log(date);
     console.log(plan);
-    if(date && plan){
+    if (date && plan) {
         alert('일정이 수정되었습니다!\n날짜:' + date + '\n일정:' + plan);
 
         planClose();
 
-    }
-    else{
+    } else {
         alert('날짜와 일정을 모두 추가해주세요.');
     }
+}
+
+function deletePlan() {
+    var id = document.getElementById('plan_Id').value;
+
+    window.href = "/schedule/scheduleDelete?id"+id;
 }
