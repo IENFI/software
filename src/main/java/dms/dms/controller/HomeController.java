@@ -7,6 +7,7 @@ import dms.dms.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -14,6 +15,11 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @RequiredArgsConstructor // MemberService에 대한 멤버를 사용 가능
 public class HomeController {
     private final MemberService memberService;
+
+    @GetMapping(value = "/home")
+    public String home() {
+        return "home";
+    }
 
     @RequestMapping
     public String dms(Model model, @SessionAttribute(name = "memberId", required = false) String memberId) {

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -25,6 +26,10 @@ public class StudyService {
 
     public Page<Study> findStudiesByMemberID(String memberID, Pageable pageable) {
         return studyRepository.findStudiesByMemberId(memberID, pageable);
+    }
+
+    public List<Study> findStudiesByMemberID(String memberID) {
+        return studyRepository.findStudiesByMemberId(memberID);
     }
 
     // user 식별해서 해당 user의 게시글만 보여주기 => findByUserIdStudies

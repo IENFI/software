@@ -2,6 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/contents.css">
+    <link rel="stylesheet" href="/css/plan.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <title>Title</title>
     <style>
         table{
@@ -43,18 +48,82 @@
     </style>
 </head>
 <body>
+<header id="header">
+    <div class="inner">
+        <a href="/home" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
+        <ul class="nav">
+            <li><a href="board.html" class="nav_item">게시판</a></li>
+            <li><a href="study.html" class="nav_item">공부기록</a></li>
+            <li><a href="plan.html" class="nav_item">일정</a></li>
+        </ul>
+        <span id="message"><img src="/img/message.png" id = message_icon></span>
+        <span id="profile">
+                   <li><a href="#"><img src="/img/profile.png" id = profile_icon  onclick=""></a>
+                       <ul id="profile_dropdown">
+                          <li><a href="#" class="dropdown_item">내 정보</a></li>
+                          <li><a href="#" class="dropdown_item">로그아웃</a></li>
+                       </ul>
+                 </li>
+            </span>
+    </div>
+</header>
+<!--<section id="contents">-->
+    <div class="inner">
+        <div>
+            <div id="Calendar_header">
+                <span id="currentYearMonth"></span>
+<!--                <button id="openPlanWrite" class="plan_button add_plan_btn" onclick="planOpen()">일정 쓰기</button>-->
+                <button class="next plan_button direct_btn" onclick="showCalendar(1)">></button>
+                <button class="prev plan_button direct_btn" onclick="showCalendar(-1)"><</button>
 
+            </div>
+            <div id="Calendar_Container"></div>
+
+        </div>
+        <div id="planWrite" class="modal">
+            <div id="planWriteContent">
+                <div id="planWriteHeader">
+                    <span id="planWrite_title">일정을 입력하세요</span>
+                    <div class="close" id="closePlanBtn" onclick="planClose()">&times;</div>
+                </div>
+
+                <div id="planWriteInner">
+                    <div id="plan_Container">
+                        <div class="Inner_item" id="plan_item">
+                            <label for="plan_content">일정 내용</label>
+                            <br>
+                            <input type="text" id="plan_content">
+                        </div>
+                        <div class="Inner_item" id="date_item">
+                            <label for="date_select">날짜</label>
+                            <br>
+                            <input type="date" id="date_select">
+                        </div>
+                    </div>
+                </div>
+                <div id="planWriteFooter">
+                    <button type="">삭제</button>
+                    <button onclick="addPlan()">추가</button>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+<!--</section>-->
     <form name="scheduleHome" id="scheduleHome" method="GET">
         <div>
-
+            <button id="openPlanWrite" class="plan_button add_plan_btn" onclick="planOpen()">일정 쓰기</button>
 <!--            <a th:href="@{/schedule/scheduleHomes(year=${(todayInfo.search_year)-1},-->
 <!--            month=${(todayInfo.search_month)-1})}">이전해</a>-->
+            <section>
             <span>
                 <button th:href="@{/schedule/scheduleHomes(year=${todayInfo.before_year}, month=${todayInfo.before_month})}">이전달</button>
                 <span style="font-size: 50px" th:text="${(todayInfo.search_month)+1}"></span>
                 <button th:href="@{/schedule/scheduleHomes(year=${todayInfo.after_year}, month=${todayInfo.after_month})}">다음달</button>
             </span>
-
+            </section>
 <!--            <a th:href="@{/schedule/scheduleHomes(year=${(todayInfo.search_year)+1},-->
 <!--            month=${(todayInfo.search_month)-1})}">다음해</a>-->
 
@@ -150,12 +219,14 @@
         </table>
     </form>
 
+
+
 </body>
+<script src="/javascript/planModal.js"></script>
 <script th:inline="javascript">
-    let abc = [[${dateList}]]
+    let abc = [[${scheduleList}]]
 
     console.log(abc[3]);
-    //console.log(abc);
 
 
 </script>

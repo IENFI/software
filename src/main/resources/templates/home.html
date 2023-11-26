@@ -42,8 +42,8 @@
         <a href="/" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
         <ul class="nav">
             <li><a href="board.html" class="nav_item">게시판</a></li>
-            <li><a th:href="@{/study/studyHome(memberId=${session.memberId})}" class="nav_item">공부기록</a></li>
-            <li><a th:href="@{/schedule/scheduleHome(memberID=${session.memberId})}"  class="nav_item">일정</a></li>
+            <li><a href="/study/studyHome" class="nav_item">공부기록</a></li>
+            <li><a href="/schedule/plan" class="nav_item">일정</a></li>
         </ul>
         <span id="message"><img src="/img/message.png" id = message_icon onclick="openGetMessage()"></span>
         <span id="profile">

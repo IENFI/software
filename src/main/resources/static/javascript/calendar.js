@@ -25,10 +25,8 @@ function generateCalendar(year, month){
                 calendarHTML += '<td></td>';
             }
             else {
-
-                //오늘 날짜 색깔 바꾸는 코드
-                /*if(dayCounter == today.getDate() && year == today.getFullYear() && month == today.getMonth() + 1){
-                calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
+                if(dayCounter == today.getDate() && year == today.getFullYear() && month == today.getMonth() + 1){
+                    //calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
                     if(holiday == 0){
                         calendarHTML += `<td><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
                     }
@@ -38,18 +36,16 @@ function generateCalendar(year, month){
                     else{
                         calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
                     }
-                }*/
-
-
-                if(holiday == 0){
-                    calendarHTML += `<td><div class="Sun">${dayCounter}</div><div class="plan_count" id="${dayCounter}"></div></td>`;
+                }
+                else if(holiday == 0){
+                    calendarHTML += `<td><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
                 }
                 else if(holiday == 6){
-                    calendarHTML += `<td><div class="Sat">${dayCounter}</div><div class="plan_count" id="${dayCounter}"></div></td>`;
+                    calendarHTML += `<td><div class="Sat">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
                 }
 
                 else{
-                    calendarHTML += `<td>${dayCounter}<div class="plan_count" id="${dayCounter}"></div></td>`;
+                    calendarHTML += `<td>${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
                 }
                 dayCounter++;
             }

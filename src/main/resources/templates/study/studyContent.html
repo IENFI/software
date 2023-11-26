@@ -14,15 +14,19 @@
 <div>작성일</div>
 <div th:text="${studyDate}">작성일</div>
 <br>
+<div th:if="${studyUrl} != null">
 <div>동영상url</div>
 <a th:href="${studyUrl}"><div th:text="${studyUrl}"/></a>
 <br>
+</div>
+<div th:if="${studyFileName} != null">
 <div>파일</div>
 <div>
     <a th:href="@{/download(studyId=${studyId})}"><div th:text="${studyFileName}"/></a>
 </div>
+</div>
 <br>
-<button type="button" onclick="location.href='/study/studyHome(member)'">목록으로</button>
+<button type="button" onclick="location.href='/study/studyHome'">목록으로</button>
 <button type="button" th:onclick="|location.href='@{/study/studyUpdate(id=${studyId})}'|">수정</button>
 <button type="button" th:onclick="|location.href='@{/study/studyDelete(id=${studyId})}'|">삭제</button>
 
