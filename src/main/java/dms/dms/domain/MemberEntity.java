@@ -25,6 +25,8 @@ public class MemberEntity { // table 역할
     @Column
     private String memberPassword;
 
+    private String memberPasswordCheck;
+
     @Column
     private String memberName;
 
@@ -37,8 +39,10 @@ public class MemberEntity { // table 역할
     @Column
     private String memberInterest;
 
+    @Column
+    private MemberRole memberRole;
 
-
+    // join할 때 쓰는 함수; 필요하면 Role 역할 바꾸고 새함수 만들기
     public static MemberEntity toMemberEntity(MemberDTO memberDTO){
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setMemberSequence(memberDTO.getMemberSequence());
@@ -49,6 +53,7 @@ public class MemberEntity { // table 역할
         memberEntity.setMemberPhoneNumber(memberDTO.getMemberPhoneNumber());
         memberEntity.setMemberDept(memberDTO.getMemberDept());
         memberEntity.setMemberInterest(memberDTO.getMemberInterest());
+        memberEntity.setMemberRole(MemberRole.USER);
         return memberEntity;
     }
 }

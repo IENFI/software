@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div>
+    <h1><a th:href="|/|">[[${pageName}]]</a></h1> <hr/>
+    <h2>유저 정보</h2>
+    <h3>[[${memberName}]]님 정말로 탈퇴 하시겠습니까?</h3>
+    <form method="post" action="/member/delete">
+    <div>
+        <li><label>비밀번호</label>
+            <input type="PW" id = "PW" name="memberPassword" class="text" placeholder="비밀번호를 입력해주세요." required></li>
+        <div id="PW_div">
+            <li><label for="PW_clear">비밀번호 확인</label>
+                <input type="password" id="PW_clear" name=memberPasswordCheck class="text" placeholder="비밀번호를 입력해주세요." required></li>
+            <span id="caution"></span>
+        </div>
+        <button id ="delete_PW" type="submit" color="red">탈퇴</button>
+    </div>
+    </form>
+</div>
+</body>
+<script>
+    const confirmPW = document.getElementById('PW_clear');
+    const firstPW = document.getElementById('PW');
+    const caution_div = document.getElementById('caution');
+    var deleteButton = document.getElementById('delete_PW');
+
+    confirmPW.addEventListener("input", function(){
+        if(firstPW.value === confirmPW.value){
+            caution.style.color = 'green';
+            caution_div.innerHTML = "비밀번호가 일치합니다.";
+            caution.style.display = 'block';
+            deleteButton.disabled = false;
+        }
+        else{
+            caution.style.color = 'red';
+
+            caution.style.display = 'block';
+            caution_div.innerHTML = "비밀번호가 일치하지 않습니다.";
+            deleteButton.disabled = true;
+        }
+    })
+</script>
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    let Error = [[${deleteError}]];
+    if(Error == "true"){
+        alert('비밀번호가 틀렸습니다.');
+    }
+    else if (Error == "none"){
+    }
+    else{
+        alert('회원 탈퇴 성공했습니다.');
+    }
+    /* ]]> */
+</script>
+</html>
