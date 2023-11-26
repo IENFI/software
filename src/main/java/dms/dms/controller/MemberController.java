@@ -28,7 +28,7 @@ public class MemberController {
         model.addAttribute("pageName", "세션 로그인");
 
         model.addAttribute("memberDTO", new MemberDTO());
-        return "save";
+        return "/member/save";
     }
 
     @PostMapping("/member/save")    // name값을 requestparam에 담아온다
@@ -45,7 +45,7 @@ public class MemberController {
         }
 
         if (bindingResult.hasErrors()){
-            return "save";
+            return "/member/save";
         }
 
         memberService.save(memberDTO);
@@ -93,7 +93,7 @@ public class MemberController {
         model.addAttribute("pageName", "세션 로그인");
 
         model.addAttribute("memberDTO", new MemberDTO());
-        return "login";
+        return "home";
     }
 
 //    @GetMapping("/check-login")
@@ -129,7 +129,7 @@ public class MemberController {
         model.addAttribute("member_empty", false);
 
         if (bindingResult.hasErrors()){
-            return "login";
+            return "home";
         }
 
         System.out.println("login_error : false");
@@ -214,7 +214,7 @@ public class MemberController {
         }
 
         model.addAttribute("member", loginMember);
-        return "info";
+        return "/member/info";
     }
 
     @GetMapping("/admin")
@@ -232,7 +232,7 @@ public class MemberController {
             return "redirect:/";
         }
 
-        return "admin";
+        return "/member/admin";
     }
 
 

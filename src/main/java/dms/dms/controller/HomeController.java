@@ -7,7 +7,6 @@ import dms.dms.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -37,6 +36,6 @@ public class HomeController {
 
         System.out.println("login_error : false");
 
-        return "/login";
+        return "home";
     }
 }
