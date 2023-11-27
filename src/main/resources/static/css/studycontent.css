@@ -1,53 +1,40 @@
-.form-group {
-    font-size:20px;
+.content-group {
     margin-left : 25%;
     margin-right:25%;
     margin-top:100px;
 }
 
-.form-group p {
+.content-group p {
     font-size:30px;
     border-bottom : 2px solid #ddd;
 }
 
-
-.form-group textarea[id="memberID"] {
-    margin-top : 20px;
-    width : 200px;
-    height:20px;
-    font-size:20px;
+.sub-title {
+    font-size : 24px;
 }
 
-.form-group input[name="title"] {
-    margin-top : 20px;
-    width : 500px;
-    height:20px;
+.study-title {
+    margin-top:10px;
     font-size:18px;
 }
 
-.form-group textarea[name="content"] {
-    margin-top:20px;
-    font-size:25px;
-    width:950px;
-    height:800px;
+.study-date {
+    font-size:18px;
+    float:right;
+}
+
+.study-detail textarea[name="study-content" ] {
+    margin-top : 10px;
+    font-size : 25px;
+    width : 950px;
+    border : 1px solid black;
+    height : 850px;
+}
+
+.study-detail {
+    margin-bottom : 150px;
+}
+
+.button-group {
     float : right;
-}
-
-.form-group input[id="url"] {
-    margin-top:20px;
-    width : 500px;
-    height:20px;
-    font-size:18px;
-}
-
-.form-group input[name="fileoriginname"] {
-    font-size:18px;
-    margin-top:20px;
-    width:300px;
-}
-
-.button {
-    float : right;
-    font-size:18px;
-    margin-bottom:150px;
 }
