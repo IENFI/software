@@ -1,6 +1,7 @@
 package dms.dms.controller;
 
 import dms.dms.domain.Study;
+import dms.dms.dto.AlertDTO;
 import dms.dms.service.StudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -13,10 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -114,8 +112,8 @@ public class StudyController {
             return "/study/studyContent";
         }
         else {
-
-            return "redirect:/study/studyHome";
+            AlertDTO message = new AlertDTO("ERROR", "/study/studyHome", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
         }
     }
 
@@ -133,9 +131,16 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyDelete")
-    public String studyDelete(@RequestParam("id") Long id) { // 공부 기록 삭제
-        studyService.deleteStudy(id);
-        return "redirect:/study/studyHome";
+    public String studyDelete(@RequestParam("id") Long id, Model model) { // 공부 기록 삭제
+        String deleteCheck = studyService.deleteStudy(id);
+        if(deleteCheck == "success") {
+            AlertDTO message = new AlertDTO("공부기록 삭제가 완료되었습니다.", "/study/studyHome", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else {
+            AlertDTO message = new AlertDTO("공부기록 삭제에 실패했습니다.", "/study/studyHome", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
     }
 
     @GetMapping(value="/study/studyUpdate")
@@ -163,7 +168,7 @@ public class StudyController {
     }
 
     @PostMapping(value="/studyUpdateComplete")
-    public String update(Study studyInfo,  MultipartFile files) throws IOException { // 공부 기록 추가 메소드
+    public String update(Study studyInfo,  MultipartFile files, Model model) throws IOException { // 공부 기록 추가 메소드
     //파일 수정 구현
         Study study = new Study();
         study.setId(studyInfo.getId());
@@ -186,9 +191,20 @@ public class StudyController {
             files.transferTo(saveFile);
         }
 
-        studyService.saveStudy(study);
+        String updateCheck = studyService.updateStudy(study);
+        if (updateCheck == "success") {
+            AlertDTO message = new AlertDTO("공부기록 수정이 완료되었습니다.", "/study/studyContent?id="+studyInfo.getId(), RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        } else {
+            AlertDTO message = new AlertDTO("공부기록 수정에 실패했습니다.", "/study/studyContent?id="+studyInfo.getId(), RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
 
-        return "redirect:/study/studyHome";
+    }
+
+    private String showMessageAndRedirect(final AlertDTO params, Model model) {
+        model.addAttribute("params", params);
+        return "alert/alertRedirect";
     }
 
 }

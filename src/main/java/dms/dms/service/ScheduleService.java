@@ -26,12 +26,43 @@ public class ScheduleService {
         scheduleRepository.save(schedule);
     }
 
+    public String updateSchedule(Schedule schedule) {
+        scheduleRepository.save(schedule);
+
+        Optional<Schedule> updateSchedule = scheduleRepository.findById(schedule.getId());
+        if(updateSchedule.isPresent()) {
+            return "success";
+        }
+        else {
+            return "fail";
+        }
+    }
+
     public Optional<Schedule> findOneSchedule(Long scheduleId) {
         return scheduleRepository.findById(scheduleId);
     }
 
-    public void deleteSchedule(Long scheduleID) {
+    public String deleteSchedule(Long scheduleID) {
         scheduleRepository.deleteById(scheduleID);
+
+        Optional<Schedule> schedule = scheduleRepository.findById(scheduleID);
+        if(schedule.isPresent()) {
+            return "fail";
+        }
+        else {
+            return "success";
+        }
+    }
+
+    public String deleteMemberSchedule(String memberID) {
+        scheduleRepository.deleteByMemberId(memberID);
+        List<Schedule> schedules = scheduleRepository.findSchedulesByMemberId(memberID);
+        if(schedules != null) {
+            return "fail";
+        }
+        else {
+            return "success";
+        }
     }
 
 }

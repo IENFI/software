@@ -14,4 +14,6 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
     Page<Study> findStudiesByMemberId(String memberID, Pageable pageable);
     List<Study> findStudiesByMemberId(String memberID);
 
+    void deleteStudiesByMemberId(String memberID);
+
 }
