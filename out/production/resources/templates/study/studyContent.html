@@ -28,7 +28,19 @@
 <br>
 <button type="button" onclick="location.href='/study/studyHome'">목록으로</button>
 <button type="button" th:onclick="|location.href='@{/study/studyUpdate(id=${studyId})}'|">수정</button>
-<button type="button" th:onclick="|location.href='@{/study/studyDelete(id=${studyId})}'|">삭제</button>
+<button type="button" onclick="deleteStudy()">삭제</button>
 
+<script th:inline="javascript">
+    let studyId = [[${studyId}]]
+    let sutdyTitle = [[${studyTitle}]]
+    function deleteStudy() {
+        if(!confirm(`해당 공부 기록을 삭제하시겠습니까?`+`\n제목: ${sutdyTitle}`)){
+            return false;
+        }
+        else {
+            location.href='http://localhost:8080/study/studyDelete?id='+studyId;
+        }
+    }
+</script>
 </body>
 </html>

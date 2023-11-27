@@ -62,7 +62,11 @@ function updatePlan() {
 }
 
 function deletePlan() {
-    var id = document.getElementById('plan_Id').value;
+    let check = confirm("일정을 삭제하시겠습니까?");
+    if(!check) {
+        return false;
+    }
 
-    window.href = "/schedule/scheduleDelete?id"+id;
 }
+
+

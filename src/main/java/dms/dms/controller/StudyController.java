@@ -29,9 +29,9 @@ import java.util.UUID;
 
 @Controller
 public class StudyController {
-//    private final String fileDir = "C:/Users/user/dms_file";
-    private final String fileDir = "D:/YU/3-2/SE/project/dms/dms_file";
-//    각자 변경해야할 부분4
+    private final String fileDir = "C:/Users/user/dms_file";
+    //private final String fileDir = "D:/YU/3-2/SE/project/dms/dms_file";
+    //    각자 변경해야할 부분4
     private final StudyService studyService;
 
     @Autowired
@@ -40,7 +40,7 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyHome")
-    public String studyListByMemberID(@SessionAttribute(name = "memberId", required = false) String memberId, Model model, @PageableDefault(page = 0, size = 3, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
+    public String studyListByMemberID(@SessionAttribute(name = "memberId", required = false) String memberId, Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
 
         Page<Study> list = studyService.findStudiesByMemberID(memberId, pageable);
         int nowPage = list.getPageable().getPageNumber()+1;
