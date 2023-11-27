@@ -29,7 +29,7 @@
     </header>
 </head>
 <body>
-<link rel="stylesheet" href="/css/list.css">
+<link rel="stylesheet" href="/css/studylist.css">
 <table class="board_wrap">
     <tr class="board_title">
         <td>나의 공부기록 | DMS</td>
@@ -39,13 +39,11 @@
         <tr class="board_list">
             <th class="num">번호</th>
             <th class="title">제목</th>
-            <th class="writer">글쓴이</th>
             <th class="date">작성일</th>
         </tr>
-        <tr class="index" th:each="study : ${studys}">
+        <tr class="board_list_under" th:each="study : ${studys}">
             <td class="num" th:name="studyId">0</td>
             <td class="title"><a th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}">글 제목이 들어갑니다.</a></td>
-            <td class="writer" th:text="${study.memberId}">DMS</td>
             <td class="date" th:text="${study.date}">2023.11.08</td>
         </tr>
         </tbody>

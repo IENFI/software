@@ -22,11 +22,6 @@ public class HomeController {
     private final MemberService memberService;
     private final ScheduleService scheduleService;
 
-    @GetMapping(value = "/home")
-    public String home() {
-        return "home";
-    }
-
     @RequestMapping
     public String dms(Model model, @SessionAttribute(name = "memberId", required = false) String memberId) {
         model.addAttribute("loginType", "dms");
