@@ -17,7 +17,7 @@ a {
 }
 
 .board_wrap {
-    margin-left : 270px;
+    margin-left : 15%;
     margin-top : 100px;
 }
 
@@ -27,7 +27,7 @@ a {
 
 
 .board_list_wrap {
-    margin-left:270px;
+    margin-left:15%;
     width: 40%;
     border-collapse: collapse;
     text-align:center;
@@ -48,11 +48,19 @@ a {
     padding-left:3px;
 }
 
-.board_list th, .board_list td {
+.board_list th {
     padding: 10px;
     text-align: center;
     font-size:15px;
-    border-bottom:1px solid ddd;
+    border-color: darkgrey;
+    background:darkgray;
+    color: white;
+}
+
+.board_list_under {
+    padding: 10px;
+    text-align: center;
+    font-size:15px;
 }
 
 .board_list td.num {
@@ -73,7 +81,7 @@ a {
 }
 
 .board_list .title {
-    width: 50%;
+    width: 30%;
     text-align: left;
 }
 
@@ -94,11 +102,8 @@ a {
 }
 
 .board_page {
-    margin-top: 30px;
-    text-align:center;
-    font-size: 0;
-    margin-left:540px;
-
+    margin-top:30px;
+    margin-left:28%;
 }
 
 .board_page td {
@@ -108,6 +113,7 @@ a {
     box-sizing: border-box;
     border: 1px solid #ddd;
     line-height: 100%;
+    text-align : center;
 }
 
 .board_page td.bottom_first {
@@ -154,7 +160,7 @@ a {
     margin-top: 20px;
     text-align: center;
     font-size: 0;
-    margin-left:610px;
+    margin-left: 31.5%;
 }
 
 .bottom_wrap a {

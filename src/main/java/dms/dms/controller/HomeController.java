@@ -20,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor // MemberService에 대한 멤버를 사용 가능
 public class HomeController {
     private final MemberService memberService;
+    private final ScheduleService scheduleService;
 
     @RequestMapping
     public String dms(Model model, @SessionAttribute(name = "memberId", required = false) String memberId) {
