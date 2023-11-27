@@ -26,17 +26,18 @@ public class MessageService {
 
     @Transactional
     public MessageDTO write(MessageDTO messageDTO){
-        MemberEntity receiver = memberRepository.findByMemberName(messageDTO.getReceiverName());
-        MemberEntity sender = memberRepository.findByMemberName(messageDTO.getSenderName());
+        MemberEntity receiver = memberRepository.findByMemberId(messageDTO.getReceiverId()).get();
+        MemberEntity sender = memberRepository.findByMemberId(messageDTO.getSenderId()).get();
 
         Message message = new Message();
         message.setReceiver(receiver);
         message.setSender(sender);
 
         message.setTitle(messageDTO.getTitle());
-        message.setContent(message.getContent());
+        message.setContent(messageDTO.getContent());
         message.setDeletedByReceiver(false);
         message.setDeletedBySender(false);
+        message.setDate(messageDTO.getDate());
         messageRepository.save(message);
 
         return MessageDTO.toMessageDTO(message);

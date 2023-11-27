@@ -70,25 +70,25 @@
 </head>
 <body>
 
-<form id="writeMessageForm">
+<form id="writeMessageForm" action="/messages/write" method="post">
     <div id="writeMessageInner">
         <div id="messageTitle_div" class="item_div">
             <label for="messageTitle">제목</label>
-            <input id="messageTitle" class="textArea" type="text" required>
+            <input id="messageTitle" class="textArea" type="text" name="title" required>
         </div>
         <div class="item_interval">
 
         </div>
         <div id="messageTarget_div" class="item_div">
             <label for="messageTarget">받는 사람</label>
-            <input id="messageTarget" class="textArea" type="text" required>
+            <input id="messageTarget" class="textArea" type="text" name="receiverId" required>
         </div>
         <div class="item_interval">
 
         </div>
         <div id="messageContent_div" class="item_div">
             <label for="messageContent">내용</label>
-            <textarea id="messageContent" class="textArea" required></textarea>
+            <textarea id="messageContent" class="textArea" name="content" required></textarea>
         </div>
     </div>
     <div id="writeMessageFooter">
@@ -97,6 +97,6 @@
     </div>
 </form>
 
-<script src="javascript/openMessage.js"></script>
+<script src="/javascript/openMessage.js"></script>
 </body>
 </html>

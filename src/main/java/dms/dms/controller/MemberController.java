@@ -17,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.HTML;
+
 @Controller
 @RequiredArgsConstructor // MemberService에 대한 멤버를 사용 가능
 public class MemberController {
@@ -113,7 +115,7 @@ public class MemberController {
         model.addAttribute("pageName", "세션 로그인");
 
         model.addAttribute("memberDTO", new MemberDTO());
-        return "home";
+        return "redirect:/";
     }
 
 //    @GetMapping("/check-login")
@@ -149,7 +151,7 @@ public class MemberController {
         model.addAttribute("member_empty", false);
 
         if (bindingResult.hasErrors()){
-            return "home";
+            return "redirect:/";
         }
 
         System.out.println("login_error : false");

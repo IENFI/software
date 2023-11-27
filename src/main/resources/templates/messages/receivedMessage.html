@@ -44,7 +44,7 @@
                 <tr th:each="message, iterStat : ${messages}">
                     <td><input type="checkbox" th:name="selectedMessages" th:value="${message.messageId}" /></td>
                     <td th:text="${iterStat.index + 1}"></td>
-                    <td th:text="${message.senderName}"></td>
+                    <td th:text="${message.senderId}"></td>
                     <td th:text="${message.content}"></td>
                     <td th:text="${message.date}"></td>
                 </tr>
