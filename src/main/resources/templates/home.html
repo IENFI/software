@@ -69,9 +69,7 @@
                             <span id="todayYear_month"></span>
                             <span id="todayDate"></span>
                         </div>
-                        <div id="plan_div">
-                            리스트
-                        </div>
+                        <div id="plan_div"></div>
                     </div>
                 </div>
             </div>
@@ -124,7 +122,7 @@
     </div>
 
 </footer>
-<script src="/javascript/calendarIndex.js"></script>
+<!--<script src="/javascript/calendarIndex.js"></script>-->
 <script src="/javascript/indexToday.js"></script>
 <script src="/javascript/openMessage.js"></script>
 <script th:inline="javascript">
@@ -147,6 +145,151 @@
     // }
     /* ]]> */
 </script>
+
+<script th:inline="javascript">
+
+    function generateCalendar(year, month){
+
+        let scheduleList = [[${scheduleList}]];
+        console.log(scheduleList.at(6));
+
+        const today = new Date();
+        const dayInMonth = new Date(year, month, 0).getDate(); //달의 일수
+        const firstDay = new Date(year, month - 1, 1).getDay(); //달의 첫 요일
+
+
+        let calendarHTML = '<table>';
+        calendarHTML += '<tr id="calendarDate"><th class="Sun">일요일</th><th>월요일</th><th>화요일</th><th>수요일</th><th>목요일</th><th>금요일</th><th class="Sat">토요일</th></tr>'
+        let dayCounter = 1;
+
+        for(let i = 0; i < 6; i++) {
+
+            calendarHTML += '<tr>';
+
+            for(let j = 0; j < 7; j++) {
+                const holiday = new Date(year, month - 1, dayCounter).getDay();
+                if(i == 0 && j < firstDay){
+                    calendarHTML += '<td></td>';
+                }
+                else if(dayCounter > dayInMonth){
+                    calendarHTML += '<td></td>';
+                }
+                else {
+
+                    //오늘 날짜 색깔 바꾸는 코드
+                    /*if(dayCounter == today.getDate() && year == today.getFullYear() && month == today.getMonth() + 1){
+                    calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
+                        if(holiday == 0){
+                            calendarHTML += `<td><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
+                        }
+                        else if(holiday == 6){
+                            calendarHTML += `<td id="today"><div class="Sat">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
+                        }
+                        else{
+                            calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
+                        }
+                    }*/
+
+
+                    if(holiday == 0){
+                        calendarHTML += `<td><div class="Sun">${dayCounter}</div><div id="${dayCounter}">`;
+                        for(let s=0; s<scheduleList.length; s++) {
+                            if(dayCounter==scheduleList.at(s).day && month==scheduleList.at(s).month && year==scheduleList.at(s).year) {
+                                calendarHTML += `<div>${scheduleList.at(s).title}</div></div><br><div class="plan_count">1</div>`;
+                            }
+                        }
+                    }
+                    else if(holiday == 6){
+                        calendarHTML += `<td><div class="Sat">${dayCounter}</div><div id="${dayCounter}">`;
+                        for(let s=0; s<scheduleList.length; s++) {
+                            if(dayCounter==scheduleList.at(s).day && month==scheduleList.at(s).month && year==scheduleList.at(s).year) {
+                                calendarHTML += `<div>${scheduleList.at(s).title}</div></div><br>`;
+                            }
+                        }
+                    }
+
+                    else{
+                        calendarHTML += `<td>${dayCounter}<div id="${dayCounter}">`;
+                        for(let s=0; s<scheduleList.length; s++) {
+                            if(dayCounter==scheduleList.at(s).day && month==scheduleList.at(s).month && year==scheduleList.at(s).year) {
+                                calendarHTML += `<div>${scheduleList.at(s).title}</div></div><br>`;
+                            }
+                        }
+                    }
+                    dayCounter++;
+                }
+
+            }
+
+            calendarHTML += '</tr>';
+        }
+
+        calendarHTML += '</table>';
+
+        document.getElementById('Calendar_Container').innerHTML = calendarHTML;
+
+        if(month == 0){
+            document.getElementById('currentYearMonth').innerHTML = `${year - 1}년 ${month + 12}월`;
+        }
+        else{
+            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month}월`;
+        }
+
+    }
+
+
+    const pos = new Date();
+    pos.setMonth(pos.getMonth() + 1);
+
+    //달력 보여주는 함수
+    function showCalendar(change){
+        if(change == -1){
+            prevCalendar(change);
+        }
+        else{
+            nextCalendar(change);
+        }
+    }
+
+    //다음 월 버튼
+    function prevCalendar(change){
+        pos.setMonth(pos.getMonth() + change);
+        generateCalendar(pos.getFullYear(), pos.getMonth());
+        pos += -1;
+
+    }
+
+    //이전 월 버튼
+    function nextCalendar(change){
+        pos.setMonth(pos.getMonth() + change);
+        generateCalendar(pos.getFullYear(), pos.getMonth());
+        pos += 1;
+    }
+
+    function todaySchedule() {
+        let scheduleList = [[${scheduleList}]];
+
+        const today = new Date();
+        let todayScheduleHTML = `<div>`;
+
+        for(let i=0; i<scheduleList.length; i++) {
+            if(scheduleList.at(i).year == today.getFullYear() && scheduleList.at(i).month == today.getMonth()+1
+                && scheduleList.at(i).day == today.getDate()) {
+                console.log("if문 실행");
+                todayScheduleHTML += `<div>${scheduleList.at(i).title}</div>`;
+            }
+        }
+        todayScheduleHTML += `</div><br>`;
+
+        document.getElementById('plan_div').innerHTML = todayScheduleHTML;
+    }
+
+    generateCalendar(pos.getFullYear(), pos.getMonth());
+    todaySchedule();
+
+</script>
+
+
 
 <!--<script th:inline="javascript">-->
 <!--    /* <![CDATA[ */-->
