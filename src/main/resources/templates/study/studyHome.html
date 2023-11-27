@@ -43,18 +43,21 @@
         </tr>
         <tr class="board_list_under" th:each="study : ${studys}">
             <td class="num" th:name="studyId">0</td>
-            <td class="title"><a th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}">글 제목이 들어갑니다.</a></td>
+            <td class="title">
+                <a th:if="${study}!=null" th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}">글 제목이 들어갑니다.</a>
+            </td>
             <td class="date" th:text="${study.date}">2023.11.08</td>
         </tr>
         </tbody>
     </table>
+    <tr th:unless="${studys}==null">현재 공부 기록이 없습니다.</tr>
     <br>
         <table class="board_page">
             <td class="bottom_first"><a th:href="@{/study/studyHome(page=${startPage}-1)}"> << </a></td>
             <td class="bottom_prev"><a th:if="${nowPage}>1" th:href="@{/study/studyHome(page=${nowPage}-2)}"> < </a>
             <a th:unless="${nowPage}>1"> < </a></td>
             <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
-                <td class="num">
+                <td class="num" th:if="${page}!=0" >
                     <a th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}"><script> let page = [[${page}]]</script></a>
                 </td>
             </th:each>
