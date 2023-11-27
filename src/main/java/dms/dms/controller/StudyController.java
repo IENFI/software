@@ -29,9 +29,9 @@ import java.util.UUID;
 
 @Controller
 public class StudyController {
-//    private final String fileDir = "C:/Users/user/dms_file";
-    private final String fileDir = "D:/YU/3-2/SE/project/dms/dms_file";
-//    각자 변경해야할 부분4
+    private final String fileDir = "C:/Users/user/dms_file";
+    //private final String fileDir = "D:/YU/3-2/SE/project/dms/dms_file";
+    //    각자 변경해야할 부분4
     private final StudyService studyService;
 
     @Autowired
@@ -40,7 +40,7 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyHome")
-    public String studyListByMemberID(@SessionAttribute(name = "memberId", required = false) String memberId, Model model, @PageableDefault(page = 0, size = 3, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
+    public String studyListByMemberID(@SessionAttribute(name = "memberId", required = false) String memberId, Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
 
         Page<Study> list = studyService.findStudiesByMemberID(memberId, pageable);
         int nowPage = list.getPageable().getPageNumber()+1;
@@ -99,7 +99,7 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyContent")
-    public String studyContent(@RequestParam("id") Long id, Model model) { // 공부 기록 상세 보기
+    public String studyContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("id") Long id, Model model) { // 공부 기록 상세 보기
         Study study = studyService.findOneStudy(id)
                 .orElseThrow(NullPointerException::new);
         model.addAttribute("studyId", study.getId());
@@ -109,7 +109,14 @@ public class StudyController {
         model.addAttribute("studyUrl", study.getUrl());
         model.addAttribute("studyFileSaveName", study.getFilesavepath());
         model.addAttribute("studyFileName", study.getFileoriginname());
-        return "/study/studyContent";
+
+        if(study.getMemberId().equals(memberId)) {
+            return "/study/studyContent";
+        }
+        else {
+
+            return "redirect:/study/studyHome";
+        }
     }
 
     @GetMapping("/download")
@@ -132,7 +139,7 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyUpdate")
-    public String studyUpdate(@RequestParam("id") Long id, Model model) { // 공부 기록 수정 화면 띄우기
+    public String studyUpdate(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("id") Long id, Model model) { // 공부 기록 수정 화면 띄우기
         Study study = studyService.findOneStudy(id)
                 .orElseThrow(NullPointerException::new);
 
@@ -145,7 +152,14 @@ public class StudyController {
         model.addAttribute("studyFileSaveName", study.getFilesavename());
         model.addAttribute("studyOriginName", study.getFileoriginname());
         model.addAttribute("studyMemberID", study.getMemberId());
-        return "/study/studyUpdate";
+
+        if(study.getMemberId().equals(memberId)) {
+            return "/study/studyUpdate";
+        }
+        else {
+
+            return "redirect:/study/studyHome";
+        }
     }
 
     @PostMapping(value="/studyUpdateComplete")

@@ -32,8 +32,6 @@ public class ScheduleController {
     @GetMapping(value = "/schedule/plan")
     public String scheduleHome(@SessionAttribute(name = "memberId", required = false) String memberId, Model model) {
         // 일정 불러오기
-        System.out.println("memberId : "+memberId);
-
         List<Schedule> schedules = scheduleService.findSchedulesByMemberID(memberId);
         List<Study> studyList = studyService.findStudiesByMemberID(memberId);
         model.addAttribute("scheduleList", schedules);

@@ -3,15 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>공부 기록 추가</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <title>공부기록 작성 | DMS</title>
+    <header id="header">
+        <div class="inner">
+            <a href="/" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
+            <ul class="nav">
+                <li><a href="board.html" class="nav_item">게시판</a></li>
+                <li><a href="/study/studyHome" class="nav_item">공부기록</a></li>
+                <li><a href="/schedule/plan" class="nav_item">일정</a></li>
+            </ul>
+            <span id="message"><img src="/img/message.png" id = message_icon onclick=""></span>
+            <span id="profile">
+                       <li><a href="#"><img src="/img/profile.png" id = profile_icon  onclick=""></a>
+                           <ul id="profile_dropdown">
+                              <li><a href="#" class="dropdown_item">내 정보</a></li>
+                              <li><a href="#" class="dropdown_item">로그아웃</a></li>
+                           </ul>
+                     </li>
+                </span>
+        </div>
+    </header>
 </head>
 <body>
+<link rel="stylesheet" href="/css/studycreate.css">
 <div class="container">
     <form action="/study/studyCreates" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <p>공부 기록</p>
-            <label for="memberId">아이디</label>
-            <textarea id="memberId" name="memberId" th:text="${memberID}"></textarea>
-            <br>
+            <div style="display: none">
+                <label for="memberId">아이디</label>
+                <textarea id="memberId" name="memberId" th:text="${memberID}"></textarea>
+                <br>
+            </div>
             <label for="title">제목</label>
             <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
             <br>

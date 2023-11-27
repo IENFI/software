@@ -1,0 +1,40 @@
+.content-group {
+    margin-left : 25%;
+    margin-right:25%;
+    margin-top:100px;
+}
+
+.content-group p {
+    font-size:30px;
+    border-bottom : 2px solid #ddd;
+}
+
+.sub-title {
+    font-size : 24px;
+}
+
+.study-title {
+    margin-top:10px;
+    font-size:18px;
+}
+
+.study-date {
+    font-size:18px;
+    float:right;
+}
+
+.study-detail textarea[name="study-content" ] {
+    margin-top : 10px;
+    font-size : 25px;
+    width : 950px;
+    border : 1px solid black;
+    height : 850px;
+}
+
+.study-detail {
+    margin-bottom : 150px;
+}
+
+.button-group {
+    float : right;
+}
