@@ -4,16 +4,14 @@ import dms.dms.domain.DateData;
 import dms.dms.domain.Schedule;
 import dms.dms.domain.ScheduleInfo;
 import dms.dms.domain.Study;
+import dms.dms.dto.AlertDTO;
 import dms.dms.service.ScheduleService;
 import dms.dms.service.StudyService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -220,7 +218,7 @@ public class ScheduleController {
     }
 
     @PostMapping(value = "/scheduleDelete")
-    public String scheduleDelete(ScheduleInfo scheduleInfo) {
+    public String scheduleDelete(ScheduleInfo scheduleInfo, Model model) {
         Schedule schedule = new Schedule();
         schedule.setMemberId(scheduleInfo.getMemberId());
         schedule.setId(scheduleInfo.getId());
@@ -232,9 +230,15 @@ public class ScheduleController {
         schedule.setMonth(scheduleInfo.getDate().substring(5,7));
         schedule.setDay(scheduleInfo.getDate().substring(8));
 
-        scheduleService.deleteSchedule(schedule.getId());
-
-        return "redirect:/schedule/plan";
+        String deleteCheck = scheduleService.deleteSchedule(schedule.getId());
+        if(deleteCheck == "success") {
+            AlertDTO message = new AlertDTO("일정 삭제가 완료되었습니다.", "/schedule/plan", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else {
+            AlertDTO message = new AlertDTO("일정 삭제에 실패했습니다.", "/schedule/plan", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
     }
 
 //    @GetMapping(value = "/schedule/scheduleUpdate")
@@ -251,23 +255,29 @@ public class ScheduleController {
 //    }
 
     @PostMapping(value="/scheduleUpdate")
-    public String update(ScheduleInfo scheduleInfo) {
+    public String update(ScheduleInfo scheduleInfo, Model model) {
         Schedule schedule = new Schedule();
         schedule.setMemberId(scheduleInfo.getMemberId());
         schedule.setId(scheduleInfo.getId());
         schedule.setTitle(scheduleInfo.getTitle());
 
-        String date = scheduleInfo.getDate();
-
-        schedule.setYear(scheduleInfo.getDate().substring(0,4));
-        schedule.setMonth(scheduleInfo.getDate().substring(5,7));
+        schedule.setYear(scheduleInfo.getDate().substring(0, 4));
+        schedule.setMonth(scheduleInfo.getDate().substring(5, 7));
         schedule.setDay(scheduleInfo.getDate().substring(8));
 
-        scheduleService.saveSchedule(schedule);
-
-        return "redirect:/schedule/plan";
+        String updateCheck = scheduleService.updateSchedule(schedule);
+        if (updateCheck == "success") {
+            AlertDTO message = new AlertDTO("일정 수정이 완료되었습니다.", "/schedule/plan", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        } else {
+            AlertDTO message = new AlertDTO("일정 수정에 실패했습니다.", "/schedule/plan", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
     }
 
-
+    private String showMessageAndRedirect(final AlertDTO params, Model model) {
+        model.addAttribute("params", params);
+        return "alert/alertRedirect";
+    }
 
 }

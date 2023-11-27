@@ -9,4 +9,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     List<Schedule> findSchedulesByMemberId(String memberID);
 
+    void deleteByMemberId(String memberID);
+
 }

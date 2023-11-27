@@ -5,6 +5,8 @@ import dms.dms.domain.MemberRole;
 import dms.dms.dto.AlertDTO;
 import dms.dms.dto.MemberDTO;
 import dms.dms.service.MemberService;
+import dms.dms.service.ScheduleService;
+import dms.dms.service.StudyService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -21,6 +23,8 @@ public class MemberController {
 
     // 생성자 주입
     private final MemberService memberService;
+    private final StudyService studyService;
+    private final ScheduleService scheduleService;
 
     // 회원가입 페이지 출력 요청
     @GetMapping("/member/save")
@@ -81,6 +85,11 @@ public class MemberController {
             System.out.println("MemberController.탈퇴 성공");
             model.addAttribute("deleteError", "false");
             model.addAttribute("nextUrl", "/member/logout");
+
+            // 해당 멤버의 공부기록, 일정 삭제
+            studyService.deleteMemberStudy(memberId);
+            scheduleService.deleteMemberSchedule(memberId);
+
             return "redirect:/member/logout";
         } else {
             System.out.println("MemberController.탈퇴 실패");
