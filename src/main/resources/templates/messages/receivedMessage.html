@@ -60,12 +60,12 @@
                 <tr>
                     <td class="bottom_first"><a th:href="@{/messages/received(page=0)}"> << </a></td>
                     <td class="bottom_prev">
-                        <a th:if="${nowPage > 1}" th:href="@{/messages/received(page=${nowPage}-2)}"> < </a>
+                        <a th:if="${nowPage > 1}" th:href="@{/messages/received(page=${nowPage}-1)}"> < </a>
                         <a th:unless="${nowPage > 1}"> < </a>
                     </td>
                     <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
-                        <td class="num">
-                            <a th:href="@{/messages/received(page=${page}-1)}" th:text="${page + 1}"></a>
+                        <td class="num" th:if="${page}!=0">
+                            <a th:href="@{/messages/received(page=${page}-1)}" th:text="${page}"></a>
                         </td>
                     </th:each>
                     <td class="bottom_next">
