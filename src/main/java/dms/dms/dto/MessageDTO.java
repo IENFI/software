@@ -9,17 +9,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageDTO {
+    private Long messageId;
     private String title;
     private String content;
     private String senderName;
     private String receiverName;
+    private String date;
 
     public static MessageDTO toMessageDTO(Message message){
         return new MessageDTO(
+                message.getMessageId(),
                 message.getTitle(),
                 message.getContent(),
                 message.getSender().getMemberName(),
-                message.getReceiver().getMemberName()
+                message.getReceiver().getMemberName(),
+                message.getDate()
         );
     }
 }

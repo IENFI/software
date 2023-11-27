@@ -29,6 +29,8 @@ public class Message {
     @Column(nullable = false)
     private boolean deletedByReceiver;
 
+    @Column(nullable = false)
+    private String date;
 
     //MemberEntity가 맞을까??
     @ManyToOne(fetch = FetchType.LAZY)

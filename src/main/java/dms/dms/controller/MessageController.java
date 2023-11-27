@@ -1,18 +1,24 @@
 package dms.dms.controller;
 
 import dms.dms.domain.MemberEntity;
+import dms.dms.domain.Study;
 import dms.dms.dto.MessageDTO;
 import dms.dms.repository.MemberRepository;
 import dms.dms.service.MessageService;
 import dms.dms.Response.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class MessageController {
 
     private final MessageService messageService;
@@ -34,16 +40,39 @@ public class MessageController {
     }
 
 
-    @Operation(summary = "받은 편지함 읽기", description = "받은 편지함 확인")
+    @Operation(summary = "편지함 읽기", description = "편지함 확인")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/messages/received")
-    public Response<?> getReceivedMessage() {
+    public String getReceivedMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
+                                     @PageableDefault(page = 0, size = 3, sort="date", direction = Sort.Direction.ASC)
+                                         Pageable pageable)
+    {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
-        MemberEntity memberEntity = memberRepository.findByMemberSequence(Long.valueOf(1)).orElseThrow(() -> {
+        MemberEntity memberEntity = memberRepository.findByMemberId(memberId).orElseThrow(() -> {
             return new IllegalArgumentException("유저를 찾을 수 없습니다.");
         });
 
-        return new Response("성공", "받은 쪽지를 불러왔습니다.", messageService.receivedMessage(memberEntity));
+        Page<MessageDTO> list = messageService.findMessagesByMemberId(memberId, pageable).map(message -> {
+            MessageDTO messageDTO = new MessageDTO();
+            messageDTO.setMessageId(message.getMessageId());
+            messageDTO.setContent(message.getContent());
+            messageDTO.setReceiverName(message.getReceiver().getMemberName());
+            messageDTO.setTitle(message.getTitle());
+            messageDTO.setSenderName(message.getSender().getMemberName());
+            messageDTO.setDate(message.getDate());
+            return messageDTO;
+        });
+        int nowPage = list.getPageable().getPageNumber()+1;
+        int startPage = Math.max(nowPage-4,1);
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
+        model.addAttribute("messages", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+//        return new Response("성공", "받은 쪽지를 불러왔습니다.", messageService.receivedMessage(memberEntity));
+        return "/messages/receivedMessage";
     }
 
     @Operation(summary = "받은 쪽지 삭제하기", description = "받은 쪽지를 삭제합니다.")

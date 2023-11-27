@@ -2,16 +2,20 @@ package dms.dms.service;
 
 import dms.dms.domain.MemberEntity;
 import dms.dms.domain.Message;
+import dms.dms.domain.Study;
 import dms.dms.dto.MemberDTO;
 import dms.dms.dto.MessageDTO;
 import dms.dms.repository.MemberRepository;
 import dms.dms.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -37,6 +41,18 @@ public class MessageService {
 
         return MessageDTO.toMessageDTO(message);
     }
+
+    @Transactional
+    public Page<Message> findMessagesByMemberId(String memberID, Pageable pageable) {
+        Optional<MemberEntity> memberEntityOptional = memberRepository.findByMemberId(memberID);
+
+        if (memberEntityOptional.isPresent()) {
+            return messageRepository.findMessagesByReceiver(memberEntityOptional.get(), pageable);
+        } else {
+            // 멤버가 존재하지 않을 때의 처리
+            // 예를 들어, 빈 페이지(Page.empty())를 반환하거나 예외를 던지는 등의 방법을 선택할 수 있습니다.
+            return Page.empty();
+        }}
 
     @Transactional(readOnly = true)
     public List<MessageDTO> receivedMessage(MemberEntity memberEntity){
