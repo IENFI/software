@@ -99,7 +99,7 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyContent")
-    public String studyContent(@RequestParam("id") Long id, Model model) { // 공부 기록 상세 보기
+    public String studyContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("id") Long id, Model model) { // 공부 기록 상세 보기
         Study study = studyService.findOneStudy(id)
                 .orElseThrow(NullPointerException::new);
         model.addAttribute("studyId", study.getId());
@@ -109,7 +109,14 @@ public class StudyController {
         model.addAttribute("studyUrl", study.getUrl());
         model.addAttribute("studyFileSaveName", study.getFilesavepath());
         model.addAttribute("studyFileName", study.getFileoriginname());
-        return "/study/studyContent";
+
+        if(study.getMemberId().equals(memberId)) {
+            return "/study/studyContent";
+        }
+        else {
+
+            return "redirect:/study/studyHome";
+        }
     }
 
     @GetMapping("/download")
@@ -132,7 +139,7 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyUpdate")
-    public String studyUpdate(@RequestParam("id") Long id, Model model) { // 공부 기록 수정 화면 띄우기
+    public String studyUpdate(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("id") Long id, Model model) { // 공부 기록 수정 화면 띄우기
         Study study = studyService.findOneStudy(id)
                 .orElseThrow(NullPointerException::new);
 
@@ -145,7 +152,14 @@ public class StudyController {
         model.addAttribute("studyFileSaveName", study.getFilesavename());
         model.addAttribute("studyOriginName", study.getFileoriginname());
         model.addAttribute("studyMemberID", study.getMemberId());
-        return "/study/studyUpdate";
+
+        if(study.getMemberId().equals(memberId)) {
+            return "/study/studyUpdate";
+        }
+        else {
+
+            return "redirect:/study/studyHome";
+        }
     }
 
     @PostMapping(value="/studyUpdateComplete")
