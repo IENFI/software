@@ -10,8 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
-    List<Message> findAllByReceiver(MemberEntity memberEntity);
-    List<Message> findAllBySender(MemberEntity memberEntity);
 
-    Page<Message> findMessagesByReceiver(MemberEntity memberEntity, Pageable pageable);
+    Page<Message> findMessagesByReceiverAndDeletedByReceiverFalse(MemberEntity memberEntity, Pageable pageable);
+    Page<Message> findBySenderAndDeletedBySenderFalse(MemberEntity memberEntity, Pageable pageable);
 }

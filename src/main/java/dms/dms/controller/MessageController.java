@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -80,7 +81,7 @@ public class MessageController {
     }
 
 
-    @Operation(summary = "편지함 읽기", description = "편지함 확인")
+    @Operation(summary = "받은 편지함 읽기", description = "받은 편지함 확인")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/messages/received")
     public String getReceivedMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
@@ -98,7 +99,7 @@ public class MessageController {
             return "redirect:/";
         }
 
-        Page<MessageDTO> list = messageService.findMessagesByMemberId(memberId, pageable).map(message -> {
+        Page<MessageDTO> list = messageService.findMessageReceiverByMemberId(memberId, pageable).map(message -> {
             MessageDTO messageDTO = new MessageDTO();
             messageDTO.setMessageId(message.getMessageId());
             messageDTO.setContent(message.getContent());
@@ -122,16 +123,37 @@ public class MessageController {
         return "/messages/receivedMessage";
     }
 
+
     @Operation(summary = "받은 쪽지 삭제하기", description = "받은 쪽지를 삭제합니다.")
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/messages/received/{id}")
-    public Response deleteReceivedMessage(@PathVariable("id") Long id) {
+    @PostMapping("/messages/deleteReceivedMessage")
+    public String deleteReceivedMessage(@SessionAttribute(name = "memberId", required = false) String memberId,
+                                    @RequestParam(value = "selectedMessages", required = false) List<Long> selectedMessages,
+                                    Model model) {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
-        MemberEntity memberEntity = memberRepository.findByMemberSequence(Long.valueOf(1)).orElseThrow(() -> {
-            return new IllegalArgumentException("유저를 찾을 수 없습니다.");
-        });
+//        MemberEntity memberEntity = memberRepository.findByMemberSequence(Long.valueOf(1)).orElseThrow(() -> {
+//            return new IllegalArgumentException("유저를 찾을 수 없습니다.");
+//        });
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
 
-        return new Response("삭제 성공", "받은 쪽지인, " + id + "번 쪽지를 삭제했습니다.", messageService.deleteMessageByReceiver(id, memberEntity));
+        if (loginMember == null){
+            return "redirect:/";
+        }
+
+        if (messageService.deleteMessageByReceiver(selectedMessages, loginMember).equals("success")){
+            AlertDTO message = new AlertDTO("쪽지를 삭제했습니다.", "/messages/received", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else if (messageService.deleteMessageByReceiver(selectedMessages, loginMember).equals("Empty Message")){
+            AlertDTO message = new AlertDTO("삭제할 쪽지가 없습니다.", "/messages/received", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else {
+            AlertDTO message = new AlertDTO("유저 정보 오류.", "/messages/received", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+
+//        return new Response<>("삭제 성공", "보낸 쪽지인, " + id + "번 쪽지를 삭제했습니다.", messageService.deleteMessageBySender(id, memberEntity));
     }
 
 
@@ -141,27 +163,76 @@ public class MessageController {
     @Operation(summary = "보낸 편지함 읽기", description = "보낸 편지함 확인")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/messages/sent")
-    public Response<?> getSentMessage() {
+    public String getSentMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
+                                     @PageableDefault(page = 0, size = 3, sort="date", direction = Sort.Direction.ASC)
+                                     Pageable pageable)
+    {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
-        MemberEntity memberEntity = memberRepository.findByMemberSequence(Long.valueOf(1)).orElseThrow(() -> {
-            return new IllegalArgumentException("유저를 찾을 수 없습니다.");
+//        MemberEntity memberEntity = memberRepository.findByMemberSequence(Long.valueOf(1)).orElseThrow(() -> {
+//            return new IllegalArgumentException("유저를 찾을 수 없습니다.");
+//        });
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+
+        if (loginMember == null){
+            return "redirect:/";
+        }
+
+        Page<MessageDTO> list = messageService.findMessageSenderByMemberId(memberId, pageable).map(message -> {
+            MessageDTO messageDTO = new MessageDTO();
+            messageDTO.setMessageId(message.getMessageId());
+            messageDTO.setContent(message.getContent());
+            messageDTO.setReceiverId(message.getReceiver().getMemberId());
+            messageDTO.setTitle(message.getTitle());
+            messageDTO.setSenderId(message.getSender().getMemberId());
+            messageDTO.setDate(message.getDate());
+            return messageDTO;
         });
 
-        return new Response("성공", "보낸 쪽지를 불러왔습니다.", messageService.sentMessage(memberEntity));
+        int nowPage = list.getPageable().getPageNumber()+1;
+        int startPage = Math.max(nowPage-4,1);
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
+        model.addAttribute("messages", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "/messages/sentMessage";
+//        return new Response("성공", "보낸 쪽지를 불러왔습니다.", messageService.sentMessage(memberEntity));
     }
 
 
 
     @Operation(summary = "보낸 쪽지 삭제하기", description = "보낸 쪽지를 삭제합니다.")
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/messages/sent/{id}")
-    public Response<?> deleteSentMessage(@PathVariable("id") Long id) {
+    @PostMapping("/messages/deleteSentMessage")
+    public String deleteSentMessage(@SessionAttribute(name = "memberId", required = false) String memberId,
+                                         @RequestParam(value = "selectedMessages", required = false) List<Long> selectedMessages,
+                                    Model model) {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
-        MemberEntity memberEntity = memberRepository.findByMemberSequence(Long.valueOf(1)).orElseThrow(() -> {
-            return new IllegalArgumentException("유저를 찾을 수 없습니다.");
-        });
+//        MemberEntity memberEntity = memberRepository.findByMemberSequence(Long.valueOf(1)).orElseThrow(() -> {
+//            return new IllegalArgumentException("유저를 찾을 수 없습니다.");
+//        });
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
 
-        return new Response<>("삭제 성공", "보낸 쪽지인, " + id + "번 쪽지를 삭제했습니다.", messageService.deleteMessageBySender(id, memberEntity));
+        if (loginMember == null){
+            return "redirect:/";
+        }
+
+        if (messageService.deleteMessageBySender(selectedMessages, loginMember).equals("success")){
+            AlertDTO message = new AlertDTO("쪽지를 삭제했습니다.", "/messages/sent", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else if (messageService.deleteMessageBySender(selectedMessages, loginMember).equals("Empty Message")){
+            AlertDTO message = new AlertDTO("삭제할 쪽지가 없습니다.", "/messages/sent", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else {
+            AlertDTO message = new AlertDTO("유저 정보 오류.", "/messages/sent", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+
+//        return new Response<>("삭제 성공", "보낸 쪽지인, " + id + "번 쪽지를 삭제했습니다.", messageService.deleteMessageBySender(id, memberEntity));
     }
 
 }
