@@ -72,6 +72,4 @@ public class StudyService {
             return "success";
         }
     }
-
-
 }

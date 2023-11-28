@@ -49,7 +49,7 @@ public class MessageController {
         return "/messages/writeMessage";
     }
 
-    // @ApiOperation(value = "쪽지 보내기", notes = "쪽지 보내기") <-- swagger v2
+// @ApiOperation(value = "쪽지 보내기", notes = "쪽지 보내기") <-- swagger v2
 //    @Operation(summary = "쪽지 보내기", description = "쪽지 보내기")
 //    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/messages/write")
