@@ -1,5 +1,5 @@
 #contents{
-    height:1000px;
+    height:1100px;
 
 }
 #contents>.inner{
@@ -10,20 +10,41 @@
     grid-template-columns: repeat(2,1fr);
     grid-template-rows: repeat(2,400px);
     grid-template-areas:
-    "calendar calendar"
+    "detail calendar"
     "playing board";
     grid-row-gap: 30px;
     grid-column-gap: 30px;
+    position:relative;
+    top:50px;
 }
+
+.detail{
+    grid-area:detail;
+    border-radius: 10px;
+    box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
+}
+
 .calendar{
     grid-area:calendar;
-    border:solid;
+    /*border:solid;*/
+    border-radius: 10px;
+    box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
 }
 .playing{
     grid-area:playing;
-    border:solid;
+    border-radius: 10px;
+    box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
 }
 .board{
     grid-area:board;
-    border:solid;
+    border-radius: 10px;
+    box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
 }
+
+
+
+
+
+
+
+

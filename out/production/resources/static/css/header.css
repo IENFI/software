@@ -36,14 +36,14 @@
     margin-right:20px;
 }
 #message_icon{
-    height:30px;
+    height :30px;
     width:30px;
 }
 #profile{
     margin-right:10px;
 }
 #profile_icon{
-    height:30px; 
+    height:30px;
     width:30px;
     border-radius: 100%;
 }
@@ -51,7 +51,7 @@
 
 
 #header>.inner{
-    
+
     height:100px;
     display:flex;
     flex-direction: row;
@@ -79,6 +79,7 @@
     -ms-transform: scale(1.2);
     -o-transform: scale(1.2);
     transform: scale(1.2);
+    cursor: pointer;
   }
   #profile:hover img {
     -webkit-transform: scale(1.2);
