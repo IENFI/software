@@ -50,7 +50,7 @@
         </tr>
         </tbody>
     </table>
-    <tr th:unless="${studys}==null">현재 공부 기록이 없습니다.</tr>
+    <tr th:if="${studys}==null">현재 공부 기록이 없습니다.</tr><!-- if문, 공부기록이 없으면 뜨는거에요 -->
     <br>
         <table class="board_page">
             <td class="bottom_first"><a th:href="@{/study/studyHome(page=${startPage}-1)}"> << </a></td>

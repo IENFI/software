@@ -46,17 +46,17 @@
         }
     })
 </script>
-<script th:inline="javascript">
-    /* <![CDATA[ */
-    let Error = [[${deleteError}]];
-    if(Error == "true"){
-        alert('비밀번호가 틀렸습니다.');
-    }
-    else if (Error == "none"){
-    }
-    else{
-        alert('회원 탈퇴 성공했습니다.');
-    }
-    /* ]]> */
+<!--<script th:inline="javascript">-->
+<!--    /* <![CDATA[ */-->
+<!--    let Error = [[${deleteError}]];-->
+<!--    if(Error == "true"){-->
+<!--        alert('비밀번호가 틀렸습니다.');-->
+<!--    }-->
+<!--    else if (Error == "none"){-->
+<!--    }-->
+<!--    else{-->
+<!--        alert('회원 탈퇴 성공했습니다.');-->
+<!--    }-->
+<!--    /* ]]> */-->
 </script>
 </html>

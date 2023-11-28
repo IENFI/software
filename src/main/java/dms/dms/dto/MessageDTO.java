@@ -12,8 +12,8 @@ public class MessageDTO {
     private Long messageId;
     private String title;
     private String content;
-    private String senderName;
-    private String receiverName;
+    private String senderId;
+    private String receiverId;
     private String date;
 
     public static MessageDTO toMessageDTO(Message message){
@@ -21,8 +21,8 @@ public class MessageDTO {
                 message.getMessageId(),
                 message.getTitle(),
                 message.getContent(),
-                message.getSender().getMemberName(),
-                message.getReceiver().getMemberName(),
+                message.getSender().getMemberId(),
+                message.getReceiver().getMemberId(),
                 message.getDate()
         );
     }

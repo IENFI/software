@@ -36,7 +36,7 @@ public class HomeController {
             System.out.println("home_button : true");
             System.out.println("loginMember : "+ loginMember);
         }
-        else{
+        else {
             model.addAttribute("home_button", false);
             System.out.println("home_button : false");
         }

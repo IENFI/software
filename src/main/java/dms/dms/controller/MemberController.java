@@ -17,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.HTML;
+
 @Controller
 @RequiredArgsConstructor // MemberService에 대한 멤버를 사용 가능
 public class MemberController {
@@ -83,20 +85,27 @@ public class MemberController {
         Boolean deleteSuccess = memberService.delete(memberId, memberPassword);
         if (deleteSuccess) {
             System.out.println("MemberController.탈퇴 성공");
-            model.addAttribute("deleteError", "false");
-            model.addAttribute("nextUrl", "/member/logout");
+//            model.addAttribute("deleteError", "false");
+//            model.addAttribute("nextUrl", "/member/logout");
 
             // 해당 멤버의 공부기록, 일정 삭제
             studyService.deleteMemberStudy(memberId);
             scheduleService.deleteMemberSchedule(memberId);
 
-            return "redirect:/member/logout";
+            AlertDTO message = new AlertDTO("회원 탈퇴 성공했습니다.", "/member/logout", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+
+//            return "redirect:/member/logout";
         } else {
             System.out.println("MemberController.탈퇴 실패");
-            System.out.println("deleteError : true");
-            model.addAttribute("deleteError", "true");
-            model.addAttribute("nextUrl", "/member/delete");
-            return "/member/delete";
+//            System.out.println("deleteError : true");
+//            model.addAttribute("deleteError", "true");
+//            model.addAttribute("nextUrl", "/member/delete");
+
+            AlertDTO message = new AlertDTO("비밀번호가 틀렸습니다.", "/member/delete", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+
+//            return "/member/delete";
         }
     }
 
@@ -106,7 +115,7 @@ public class MemberController {
         model.addAttribute("pageName", "세션 로그인");
 
         model.addAttribute("memberDTO", new MemberDTO());
-        return "home";
+        return "redirect:/";
     }
 
 //    @GetMapping("/check-login")
@@ -142,7 +151,7 @@ public class MemberController {
         model.addAttribute("member_empty", false);
 
         if (bindingResult.hasErrors()){
-            return "home";
+            return "redirect:/";
         }
 
         System.out.println("login_error : false");

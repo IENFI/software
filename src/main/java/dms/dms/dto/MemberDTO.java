@@ -17,7 +17,7 @@ public class MemberDTO { // 회원 정보를 필드로 정의
     private String memberId;
     private String memberEmail;
     private String memberPassword;
-    private String memberPasswordCheck; // 중복 체크 시 사용
+    private String memberPasswordCheck; // 중복 체크 시 사용.. 필요없어짐!
     private String memberName;
     private String memberPhoneNumber;
     private String memberDept;
