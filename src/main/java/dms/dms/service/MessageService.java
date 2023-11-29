@@ -2,8 +2,6 @@ package dms.dms.service;
 
 import dms.dms.domain.MemberEntity;
 import dms.dms.domain.Message;
-import dms.dms.domain.Study;
-import dms.dms.dto.MemberDTO;
 import dms.dms.dto.MessageDTO;
 import dms.dms.repository.MemberRepository;
 import dms.dms.repository.MessageRepository;
@@ -13,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +25,10 @@ public class MessageService {
     public MessageDTO write(MessageDTO messageDTO){
         MemberEntity receiver = memberRepository.findByMemberId(messageDTO.getReceiverId()).get();
         MemberEntity sender = memberRepository.findByMemberId(messageDTO.getSenderId()).get();
+
+        if (receiver==sender){
+            return null;
+        }
 
         Message message = new Message();
         message.setReceiver(receiver);

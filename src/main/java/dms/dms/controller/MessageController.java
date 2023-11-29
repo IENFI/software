@@ -1,13 +1,11 @@
 package dms.dms.controller;
 
 import dms.dms.domain.MemberEntity;
-import dms.dms.domain.Study;
 import dms.dms.dto.AlertDTO;
 import dms.dms.dto.MessageDTO;
 import dms.dms.repository.MemberRepository;
 import dms.dms.service.MemberService;
 import dms.dms.service.MessageService;
-import dms.dms.Response.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -63,6 +61,11 @@ public class MessageController {
         System.out.println(receiverId);
         MemberEntity receiverMember = memberService.getLoginUserByLoginId(receiverId);
 
+        if(receiverMember== null){
+            AlertDTO message = new AlertDTO("사용자가 존재하지 않습니다.", "/messages/write", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+
         messageDTO.setSenderId(loginMember.getMemberId());
         messageDTO.setReceiverId(receiverMember.getMemberId());
 
@@ -72,7 +75,7 @@ public class MessageController {
         messageDTO.setDate(date);
 
         if(messageService.write(messageDTO)== null){
-            AlertDTO message = new AlertDTO("쪽지를 보내지 못했습니다.", "/messages/write", RequestMethod.GET, null);
+            AlertDTO message = new AlertDTO("본인에게 보낼 수 없습니다.", "/messages/write", RequestMethod.GET, null);
             return showMessageAndRedirect(message, model);
         }
 
