@@ -19,8 +19,10 @@
             <div id="Calendar_header">
                 <span id="currentYearMonth"></span>
                 <button id="openPlanWrite" class="plan_button add_plan_btn" onclick="planOpen()">일정 쓰기</button>
-                <button class="next plan_button direct_btn" onclick="showCalendar(1)">></button>
-                <button class="prev plan_button direct_btn" onclick="showCalendar(-1)"><</button>
+                <div id="calendarBtn">
+                    <button class="next plan_button direct_btn" onclick="showCalendar(1)"><</button>
+                    <button class="prev plan_button direct_btn" onclick="showCalendar(-1)">></button>
+                </div>
             </div>
             <div id="Calendar_Container"></div>
         </div>
@@ -89,10 +91,10 @@
                         </div>
                     </div>
                     <div id="planWriteFooterUpdate">
+                        <button class="modalBtn" id="editPlanBtn" type="submit" formaction="/scheduleUpdate" onclick="updatePlan()">수정</button>
                         <button class="modalBtn" type="submit"
                                 onclick="if(!confirm(`해당 일정을 삭제하시겠습니까?`+`\n날짜:${document.getElementById('date_select1').value}`
                                 +`\n일정:${document.getElementById('plan_content1').value}`)){return false;}">삭제</button>
-                        <button class="modalBtn" id="editPlanBtn" type="submit" formaction="/scheduleUpdate" onclick="updatePlan()">수정</button>
                     </div>
 
                 </form>

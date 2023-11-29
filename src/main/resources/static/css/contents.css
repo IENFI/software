@@ -8,7 +8,7 @@
 #contents_container{
     display:grid;
     grid-template-columns: repeat(2,1fr);
-    grid-template-rows: repeat(2,400px);
+    grid-template-rows: repeat(2,90%);
     grid-template-areas:
     "detail calendar"
     "playing board";

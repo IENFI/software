@@ -61,18 +61,20 @@
             </div>
 
             <div class="calendar">
-                <div id="planHeader">
-                    <div id="HeaderInner">
-                        <span id="currentYearMonth"></span>
-                        <div id="calendarBtn">
-                            <button class="calendarBtn" onclick="showCalendar(-1)"><</button>
-                            <button class="calendarBtn" onclick="showCalendar(1)">></button>
+                <div id="calendar_container">
+                    <div id="planHeader">
+                        <div id="HeaderInner">
+                            <span id="currentYearMonth"></span>
+                            <div id="calendarBtn">
+                                <button class="calendarBtn" onclick="showCalendar(-1)"><</button>
+                                <button class="calendarBtn" onclick="showCalendar(1)">></button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="plan_container">
-                    <div id="Calendar_Container"></div>
+                    <div id="plan_container">
+                        <div id="Calendar_Container"></div>
 
+                    </div>
                 </div>
             </div>
             <div class="playing">공모전</div>
@@ -197,7 +199,7 @@
                     }
 
                     else{
-                        calendarHTML += `<td>${dayCounter}`;
+                        calendarHTML += `<td><div>${dayCounter}</div>`;
                         for(let s=0; s<scheduleList.length; s++) {
                             if(dayCounter==scheduleList.at(s).day && month==scheduleList.at(s).month && year==scheduleList.at(s).year) {
                                 calendarHTML += `<div class="plan_count"></div>`;

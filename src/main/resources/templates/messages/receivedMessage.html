@@ -20,36 +20,25 @@
         </div>
     </div>
 
-<!--    <div id="color_header">-->
-<!--        <input type="checkbox" id="allCheckbox" class="color_item">-->
-<!--        <div id="list" class="color_item">번호</div>-->
-<!--        <div id="name" class="color_item">이름</div>-->
-<!--        <div id="content" class="color_item">내용</div>-->
-<!--        <div id="date" class="color_item">날짜</div>-->
-<!--    </div>-->
+    <div id="color_header">
+        <input type="checkbox" id="allCheckbox" class="color_item">
+        <div id="list" class="color_item">번호</div>
+        <div id="name" class="color_item">이름</div>
+        <div id="title" class="color_item">제목</div>
+        <div id="date" class="color_item">날짜</div>
+    </div>
 
     <div id="message_content">
         <form id="deleteForm" th:action="@{/messages/deleteReceivedMessage}" th:method="post">
-            <table>
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>번호</th>
-                    <th>이름</th>
-                    <th>내용</th>
-                    <th>날짜</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="message, iterStat : ${messages}">
-                    <td><input type="checkbox" th:name="selectedMessages" th:value="${message.messageId}" /></td>
-                    <td th:text="${iterStat.index + 1}"></td>
-                    <td th:text="${message.senderId}"></td>
-                    <td th:text="${message.content}"></td>
-                    <td th:text="${message.date}"></td>
-                </tr>
-                </tbody>
-            </table>
+
+            <div class="message_list" th:each="message, iterStat : ${messages}">
+                <input type="checkbox" th:name="selectedMessages" th:value="${message.messageId}" class="content_item list_checkbox">
+                <div th:text="${iterStat.index + 1}" class="content_item list_number"></div>
+                <div th:text="${message.senderId}" class="content_item list_name"></div>
+                <a href="#"><div th:text="${message.title}" class="content_item list_title"></div></a>
+                <div th:text="${message.date}" class="content_item list_date"></div>
+            </div>
+
         </form>
     </div>
 

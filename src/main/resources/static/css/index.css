@@ -1,5 +1,5 @@
    /*--------------------------------------------------------달력 grid-----------------------------------------------------*/
-   .calendar{
+   #calendar_container{
     display:flex;
     align-items: center;
     justify-content: center;
@@ -14,8 +14,8 @@
     }
    td{
     border:solid gray 0.5px !important;
-    height:45px;
-    width:70px;
+    height:2.7vw;
+    width:4vw;
     position:relative;
     vertical-align: top;
    }
@@ -28,32 +28,39 @@
         color:red;
     }
     .plan_count{
-            border:solid 1px;
-            height:10px;
-            position:relative;
-            top:11px;
-            left:58px;
-            width:10px;
-            border-radius: 100%;
-            background-color: rgb(45, 190, 45);
-            border:none;
+
+        height:10px;
 
 
-        }
+        position:absolute;
+        top:2.1vw;
+        width:10px;
+        border-radius: 100%;
+        background-color: rgb(45, 190, 45);
+        border:none;
+        left:3.4vw;
+
+
+    }
     #planHeader{
         width:100%;
-        margin-bottom:10px;
+        margin:20px 0 10px 0;
+
     }
     #HeaderInner{
         display:flex;
         flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin:0 35px 0 35px;
     }
     #currentYearMonth{
-        font-size:20px;
-        float:left;
-        margin-right:355px;
-        margin-left:30px;
+        font-size:2rem;
+
+
+        /*margin-left:30px;*/
     }
+
     .calendarBtn{
         background-color:#fff;
         color:black;
@@ -64,8 +71,8 @@
         border-radius: 100%;
         text-align: center;
         border:solid 1px;
-        position:relative;
-        top:3px;
+
+
     }
     .calendarBtn:hover{
         background-color: #b3b5b6;
