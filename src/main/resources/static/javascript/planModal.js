@@ -40,7 +40,9 @@ function addPlan(){
     }
     else{
         alert('날짜와 일정을 모두 추가해주세요.');
+        return;
     }
+    addPlan();
 }
 
 function updatePlan() {
