@@ -16,7 +16,8 @@
         <div id="m_h_inner">
             <li><a href="/messages/received" class="m_h_item" style="color: red;"><strong>받은 쪽지</strong></a></li>
             <li><a href="/messages/sent" class="m_h_item">보낸 쪽지</a></li>
-            <li><a href="/messages/write" class="m_h_item">쪽지 쓰기</a></li>
+            <li><a href="/qna/question" class="m_h_item">문의</a></li>
+            <li><a href="/qna/answer" class="m_h_item">답변</a></li>
         </div>
     </div>
 
@@ -36,7 +37,7 @@
                     <th></th>
                     <th>번호</th>
                     <th>이름</th>
-                    <th>내용</th>
+                    <th>제목</th>
                     <th>날짜</th>
                 </tr>
                 </thead>
@@ -45,7 +46,7 @@
                     <td><input type="checkbox" th:name="selectedMessages" th:value="${message.messageId}" /></td>
                     <td th:text="${iterStat.index + 1}"></td>
                     <td th:text="${message.senderId}"></td>
-                    <td th:text="${message.content}"></td>
+                    <td th:text="${message.title}"></td>
                     <td th:text="${message.date}"></td>
                 </tr>
                 </tbody>
