@@ -1,5 +1,5 @@
    /*--------------------------------------------------------달력 grid-----------------------------------------------------*/
-   #calendar_container{
+   #calendar_wrap{
     display:flex;
     align-items: center;
     justify-content: center;
@@ -44,7 +44,7 @@
     }
     #planHeader{
         width:100%;
-        margin:20px 0 10px 0;
+        margin:5px 0 10px 0;
 
     }
     #HeaderInner{

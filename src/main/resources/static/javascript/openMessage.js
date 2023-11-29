@@ -1,5 +1,5 @@
 function openGetMessage(){
-    var windowFeatures = 'width=750,height=550,resizable=yes';
+    var windowFeatures = 'width=750,height=535,resizable=yes';
 
     var newWindow = window.open('/messages/received', 'NoteListWindow', windowFeatures);
     if (newWindow === null) {
