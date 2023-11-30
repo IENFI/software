@@ -33,11 +33,11 @@
         <form id="deleteForm" th:action="@{/messages/deleteSentMessage}" th:method="post">
             <div class="message_list" th:each="message, iterStat : ${messages}">
                 <input type="checkbox" th:name="selectedMessages" th:value="${message.messageId}" class="content_item list_checkbox childCheckbox">
-                <div th:text="${iterStat.index + 1}" class="conte                                   nt_item list_number"></div>
+                <div th:text="${iterStat.index + 1}" class="content_item list_number"></div>
                 <div th:text="${message.receiverId}" class="content_item list_name"></div>
-                <div class="content_item list_title">
-                    <div th:text="${message.title}" id="list_titleInner"></div>
-                </div>
+                <a th:href="@{/messages/sentContent(messageId=${message.messageId})}" class="content_item list_title">
+                    <div th:text="${message.title}" class="list_titleInner"></div>
+                </a>
                 <div th:text="${message.date}" class="content_item list_date"></div>
             </div>
 
@@ -68,7 +68,7 @@
         <div id="footerBtn_div">
             <div id="footerBtn">
                 <button type="button" onclick="submitForm()" class="footerBtn">삭제</button>
-                <a href="/messages/write"><button class="footerBtn">쪽지쓰기</button></a>
+                <a href="/messages/write"><button class="footerBtn">쪽지 쓰기</button></a>
             </div>
         </div>
 

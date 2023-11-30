@@ -103,6 +103,7 @@ public class QnAController {
             return showMessageAndRedirect(message, model);
         }
         model.addAttribute("qna", qna);
+        model.addAttribute("role",loginMember.getMemberRole().equals(MemberRole.ADMIN));
 
         return "/qna/qnaContent";
     }

@@ -2,6 +2,8 @@ package dms.dms.controller;
 
 import dms.dms.domain.MemberEntity;
 import dms.dms.domain.MemberRole;
+import dms.dms.domain.Message;
+import dms.dms.domain.QnA;
 import dms.dms.dto.AlertDTO;
 import dms.dms.dto.MessageDTO;
 import dms.dms.repository.MemberRepository;
@@ -161,10 +163,6 @@ public class MessageController {
 //        return new Response<>("삭제 성공", "보낸 쪽지인, " + id + "번 쪽지를 삭제했습니다.", messageService.deleteMessageBySender(id, memberEntity));
     }
 
-
-
-
-
     @Operation(summary = "보낸 편지함 읽기", description = "보낸 편지함 확인")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/messages/sent")
@@ -211,7 +209,43 @@ public class MessageController {
 //        return new Response("성공", "보낸 쪽지를 불러왔습니다.", messageService.sentMessage(memberEntity));
     }
 
+    @GetMapping("/messages/sentContent")
+    public String sentContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("messageId") Long messageId, Model model) { // 공부 기록 상세 보기
+        // qna가 조회되지 않을 때의 알림창 구분하기
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+        if (loginMember == null){
+            return "redirect:/";
+        }
 
+        Message message = messageService.findMessageByMessageId(messageId);
+
+        if (message==null){
+            AlertDTO alert = new AlertDTO("쪽지가 조회되지 않습니다.", "/messages/sent", RequestMethod.GET, null);
+            return showMessageAndRedirect(alert, model);
+        }
+        model.addAttribute("message", message);
+
+        return "/messages/sentContent";
+    }
+
+    @GetMapping("/messages/receivedContent")
+    public String receivedContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("messageId") Long messageId, Model model) { // 공부 기록 상세 보기
+        // qna가 조회되지 않을 때의 알림창 구분하기
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+        if (loginMember == null){
+            return "redirect:/";
+        }
+
+        Message message = messageService.findMessageByMessageId(messageId);
+
+        if (message==null){
+            AlertDTO alert = new AlertDTO("쪽지가 조회되지 않습니다.", "/messages/received", RequestMethod.GET, null);
+            return showMessageAndRedirect(alert, model);
+        }
+        model.addAttribute("message", message);
+
+        return "/messages/receivedContent";
+    }
 
     @Operation(summary = "보낸 쪽지 삭제하기", description = "보낸 쪽지를 삭제합니다.")
     @ResponseStatus(HttpStatus.OK)

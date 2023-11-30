@@ -98,7 +98,9 @@
     </div>
     <div id="writeMessageFooter">
         <a href="/qna/question">목록 보기</a>
+        <td th:if="${role}"> <!-- 관리자만 답변 하기 뜨게 하기 관리자면 role이 true-->
         <a th:href="@{'/qna/writeAnswer/'+${qna.qnaId}}" ><button type="button">답변 하기</button></a>
+        </td>
     </div>
 </form>
 
