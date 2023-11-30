@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
 public class MailService {
 
     private final JavaMailSender javaMailSender;
-    private static final String senderEmail= "본인 이메일";
+    private static final String senderEmail= "";
     private static int number = 0;
 
     public static void createNumber(){
