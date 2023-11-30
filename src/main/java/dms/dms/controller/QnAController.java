@@ -39,20 +39,54 @@ public class QnAController {
     @GetMapping("/qna/writeQnA")
     public String writeQuestionMessage(@SessionAttribute(name = "memberId", required = false) String memberId){
         MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+        if (loginMember == null){
+            return "redirect:/";
+        }
+        return "/qna/writeQuestionMessage";
+    }
+
+    @PostMapping("/qna/writeAnswer/{qnaId}")
+    public String writeAnswer(@SessionAttribute(name = "memberId", required = false) String memberId,
+                                @ModelAttribute QnADTO qnaDTO, Model model,
+                              @PathVariable("qnaId") Long qnaId){
+        // html에서 넘어오는 건 관리자의 memberId, qnaId와 answerContent밖에 없음
+        System.out.println("QnAController.writeAnswer");
+
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+        qnaDTO.setAdminId(loginMember.getMemberId());
+
+        // 답변한 시간 저장하기
+//        Long time = System.currentTimeMillis();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String date = dateFormat.format(time);
+//        qnaDTO.setDate(date);
+
+        if(qnaService.answer(qnaDTO, qnaId)){
+            AlertDTO message = new AlertDTO("문의에 답변했습니다.", "/messages/write", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+
+        AlertDTO message = new AlertDTO("답변을 실패했습니다.", "/messages/sent", RequestMethod.GET, null);
+        return showMessageAndRedirect(message, model);
+    }
+
+    @GetMapping("/qna/writeAnswer/{qnaId}")
+    public String writeAnswerMessage(@SessionAttribute(name = "memberId", required = false) String memberId,
+                                     Model model, @PathVariable("qnaId") Long qnaId){
+        System.out.println("QnAController.writeAnswerMessage");
+
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+        QnA qna = qnaService.findOneQnA(qnaId);
 
         if (loginMember == null){
             return "redirect:/";
         }
 
+        model.addAttribute("qna",qna);
 
-        if (loginMember.getMemberRole()== MemberRole.USER){
-            return "/qna/writeQuestionMessage";
-        }
-
-        else {
-            return "/qna/writeAnswerMessage";
-        }
+        return "/qna/writeAnswerMessage";
     }
+
 
     @GetMapping("/qna/qnaContent")
     public String qnaContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("qnaId") Long qnaId, Model model) { // 공부 기록 상세 보기
@@ -163,7 +197,7 @@ public class QnAController {
         }
     }
 
-    @GetMapping("/qna/answeredQuestionMessage")
+    @GetMapping("/qna/answeredQuestion")
     public String answeredQuestionMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
                                   @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.ASC)
                                   Pageable pageable){
@@ -200,7 +234,7 @@ public class QnAController {
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
 
-            return "/qna/adminQuestionMessage";
+            return "/qna/adminAnsweredMessage";
         }
     }
 

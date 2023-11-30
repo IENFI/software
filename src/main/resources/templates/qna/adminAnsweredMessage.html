@@ -14,8 +14,8 @@
 <div id="message_category">
     <div id="message_header">
         <div id="m_h_inner">
-            <li><a href="/qna/question" class="m_h_item" style="color: red;"><strong>문의함</strong></a></li>
-            <li><a href="/qna/answeredQuestion" class="m_h_item">답변함</a></li>
+            <li><a href="/qna/question" class="m_h_item">문의함</a></li>
+            <li><a href="/qna/answeredQuestion" class="m_h_item" style="color: red;"><strong>답변함</strong></a></li>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
         <div id="board_page">
             <span class="bottom_first"><a th:href="@{/qna/question(page=0)}"><img src="/img/two_left.png" class="pageBtn" style="height:14px;"></a></span>
             <span class="bottom_prev">
-                        <a th:if="${nowPage > 1}" th:href="@{/qna/question(page=${nowPage}-2)}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
+                        <a th:if="${nowPage > 1}" th:href="@{/qna/question(page=${nowPage}-1)}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
                         <a th:unless="${nowPage > 1}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
                     </span>
             <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
