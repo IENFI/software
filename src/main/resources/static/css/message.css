@@ -32,8 +32,16 @@ a{
     margin-bottom:15px;
 }
 #message_content{
-    height:320px;
+    height:310px;
 
+}
+#emptyText{
+    height:310px;
+    text-align:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:gray;
 }
 #m_h_inner{
     display:flex;
@@ -108,8 +116,9 @@ a{
     text-align: center;
 
 }
-#list_titleInner{
+.list_titleInner{
     width:280px;
+    text-align:left;
     overflow: hidden; /* 넘치는 부분 숨김 */
     white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
 }
@@ -127,6 +136,7 @@ a{
 
 #message_footer{
     flex:1;
+
 
 }
 

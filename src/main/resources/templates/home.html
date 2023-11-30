@@ -267,7 +267,7 @@
             if(scheduleList.at(i).year == today.getFullYear() && scheduleList.at(i).month == today.getMonth()+1
                 && scheduleList.at(i).day == today.getDate()) {
                 console.log("if문 실행");
-                todayScheduleHTML += `<div class="todayPlanItem">${scheduleList.at(i).title}</div>`;
+                todayScheduleHTML += `<li class="todayPlanItem">${scheduleList.at(i).title}</li>`;
             }
         }
         todayScheduleHTML += `</div><br>`;
