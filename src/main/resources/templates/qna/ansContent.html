@@ -32,6 +32,10 @@
         }
         .textArea{
             width:510px;
+            border:1px solid;
+            border-radius: 3px;
+            font-weight: lighter;
+
         }
         #messageTarget{
 
@@ -43,10 +47,13 @@
 
             padding-top: 10px;
             padding-bottom: 10px;
+            display:flex;
+            flex-direction: row;
         }
         #messageContent{
             height:270px;
             width:510px !important;
+            overflow-wrap: break-word;
 
         }
         .item_interval{
@@ -69,7 +76,7 @@
 </head>
 <body>
 
-<form id="writeMessageForm" th:action="|@{/qna/writeAnswer/}+${qna.qnaId}|" method="post" th:object="${qna}">
+<form id="writeMessageForm">
     <div id="writeMessageInner">
         <div id="messageTitle_div" class="item_div">
             <label for="messageTitle">제목</label>
@@ -79,7 +86,7 @@
 
         </div>
         <div id="messageTarget_div" class="item_div">
-            <label for="messageTarget">받는 사람</label>
+            <label for="messageTarget">보낸 사람</label>
             <div id="messageTarget" class="textArea" th:text="${qna.getUser().memberId}"></div>
         </div>
         <div class="item_interval">
@@ -90,12 +97,11 @@
         </div>
         <div id="messageContent_div" class="item_div">
             <label for="messageContent">답변</label>
-            <textarea id="messageContent" class="textArea" th:field="*{answerContent}" required></textarea>
+            <div id="messageContent" class="textArea" th:text="${qna.answerContent}"></div>
         </div>
     </div>
     <div id="writeMessageFooter">
-        <a href="/qna/question"><button type="button">목록보기</button></a>
-        <button type="submit">전송</button>
+        <a th:href="@{'/qna/answeredQuestion'}" ><button type="button">목록 보기</button></a>
     </div>
 </form>
 

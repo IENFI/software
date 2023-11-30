@@ -62,11 +62,11 @@ public class QnAController {
 //        qnaDTO.setDate(date);
 
         if(qnaService.answer(qnaDTO, qnaId)){
-            AlertDTO message = new AlertDTO("문의에 답변했습니다.", "/messages/write", RequestMethod.GET, null);
+            AlertDTO message = new AlertDTO("문의에 답변했습니다.", "/qna/answeredQuestion", RequestMethod.GET, null);
             return showMessageAndRedirect(message, model);
         }
-
-        AlertDTO message = new AlertDTO("답변을 실패했습니다.", "/messages/sent", RequestMethod.GET, null);
+        String URL = "/qna/writeAnswer/"+qnaId;
+        AlertDTO message = new AlertDTO("답변을 실패했습니다.", URL, RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
 
@@ -103,6 +103,21 @@ public class QnAController {
         return "/qna/qnaContent";
     }
 
+    @GetMapping("/qna/ansContent")
+    public String ansContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("qnaId") Long qnaId, Model model) { // 공부 기록 상세 보기
+        // qna가 조회되지 않을 때의 알림창 구분하기
+
+        QnA qna = qnaService.findOneQnA(qnaId);
+
+        if (qna==null){
+            AlertDTO message = new AlertDTO("QnA가 조회되지 않습니다.", "/qna/answeredQuestion", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        model.addAttribute("qna", qna);
+
+        return "/qna/ansContent";
+    }
+
     @PostMapping("/qna/writeQuestion")
     public String writeQuestion(@SessionAttribute(name = "memberId", required = false) String memberId,
                                 @ModelAttribute QnADTO qnaDTO, Model model){
@@ -128,7 +143,7 @@ public class QnAController {
 
     @GetMapping("/qna/question")
     public String questionMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
-                                  @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.ASC)
+                                  @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
                                   Pageable pageable){
         System.out.println("QnAController.questionMessage");
         MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
@@ -153,7 +168,7 @@ public class QnAController {
                 else {
                     // 답변이 있을 경우 답변 란, 답변한 관리자 아이디 입력
                     qnaDTO.setAnswerContent(qna.getAnswerContent());
-                    qnaDTO.setAdminId(qnaDTO.getAdminId());
+                    qnaDTO.setAdminId(qna.getAdmin().getMemberId());
                 }
                 return qnaDTO;
             });
@@ -199,7 +214,7 @@ public class QnAController {
 
     @GetMapping("/qna/answeredQuestion")
     public String answeredQuestionMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
-                                  @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.ASC)
+                                  @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
                                   Pageable pageable){
         System.out.println("QnAController.answeredQuestionMessage");
         MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
@@ -240,7 +255,7 @@ public class QnAController {
 
     @GetMapping("/qna/answer")
     public String answerMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
-                                  @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.ASC)
+                                  @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
                                   Pageable pageable){
         MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
 

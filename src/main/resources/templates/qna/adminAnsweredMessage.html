@@ -33,7 +33,7 @@
                 <input type="checkbox" th:name="selectedMessages" th:value="${qna.qnaId}" class="content_item list_checkbox childCheckbox">
                 <div th:text="${iterStat.index + 1}" class="content_item list_number"></div>
                 <div th:text="${qna.userId}" class="content_item list_name"></div>
-                <a th:href="@{/qna/qnaContent(qnaId=${qna.qnaId})}" class="content_item list_title">
+                <a th:href="@{/qna/ansContent(qnaId=${qna.qnaId})}" class="content_item list_title">
                     <div th:text="${qna.title}" class="list_titleInner"></div>
                 </a>
                 <div th:text="${qna.date}" class="content_item list_date"></div>
