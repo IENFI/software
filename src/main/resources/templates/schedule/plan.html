@@ -20,8 +20,9 @@
                 <span id="currentYearMonth"></span>
                 <button id="openPlanWrite" class="plan_button add_plan_btn" onclick="planOpen()">일정 쓰기</button>
                 <div id="calendarBtn">
-                    <button class="next plan_button direct_btn" onclick="showCalendar(1)"><</button>
-                    <button class="prev plan_button direct_btn" onclick="showCalendar(-1)">></button>
+
+                    <button class="prev plan_button direct_btn" onclick="showCalendar(-1)"><</button>
+                    <button class="next plan_button direct_btn" onclick="showCalendar(1)">></button>
                 </div>
             </div>
             <div id="Calendar_Container"></div>
@@ -120,8 +121,8 @@
         console.log(abc.at(0))
 
         const today = new Date();
-        const dayInMonth = new Date(year, month, 0).getDate(); //달의 일수
-        const firstDay = new Date(year, month - 1, 1).getDay(); //달의 첫 요일
+        const dayInMonth = new Date(year, month + 1, 0).getDate(); //달의 일수
+        const firstDay = new Date(year, month, 1).getDay(); //달의 첫 요일
 
 
         let calendarHTML = '<table>';
@@ -133,7 +134,7 @@
             calendarHTML += '<tr>';
 
             for(let j = 0; j < 7; j++) {
-                const holiday = new Date(year, month - 1, dayCounter).getDay();
+                const holiday = new Date(year, month, dayCounter).getDay();
                 if(i == 0 && j < firstDay){
                     calendarHTML += '<td></td>';
                 }
@@ -141,7 +142,7 @@
                     calendarHTML += '<td></td>';
                 }
                 else {
-                    if(dayCounter == today.getDate() && year == today.getFullYear() && month == today.getMonth() + 1){
+                    if(dayCounter == today.getDate() && year == today.getFullYear() && month == today.getMonth()){
                         //calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
                         if(holiday == 0){
                             calendarHTML += `<td id="today"><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
@@ -277,17 +278,19 @@
 
         document.getElementById('Calendar_Container').innerHTML = calendarHTML;
 
-        if(month == 0){
-            document.getElementById('currentYearMonth').innerHTML = `${year - 1}년 ${month + 12}월`;
-        }
-        else{
-            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month}월`;
-        }
+<!--        if(month == 0){-->
+<!--            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;-->
+<!--        }-->
+<!--        else{-->
+<!--            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;-->
+<!--        }-->
+document.getElementById('Calendar_Container').innerHTML = calendarHTML;
+    document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;
 
     }
 
-    const pos = new Date();
-    pos.setMonth(pos.getMonth() + 1);
+    var pos = new Date();
+
 
     //달력 보여주는 함수
     function showCalendar(change){
@@ -299,19 +302,16 @@
         }
     }
 
-    //다음 월 버튼
+    //이전 월 버튼
     function prevCalendar(change){
         pos.setMonth(pos.getMonth() + change);
         generateCalendar(pos.getFullYear(), pos.getMonth());
-        pos += -1;
-
     }
 
-    //이전 월 버튼
+    //다음 월 버튼
     function nextCalendar(change){
         pos.setMonth(pos.getMonth() + change);
         generateCalendar(pos.getFullYear(), pos.getMonth());
-        pos += 1;
     }
 
     generateCalendar(pos.getFullYear(), pos.getMonth());

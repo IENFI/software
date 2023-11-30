@@ -27,13 +27,36 @@ function planClose(){
 }
 
 //일정 추가 함수
+//function addPlan(){
+//    var date = document.getElementById('date_select').value;
+//    var plan = document.getElementById('plan_content').value;
+//    console.log(date);
+//    console.log(plan);
+//    if(date && plan){
+//        alert('일정이 추가되었습니다!\n날짜:' + date + '\n일정:' + plan);
+//        planClose();
+//        return true;
+//    }
+//    else{
+//        alert('날짜와 일정을 모두 추가해주세요.');
+//        return false;
+//    }
+//}
 function addPlan(){
     var date = document.getElementById('date_select').value;
     var plan = document.getElementById('plan_content').value;
+    var currentYear = pos.getFullYear();
+    var currentMonth = pos.getMonth();
+
     console.log(date);
     console.log(plan);
+
     if(date && plan){
         alert('일정이 추가되었습니다!\n날짜:' + date + '\n일정:' + plan);
+
+        // 변경된 부분: 현재 연도와 월 정보를 사용하여 해당 달력을 생성
+        generateCalendar(currentYear, currentMonth);
+
         planClose();
         return true;
     }
