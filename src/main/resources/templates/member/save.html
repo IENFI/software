@@ -87,22 +87,24 @@
                     <input type="text" id="User_name" name="memberName" class="text" placeholder="이름을 입력해주세요." required></li>
 
                 <div id="email_div">
-                    <li><label for="email">이메일</label>
-                        <input type="email" id="email" name="memberEmail" class="text" placeholder="이메일을 입력해주세요." required></li>
+                    <li><label for="memberEmail2">이메일</label>
+                        <input type="email" id="memberEmail2" name="memberEmail" class="text" placeholder="이메일을 입력해주세요." required></li>
                     <button type="button" id="email_check" class="inner_button" onclick="checkForEmailDuplicate()">중복 확인</button>
+                    <button type="button" id="submit_code" class="inner_button" onclick="sendCode()">인증번호 전송</button>
                 </div>
 
-                <div id="tel_div" class="ID_tel_code_div">
-                    <li><label for="tel">전화번호</label>
-                        <input type="tel" id="tel" name="memberPhoneNumber" class="text" placeholder="전화번호를 입력해주세요." required></li>
-                    <button type="submit" id="submit_code" class="inner_button">인증번호 전송</button>
-                </div>
+<!--                <div id="tel_div" class="ID_tel_code_div">-->
+<!--                    <li><label for="tel">전화번호</label>-->
+<!--                        <input type="tel" id="tel" name="memberPhoneNumber" class="text" placeholder="전화번호를 입력해주세요." required></li>-->
+
+<!--                </div>-->
 
                 <div id="code_div" class="ID_tel_code_div">
-                    <li><label for="verification_code">인증번호</label>
-                        <input type="text" id="verification_code" name="verification_code" class="text" placeholder="인증번호를 입력해주세요." required></li>
-                    <button id="code_clear" class="inner_button">인증번호 인증</button>
+                    <li><label for="memberEmailNum">인증번호</label>
+                        <input type="text" id="memberEmailNum" name="verification_code" class="text" placeholder="인증번호를 입력해주세요." required></li>
+                    <button id="code_clear" class="inner_button" onclick="equalCode()">인증번호 인증</button>
                 </div>
+                <input id="check">체크</input> <!-- 나중에 hidden 처리 -->
 
                 <li><label for="school_information">학적정보</label>
                     <input type="text" id="school_information" name="memberDept" class="text" placeholder="ex) 영남대학교 수학과" required></li>
@@ -125,6 +127,7 @@
 </form>
 </body>
 <script src="/javascript/signup.js"></script>
+<script src="/javascript/emailSend.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
 
@@ -176,7 +179,7 @@
 
     function checkForEmailDuplicate() {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/check-emailDuplicate?memberEmail=' + encodeURIComponent(document.getElementById('email').value), true);
+        xhr.open('GET', '/check-emailDuplicate?memberEmail=' + encodeURIComponent(document.getElementById('memberEmail2').value), true);
 
         xhr.onload = function () {
             if (xhr.status === 200) {

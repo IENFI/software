@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -44,12 +45,14 @@ public class StudyController {
             return "redirect:/";
         }
 
+        List<Study> studyList = studyService.findStudiesByMemberID(memberId);
         Page<Study> list = studyService.findStudiesByMemberID(memberId, pageable);
         int nowPage = list.getPageable().getPageNumber()+1;
         int startPage = Math.max(nowPage-4,1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
-        model.addAttribute("studys", list);
+        model.addAttribute("studies", list);
+        model.addAttribute("studyList", studyList);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
