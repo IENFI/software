@@ -18,6 +18,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.HTML;
+import java.lang.reflect.Member;
 
 @Controller
 @RequiredArgsConstructor // MemberService에 대한 멤버를 사용 가능
@@ -351,4 +352,59 @@ public class MemberController {
 ////        return "main";
 //        return "home";
 //    }
+
+    @GetMapping("/member/findIDPW")
+    public String findIDPW() {
+        return "/member/findIDPW";
+    }
+
+    @PostMapping("/member/findID")
+    public String findID(MemberEntity memberInfo, Model model) {
+        String memberCheck = memberService.findMemberID(memberInfo.getMemberName(), memberInfo.getMemberEmail());
+
+        if(memberCheck == "incorrect") {
+            AlertDTO message = new AlertDTO("해당 사용자를 찾을 수 없습니다. 아이디, 이메일을 다시 확인해주세요.", "/member/findIDPW", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        else {
+            AlertDTO message = new AlertDTO("아이디는 '"+memberCheck+"' 입니다.", "/", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+
+    }
+
+    @GetMapping("/member/findPW")
+    @ResponseBody
+    public String findPW(@RequestParam("memberID") String memberID,
+                       @RequestParam("memberName") String memberName,
+                       @RequestParam("memberEmail") String memberEmail,
+                       @RequestParam("check") String check) {
+        String memberID1 = memberService.findMemberID(memberName, memberEmail);
+        if(memberID1 != null && memberID != null) {
+            if(memberID1.equals(memberID) && check.equals("true")) {
+                return "correct";
+            }
+            else {
+                return "incorrect";
+            }
+        }
+        else {
+            return "null";
+        }
+
+    }
+
+    @PostMapping(value = "/member/changePW")
+    public String changePW(String memberID, String memberPW) {
+
+        MemberEntity member = memberService.getMember(memberID);
+
+        member.setMemberPassword(memberPW);
+        System.out.println(memberPW);
+        memberService.changePW(member);
+
+        return "redirect:/";
+    }
+
+
 }

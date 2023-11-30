@@ -34,12 +34,12 @@ function addPlan(){
     console.log(plan);
     if(date && plan){
         alert('일정이 추가되었습니다!\n날짜:' + date + '\n일정:' + plan);
-
         planClose();
-
+        return true;
     }
     else{
         alert('날짜와 일정을 모두 추가해주세요.');
+        return false;
     }
 }
 
@@ -53,11 +53,12 @@ function updatePlan() {
     console.log(plan);
     if (date && plan) {
         alert('일정이 수정되었습니다!\n날짜:' + date + '\n일정:' + plan);
-
         planClose();
+        return true;
 
     } else {
         alert('날짜와 일정을 모두 추가해주세요.');
+        return false;
     }
 }
 
