@@ -116,10 +116,11 @@
 <script th:inline="javascript">
     /* <![CDATA[ */
     let role = [[${role}]];
+    let user = [[${user}]];
     function openGetMessage(){
         var windowFeatures = 'width=750,height=535,resizable=yes';
 
-        if(role == 0){
+        if(role == user){
             var newWindow = window.open('/messages/received', 'NoteListWindow', windowFeatures);
         }
         else {

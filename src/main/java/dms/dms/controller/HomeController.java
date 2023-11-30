@@ -2,6 +2,7 @@ package dms.dms.controller;
 
 
 import dms.dms.domain.MemberEntity;
+import dms.dms.domain.MemberRole;
 import dms.dms.domain.Schedule;
 import dms.dms.dto.MemberDTO;
 import dms.dms.service.MemberService;
@@ -28,6 +29,7 @@ public class HomeController {
         model.addAttribute("loginType", "dms");
         model.addAttribute("pageName", "세션 로그인");
         model.addAttribute("memberDTO", new MemberDTO());
+        model.addAttribute("user", MemberRole.USER);
 
         MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
         model.addAttribute("login_error", false);
