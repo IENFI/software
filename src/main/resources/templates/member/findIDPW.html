@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/contents.css">
+    <link rel="stylesheet" href="/css/plan.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+<body>
+<form action="/member/findID" method="post">
+    <div>
+        <span>>> 아이디 찾기 <<</span>
+    </div>
+    <div>
+        <div>
+            <div>
+                <label for="memberName">이름</label>
+                <br>
+                <input type="text" id="memberName" name="memberName" value="">
+            </div>
+            <div>
+                <label for="memberEmail">이메일</label>
+                <br>
+                <input type="text" id="memberEmail" name="memberEmail">
+            </div>
+        </div>
+    </div>
+    <div id="planWriteFooter">
+        <button type="submit">아이디 찾기</button>
+    </div>
+</form>
+<br>
+<br>
+<br>
+
+
+<div>
+    <span>>> 비밀번호 찾기 <<</span>
+</div>
+<div>
+    <div>
+        <div>
+            <label for="memberName2">이름</label>
+            <br>
+            <input type="text" id="memberName2" name="memberName" value="">
+        </div>
+        <div>
+            <label for="memberID">아이디</label>
+            <br>
+            <input type="text" id="memberID" name="memberID" value="">
+        </div>
+        <div>
+<!--            <form action="/emailSend" method="post">-->
+                <label for="memberEmail2">이메일</label>
+                <br>
+                <input type="email" id="memberEmail2" name="memberEmail" required>
+                <button type="button" id="email_send" onclick="checkCode()">인증 메일 전송</button>
+<!--            </form>-->
+        </div>
+        <div>
+            <label for="memberEmailNum">인증 번호</label>
+            <br>
+            <input type="text" id="memberEmailNum" name="memberEmailNum" placeholder="인증번호를 입력하세요.">
+            <button type="button" id="checkCode" onclick="equalCode()">인증</button>
+        </div>
+        <input id="check">체크</input>
+    </div>
+</div>
+<div id="planWriteFooter2">
+    <button type="submit" onclick="findPW()">비밀번호 찾기</button>
+</div>
+<button id="changePW" style="display: none" onclick="changePWOpen()">비밀번호 변경</button>
+<div style="display: none" id="changePWModal" class="modal">
+    <form id="formChangePW" action="/member/changePW" method="post">
+        <div>비밀번호를 변경하세요</div>
+        <div>
+            <div>
+                <label for="changePW_memberID">아이디</label>
+                <br>
+                <input type="text" id="changePW_memberID" name="memberID">
+            </div>
+            <div>
+                <label for="memberPW">비밀번호</label>
+                <br>
+                <input type="text" id="memberPW" name="memberPW">
+            </div>
+            <div>
+                <label for="memberPW">비밀번호 확인</label>
+                <br>
+                <input type="text" id="memberPWCheck" name="memberPWCheck">
+            </div>
+        </div>
+        <div id="changePWBtn">
+            <button type="submit" onclick="if(!changePW()){return false}">변경</button>
+        </div>
+    </form>
+</div>
+</body>
+<script src="/javascript/changePWModal.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let returnCode;
+    let check;
+    function checkCode() {
+        let code = new XMLHttpRequest();
+        code.open('GET', '/emailSend?memberEmail=' + encodeURIComponent(document.getElementById('memberEmail2').value), true);
+
+        code.onload = function () {
+            if(code.status === 200) {
+                returnCode = code.responseText;
+            }
+        }
+        code.send();
+    }
+
+    function equalCode() {
+        let code = document.getElementById('memberEmailNum').value;
+        if(code == returnCode) {
+            check = 'true';
+            alert("이메일 인증에 성공했습니다.");
+            document.getElementById('check').value = check
+        }
+        else {
+            check='false';
+            alert("이메일 인증에 실패했습니다.");
+            document.getElementById('check').value = check;
+        }
+    }
+
+    function findPW() {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/member/findPW?memberID='+encodeURIComponent(document.getElementById('memberID').value)
+                            +'&memberName='+encodeURIComponent(document.getElementById('memberName2').value)
+                            +'&memberEmail='+encodeURIComponent(document.getElementById('memberEmail2').value)
+                            +'&check='+encodeURIComponent(document.getElementById('check').value), true);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                let responseData = xhr.responseText;
+                if (responseData == 'null') {
+                    alert('가입된 아이디가 없습니다.');
+                } else if (responseData == 'incorrect') {
+                    alert("인증 정보를 다시 확인해주세요.");
+                } else {
+                    alert("비밀번호 변경 가능합니다.");
+                    changePWOpen();
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    /*]]>*/
+</script>
+
+</html>

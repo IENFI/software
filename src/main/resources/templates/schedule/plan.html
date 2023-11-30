@@ -12,22 +12,36 @@
     <title>Document</title>
 </head>
 <body>
-<header id="header"></header>
+<header id="header">
+    <div class="inner">
+        <a href="/" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
+        <ul class="nav">
+            <li><a href="board.html" class="nav_item">게시판</a></li>
+            <li><a href="/study/studyHome" class="nav_item">공부기록</a></li>
+            <li><a href="/schedule/plan" class="nav_item">일정</a></li>
+        </ul>
+        <span id="message"><img src="/img/message.png" id = message_icon onclick=""></span>
+        <span id="profile">
+            <li><a href="#"><img src="/img/profile.png" id = profile_icon  onclick=""></a>
+                <ul id="profile_dropdown">
+                    <li><a href="/member/info" class="dropdown_item">내 정보</a></li>
+                    <li><a href="/member/logout" class="dropdown_item">로그아웃</a></li>
+                </ul>
+            </li>
+        </span>
+    </div>
+</header>
 <section id="contents">
     <div class="inner">
         <div>
             <div id="Calendar_header">
                 <span id="currentYearMonth"></span>
                 <button id="openPlanWrite" class="plan_button add_plan_btn" onclick="planOpen()">일정 쓰기</button>
-                <div id="calendarBtn">
-                    <button class="next plan_button direct_btn" onclick="showCalendar(1)"><</button>
-                    <button class="prev plan_button direct_btn" onclick="showCalendar(-1)">></button>
-                </div>
+                <button class="next plan_button direct_btn" onclick="showCalendar(1)">></button>
+                <button class="prev plan_button direct_btn" onclick="showCalendar(-1)"><</button>
             </div>
             <div id="Calendar_Container"></div>
         </div>
-
-
         <div id="planWrite" class="modal">
             <div id="planWriteContent">
                 <form id="formWrite" action="/schedule/scheduleCreates" method="post">
@@ -47,7 +61,7 @@
                                 <br>
                                 <input type="text" id="plan_content" name="title" value="">
                             </div>
-                            <div class="Inner_item" id="date_item">
+                            <div class="Inner_item" id="date">
                                 <label for="date_select">날짜</label>
                                 <br>
                                 <input type="date" id="date_select" name="date">
@@ -55,10 +69,10 @@
                         </div>
                     </div>
                     <div id="planWriteFooter">
-                        <button class="modalBtn" type="submit" onclick="addPlan()">추가</button>
+                        <button type="submit" onclick="if(!addPlan()){return false}">추가</button>
                     </div>
                 </form>
-                <!--                action 내용이랑 controller랑 연결해서 입력 데이터를 처리함 => 추가, 상세보기 form 2개 만듦-->
+<!--                action 내용이랑 controller랑 연결해서 입력 데이터를 처리함 => 추가, 상세보기 form 2개 만듦-->
                 <form id="formContent" action="/scheduleDelete"  method="post">
                     <div id="planWriteHeader1">
                         <span id="planWrite_title1">일정을 수정하세요</span>
@@ -82,21 +96,20 @@
                                     <br>
                                     <input type="text" id="plan_content1" name="title">
                                 </div>
-                                <div class="Inner_item" id="date_item1">
+                                <div class="Inner_item" id="date1">
                                     <label for="date_select">날짜</label>
                                     <br>
                                     <input type="date" id="date_select1" name="date">
                                 </div>
                             </div>
                         </div>
+                        <div id="planWriteFooterUpdate">
+                            <button id="deletePlan" type="submit"
+                                    onclick="if(!confirm(`해당 일정을 삭제하시겠습니까?`+`\n날짜:${document.getElementById('date_select1').value}`
+                                    +`\n일정:${document.getElementById('plan_content1').value}`)){return false;}">삭제</button>
+                            <button type="submit" formaction="/scheduleUpdate" onclick="if(!updatePlan()){return false;}">수정</button>
+                        </div>
                     </div>
-                    <div id="planWriteFooterUpdate">
-                        <button class="modalBtn" id="editPlanBtn" type="submit" formaction="/scheduleUpdate" onclick="updatePlan()">수정</button>
-                        <button class="modalBtn" type="submit"
-                                onclick="if(!confirm(`해당 일정을 삭제하시겠습니까?`+`\n날짜:${document.getElementById('date_select1').value}`
-                                +`\n일정:${document.getElementById('plan_content1').value}`)){return false;}">삭제</button>
-                    </div>
-
                 </form>
             </div>
         </div>
@@ -106,8 +119,8 @@
 
 <!--<script src="/javascript/calendar.js"></script>-->
 <script src="/javascript/planModal.js"></script>
-<script src="/javascript/fetchMainHF1.js"></script>
-<script src="/javascript/openMessage.js"></script>
+<!--<script src="/javascript/fetchMainHF.js"></script>-->
+<!--<script src="/javascript/openMessage.js"></script>-->
 </body>
 </html>
 
@@ -148,7 +161,7 @@
                             for(let s=0; s<abc.length; s++) {
                                 if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
                                     let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
-                                    calendarHTML += `<ul><li><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
+                                    calendarHTML += `<a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a><br>`;
                                 }
                             }
                             for(let s=0; s<def.length; s++) {
@@ -158,7 +171,7 @@
                                 let studyDay = studyDate.substring(8,10);
                                 if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
                                     console.log("if문 실행")
-                                    calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                                    calendarHTML += `<a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a><br>`;
                                 }
                             }
                             calendarHTML += `</div></td>`;
@@ -168,7 +181,7 @@
                             for(let s=0; s<abc.length; s++) {
                                 if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
                                     let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
-                                    calendarHTML += `<ul><li><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
+                                    calendarHTML += `<a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a><br>`;
                                 }
                             }
                             for(let s=0; s<def.length; s++) {
@@ -178,7 +191,7 @@
                                 let studyDay = studyDate.substring(8,10);
                                 if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
                                     console.log("if문 실행")
-                                    calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                                    calendarHTML += `<a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a><br>`;
                                 }
                             }
                             calendarHTML += `</div></td>`;
@@ -188,7 +201,7 @@
                             for(let s=0; s<abc.length; s++) {
                                 if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
                                     let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
-                                    calendarHTML += `<ul><li><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
+                                    calendarHTML += `<a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a><br>`;
                                 }
                             }
                             for(let s=0; s<def.length; s++) {
@@ -198,7 +211,7 @@
                                 let studyDay = studyDate.substring(8,10);
                                 if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
                                     console.log("if문 실행")
-                                    calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                                    calendarHTML += `<a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a><br>`;
                                 }
                             }
                             calendarHTML += `</div></td>`;
@@ -209,7 +222,7 @@
                         for(let s=0; s<abc.length; s++) {
                             if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
                                 let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
-                                calendarHTML += `<ul><li><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
+                                calendarHTML += `<a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a><br>`;
                             }
                         }
                         for(let s=0; s<def.length; s++) {
@@ -219,7 +232,7 @@
                             let studyDay = studyDate.substring(8,10);
                             if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
                                 console.log("if문 실행")
-                                calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                                calendarHTML += `<a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a><br>`;
                             }
                         }
                         calendarHTML += `</div></td>`;
@@ -229,7 +242,7 @@
                         for(let s=0; s<abc.length; s++) {
                             if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
                                 let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
-                                calendarHTML += `<ul><li><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
+                                calendarHTML += `<a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a><br>`;
                             }
                         }
                         for(let s=0; s<def.length; s++) {
@@ -239,7 +252,7 @@
                             let studyDay = studyDate.substring(8,10);
                             if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
                                 console.log("if문 실행")
-                                calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                                calendarHTML += `<a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a><br>`;
                             }
                         }
                         calendarHTML += `</div></td>`;
@@ -250,7 +263,7 @@
                         for(let s=0; s<abc.length; s++) {
                             if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
                                 let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
-                                calendarHTML += `<ul><li><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
+                                calendarHTML += `<a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a><br>`;
                             }
                         }
                         for(let s=0; s<def.length; s++) {
@@ -260,7 +273,7 @@
                             let studyDay = studyDate.substring(8,10);
                             if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
                                 console.log("if문 실행")
-                                calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                                calendarHTML += `<a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a><br>`;
                             }
                         }
                         calendarHTML += `</div></td>`;

@@ -29,6 +29,11 @@ public class ScheduleController {
 
     @GetMapping(value = "/schedule/plan")
     public String scheduleHome(@SessionAttribute(name = "memberId", required = false) String memberId, Model model) {
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
+
         // 일정 불러오기
         List<Schedule> schedules = scheduleService.findSchedulesByMemberID(memberId);
         List<Study> studyList = studyService.findStudiesByMemberID(memberId);
@@ -51,7 +56,11 @@ public class ScheduleController {
 //    }
 
     @PostMapping(value = "/schedule/scheduleCreates")
-    public String insert(ScheduleInfo scheduleInfo) {
+    public String insert(@SessionAttribute(name = "memberId", required = false) String memberId, ScheduleInfo scheduleInfo) {
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
 
         Schedule schedule = new Schedule();
         schedule.setMemberId(scheduleInfo.getMemberId());
@@ -200,7 +209,12 @@ public class ScheduleController {
 //    }
 
     @GetMapping(value = "/schedule/scheduleContent")
-    public String scheduleContent(@RequestParam("id") Long id, Model model) {
+    public String scheduleContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("id") Long id, Model model) {
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
+
         Schedule schedule = scheduleService.findOneSchedule(id)
                 .orElseThrow(NullPointerException::new);
         model.addAttribute("scheduleID", schedule.getId());
@@ -218,7 +232,12 @@ public class ScheduleController {
     }
 
     @PostMapping(value = "/scheduleDelete")
-    public String scheduleDelete(ScheduleInfo scheduleInfo, Model model) {
+    public String scheduleDelete(@SessionAttribute(name = "memberId", required = false) String memberId, ScheduleInfo scheduleInfo, Model model) {
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
+
         Schedule schedule = new Schedule();
         schedule.setMemberId(scheduleInfo.getMemberId());
         schedule.setId(scheduleInfo.getId());
@@ -255,7 +274,12 @@ public class ScheduleController {
 //    }
 
     @PostMapping(value="/scheduleUpdate")
-    public String update(ScheduleInfo scheduleInfo, Model model) {
+    public String update(@SessionAttribute(name = "memberId", required = false) String memberId, ScheduleInfo scheduleInfo, Model model) {
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
+
         Schedule schedule = new Schedule();
         schedule.setMemberId(scheduleInfo.getMemberId());
         schedule.setId(scheduleInfo.getId());

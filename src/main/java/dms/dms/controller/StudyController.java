@@ -27,8 +27,8 @@ import java.util.UUID;
 
 @Controller
 public class StudyController {
-//    private final String fileDir = "C:/Users/user/dms_file";
-    private final String fileDir = "D:/YU/3-2/SE/project/dms/dms_file";
+    private final String fileDir = "C:/Users/user/dms_file";
+//    private final String fileDir = "D:/YU/3-2/SE/project/dms/dms_file";
     //    각자 변경해야할 부분4
     private final StudyService studyService;
 
@@ -39,6 +39,10 @@ public class StudyController {
 
     @GetMapping(value="/study/studyHome")
     public String studyListByMemberID(@SessionAttribute(name = "memberId", required = false) String memberId, Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.ASC) Pageable pageable) { // 홈 화면 띄우기
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
 
         Page<Study> list = studyService.findStudiesByMemberID(memberId, pageable);
         int nowPage = list.getPageable().getPageNumber()+1;
@@ -55,12 +59,21 @@ public class StudyController {
 
     @GetMapping(value="/study/studyCreate")
     public String studyInsert(@SessionAttribute(name = "memberId", required = false) String memberId, Model model) { // 추가 화면 띄우기
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("memberID", memberId);
         return "/study/studyCreate";
     }
 
     @PostMapping(value="/study/studyCreates")
     public String insert(@SessionAttribute(name = "memberId", required = false) String memberId, Study studyInfo, MultipartFile files) throws IOException { // 공부 기록 추가 메소드
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
 
         Study study = new Study();
         System.out.println(memberId);
@@ -98,6 +111,11 @@ public class StudyController {
 
     @GetMapping(value="/study/studyContent")
     public String studyContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("id") Long id, Model model) { // 공부 기록 상세 보기
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
+
         Study study = studyService.findOneStudy(id)
                 .orElseThrow(NullPointerException::new);
         model.addAttribute("studyId", study.getId());
@@ -118,7 +136,8 @@ public class StudyController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<InputStreamResource> downloadFile(@RequestParam("studyId") Long id) throws IOException {
+    public ResponseEntity<InputStreamResource> downloadFile(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("studyId") Long id) throws IOException {
+
         Study study = studyService.findOneStudy(id)
                 .orElseThrow(NullPointerException::new);
 
@@ -131,7 +150,12 @@ public class StudyController {
     }
 
     @GetMapping(value="/study/studyDelete")
-    public String studyDelete(@RequestParam("id") Long id, Model model) { // 공부 기록 삭제
+    public String studyDelete(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("id") Long id, Model model) { // 공부 기록 삭제
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
+
         String deleteCheck = studyService.deleteStudy(id);
         if(deleteCheck == "success") {
             AlertDTO message = new AlertDTO("공부기록 삭제가 완료되었습니다.", "/study/studyHome", RequestMethod.GET, null);
@@ -145,6 +169,11 @@ public class StudyController {
 
     @GetMapping(value="/study/studyUpdate")
     public String studyUpdate(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("id") Long id, Model model) { // 공부 기록 수정 화면 띄우기
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
+
         Study study = studyService.findOneStudy(id)
                 .orElseThrow(NullPointerException::new);
 
@@ -168,14 +197,19 @@ public class StudyController {
     }
 
     @PostMapping(value="/studyUpdateComplete")
-    public String update(Study studyInfo,  MultipartFile files, Model model) throws IOException { // 공부 기록 추가 메소드
-    //파일 수정 구현
+    public String update(@SessionAttribute(name = "memberId", required = false) String memberId, Study studyInfo,  MultipartFile files, Model model) throws IOException { // 공부 기록 추가 메소드
+
+        if(memberId==null) {
+            return "redirect:/";
+        }
+
         Study study = new Study();
         study.setId(studyInfo.getId());
         study.setMemberId(studyInfo.getMemberId());
         study.setTitle(studyInfo.getTitle());
         study.setContent(studyInfo.getContent());
         study.setDate(studyInfo.getDate());
+        study.setUrl(studyInfo.getUrl());
 
         String originalName = studyInfo.getFileoriginname();
         if(!originalName.isEmpty()) {

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 //import java.lang.foreign.SymbolLookup;
+import java.lang.reflect.Member;
 import java.util.Optional;
 
 @Service // 스프링이 관리해주는 객체 == 스프링 빈
@@ -25,6 +26,10 @@ public class MemberService {
         memberRepository.save(memberEntity);
         // Repository의 save 메서드 호출 (조건. entity 객체를 넘겨줘야 함)
 
+    }
+
+    public void changePW(MemberEntity memberEntity){
+        memberRepository.save(memberEntity);
     }
 
     // 탈퇴 기능
@@ -161,6 +166,18 @@ public class MemberService {
             System.out.println("수정할 멤버 조회 불가");
             // 조회 결과가 없다
             return "fail";
+        }
+    }
+
+    public String findMemberID(String memberName, String memberEmail) {
+        MemberEntity memberEntity1 = memberRepository.findByMemberName(memberName);
+        MemberEntity memberEntity2 = memberRepository.findByMemberEmail(memberEmail);
+
+        if(memberEntity1!=null && memberEntity2 != null && memberEntity1 == memberEntity2) {
+            return memberEntity1.getMemberId();
+        }
+        else {
+            return "incorrect";
         }
     }
 
