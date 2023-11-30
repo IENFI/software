@@ -1,6 +1,7 @@
 package dms.dms.controller;
 
 import dms.dms.domain.MemberEntity;
+import dms.dms.domain.MemberRole;
 import dms.dms.dto.AlertDTO;
 import dms.dms.dto.MessageDTO;
 import dms.dms.dto.QnADTO;
@@ -41,10 +42,17 @@ public class QnAController {
             return "redirect:/";
         }
 
-        return "/qna/writeQuestionMessage";
+
+        if (loginMember.getMemberRole()== MemberRole.USER){
+            return "/qna/writeQuestionMessage";
+        }
+
+        else {
+            return "/qna/writeAnswerMessage";
+        }
     }
 
-    @PostMapping("/qna/write")
+    @PostMapping("/qna/writeQuestion")
     public String writeQuestion(@SessionAttribute(name = "memberId", required = false) String memberId,
                                 @ModelAttribute QnADTO qnaDTO, Model model){
         System.out.println("MessageController.Post_write");
@@ -71,6 +79,7 @@ public class QnAController {
     public String questionMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
                                   @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.ASC)
                                   Pageable pageable){
+        System.out.println("QnAController.questionMessage");
         MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
 
         if (loginMember == null){

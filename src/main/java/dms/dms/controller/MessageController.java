@@ -1,6 +1,7 @@
 package dms.dms.controller;
 
 import dms.dms.domain.MemberEntity;
+import dms.dms.domain.MemberRole;
 import dms.dms.dto.AlertDTO;
 import dms.dms.dto.MessageDTO;
 import dms.dms.repository.MemberRepository;
@@ -102,28 +103,34 @@ public class MessageController {
             return "redirect:/";
         }
 
-        Page<MessageDTO> list = messageService.findMessageReceiverByMemberId(memberId, pageable).map(message -> {
-            MessageDTO messageDTO = new MessageDTO();
-            messageDTO.setMessageId(message.getMessageId());
-            messageDTO.setContent(message.getContent());
-            messageDTO.setReceiverId(message.getReceiver().getMemberId());
-            messageDTO.setTitle(message.getTitle());
-            messageDTO.setSenderId(message.getSender().getMemberId());
-            messageDTO.setDate(message.getDate());
-            return messageDTO;
-        });
+        if (loginMember.getMemberRole()== MemberRole.USER){
+            Page<MessageDTO> list = messageService.findMessageReceiverByMemberId(memberId, pageable).map(message -> {
+                MessageDTO messageDTO = new MessageDTO();
+                messageDTO.setMessageId(message.getMessageId());
+                messageDTO.setContent(message.getContent());
+                messageDTO.setReceiverId(message.getReceiver().getMemberId());
+                messageDTO.setTitle(message.getTitle());
+                messageDTO.setSenderId(message.getSender().getMemberId());
+                messageDTO.setDate(message.getDate());
+                return messageDTO;
+            });
 
-        int nowPage = list.getPageable().getPageNumber()+1;
-        int startPage = Math.max(nowPage-4,1);
-        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+            int nowPage = list.getPageable().getPageNumber()+1;
+            int startPage = Math.max(nowPage-4,1);
+            int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
-        model.addAttribute("messages", list);
-        model.addAttribute("nowPage", nowPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+            model.addAttribute("messages", list);
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
 
 //        return new Response("성공", "받은 쪽지를 불러왔습니다.", messageService.receivedMessage(memberEntity));
-        return "/messages/receivedMessage";
+            return "/messages/receivedMessage";
+        }
+        else {
+            System.out.println("admin이 쪽지창 진입");
+            return "redirect:/qna/question";
+        }
     }
 
 
@@ -180,27 +187,32 @@ public class MessageController {
             return "redirect:/";
         }
 
-        Page<MessageDTO> list = messageService.findMessageSenderByMemberId(memberId, pageable).map(message -> {
-            MessageDTO messageDTO = new MessageDTO();
-            messageDTO.setMessageId(message.getMessageId());
-            messageDTO.setContent(message.getContent());
-            messageDTO.setReceiverId(message.getReceiver().getMemberId());
-            messageDTO.setTitle(message.getTitle());
-            messageDTO.setSenderId(message.getSender().getMemberId());
-            messageDTO.setDate(message.getDate());
-            return messageDTO;
-        });
+        if (loginMember.getMemberRole()==MemberRole.USER){
+            Page<MessageDTO> list = messageService.findMessageSenderByMemberId(memberId, pageable).map(message -> {
+                MessageDTO messageDTO = new MessageDTO();
+                messageDTO.setMessageId(message.getMessageId());
+                messageDTO.setContent(message.getContent());
+                messageDTO.setReceiverId(message.getReceiver().getMemberId());
+                messageDTO.setTitle(message.getTitle());
+                messageDTO.setSenderId(message.getSender().getMemberId());
+                messageDTO.setDate(message.getDate());
+                return messageDTO;
+            });
 
-        int nowPage = list.getPageable().getPageNumber()+1;
-        int startPage = Math.max(nowPage-4,1);
-        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+            int nowPage = list.getPageable().getPageNumber()+1;
+            int startPage = Math.max(nowPage-4,1);
+            int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
-        model.addAttribute("messages", list);
-        model.addAttribute("nowPage", nowPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+            model.addAttribute("messages", list);
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
 
-        return "/messages/sentMessage";
+            return "/messages/sentMessage";
+        }
+        else {
+            return "redirect:/gna/answer";
+        }
 //        return new Response("성공", "보낸 쪽지를 불러왔습니다.", messageService.sentMessage(memberEntity));
     }
 

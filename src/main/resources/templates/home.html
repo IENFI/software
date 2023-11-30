@@ -94,11 +94,11 @@
                 <ul class="login_item">
                     <li><input id="ID" class="item" type="text" placeholder="아이디를 입력하세요." th:field="*{memberId}"></li>
                     <li><input id="PW" class="item" type="password" placeholder="비밀번호를 입력하세요." th:field="*{memberPassword}"></li>
-                    <div th:if="${#fields.hasGlobalErrors()}">
-                        <br/>
-                        <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>
-                    </div>
-                    <br/>
+<!--                    <div th:if="${#fields.hasGlobalErrors()}">-->
+<!--                        <br/>-->
+<!--                        <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>-->
+<!--                    </div>-->
+<!--                    <br/>-->
                     <input id="login_button" class="item" type="submit" value="로그인">
                     <a href="#" id="find_id_pw">아이디/비밀번호 찾기</a>
                     <a href="/member/save" id="signup_button">회원가입</a>
