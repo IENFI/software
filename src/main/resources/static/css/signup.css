@@ -125,7 +125,3 @@ label{
     font-size:12px;
 }
 
-#email_div{
-    display: flex;
-    flex-direction: row;
-}

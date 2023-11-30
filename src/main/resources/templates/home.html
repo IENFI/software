@@ -37,25 +37,7 @@
     </style>
 </head>
 <body>
-<header id="header">
-    <div class="inner">
-        <a href="/" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
-        <ul class="nav">
-            <li><a href="board.html" class="nav_item">게시판</a></li>
-            <li><a href="/study/studyHome" class="nav_item">공부기록</a></li>
-            <li><a href="/schedule/plan" class="nav_item">일정</a></li>
-        </ul>
-        <span id="message"><img src="/img/message.png" id = message_icon onclick="openGetMessage()"></span>
-        <span id="profile">
-                   <li><a href="#"><img src="/img/profile.png" id = profile_icon  onclick=""></a>
-                       <ul id="profile_dropdown">
-                          <li><a href="/member/info" class="dropdown_item">내 정보</a></li>
-                          <li><a href="/member/logout" class="dropdown_item">로그아웃</a></li>
-                       </ul>
-                 </li>
-            </span>
-    </div>
-</header>
+<header id="header"></header>
 <section id="contents">
     <div class="inner">
         <div id="contents_container">
@@ -69,19 +51,30 @@
                             <span id="todayYear_month"></span>
                             <span id="todayDate"></span>
                         </div>
-                        <div id="plan_div"></div>
+                        <div id="plan_div">
+
+
+
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="calendar">
-                <div id="plan_container">
-                    <span id="currentYearMonth"></span>
-                    <button class="prev" onclick="showCalendar(-1)">이전 월</button>
-                    <button class="next" onclick="showCalendar(1)">다음 월</button>
+                <div id="calendar_wrap">
+                    <div id="planHeader">
+                        <div id="HeaderInner">
+                            <span id="currentYearMonth"></span>
+                            <div id="calendarBtn">
+                                <button class="calendarBtn" onclick="showCalendar(-1)"><</button>
+                                <button class="calendarBtn" onclick="showCalendar(1)">></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="plan_container">
+                        <div id="Calendar_Container"></div>
 
-                    <div id="Calendar_Container"></div>
-
+                    </div>
                 </div>
             </div>
             <div class="playing">공모전</div>
@@ -103,7 +96,7 @@
                     <li><input id="PW" class="item" type="password" placeholder="비밀번호를 입력하세요." th:field="*{memberPassword}"></li>
                     <div th:if="${#fields.hasGlobalErrors()}">
                         <br/>
-                        <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}" />
+                        <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>
                     </div>
                     <br/>
                     <input id="login_button" class="item" type="submit" value="로그인">
@@ -114,15 +107,10 @@
         </div>
     </form>
 </section>
-<footer id="footer">
-    <div class="inner">
-        <div id="footer_container">
+<footer id="footer"></footer>
 
-        </div>
-    </div>
-
-</footer>
 <!--<script src="/javascript/calendarIndex.js"></script>-->
+<script src="/javascript/fetchMainHF.js"></script>
 <script src="/javascript/indexToday.js"></script>
 <script src="/javascript/openMessage.js"></script>
 <script th:inline="javascript">
@@ -137,7 +125,7 @@
         document.getElementById('login_form').style.display = 'none';
     }
     else if(Error==true){
-        document.getElementById('login_form').style.display = 'cont ents';
+        document.getElementById('login_form').style.display = 'contents';
         // alert('로그인 실패');
     }
     // else {
@@ -192,27 +180,30 @@
 
 
                     if(holiday == 0){
-                        calendarHTML += `<td><div class="Sun">${dayCounter}</div><div id="${dayCounter}">`;
+                        calendarHTML += `<td><div class="Sun">${dayCounter}</div>`;
                         for(let s=0; s<scheduleList.length; s++) {
                             if(dayCounter==scheduleList.at(s).day && month==scheduleList.at(s).month && year==scheduleList.at(s).year) {
-                                calendarHTML += `<div>${scheduleList.at(s).title}</div></div><br><div class="plan_count">1</div>`;
+                                calendarHTML += `<div class="plan_count"></div>`;
+                                break;
                             }
                         }
                     }
                     else if(holiday == 6){
-                        calendarHTML += `<td><div class="Sat">${dayCounter}</div><div id="${dayCounter}">`;
+                        calendarHTML += `<td><div class="Sat">${dayCounter}</div>`;
                         for(let s=0; s<scheduleList.length; s++) {
                             if(dayCounter==scheduleList.at(s).day && month==scheduleList.at(s).month && year==scheduleList.at(s).year) {
-                                calendarHTML += `<div>${scheduleList.at(s).title}</div></div><br>`;
+                                calendarHTML += `<div class="plan_count"></div>`;
+                                break;
                             }
                         }
                     }
 
                     else{
-                        calendarHTML += `<td>${dayCounter}<div id="${dayCounter}">`;
+                        calendarHTML += `<td><div>${dayCounter}</div>`;
                         for(let s=0; s<scheduleList.length; s++) {
                             if(dayCounter==scheduleList.at(s).day && month==scheduleList.at(s).month && year==scheduleList.at(s).year) {
-                                calendarHTML += `<div>${scheduleList.at(s).title}</div></div><br>`;
+                                calendarHTML += `<div class="plan_count"></div>`;
+                                break;
                             }
                         }
                     }
@@ -270,13 +261,13 @@
         let scheduleList = [[${scheduleList}]];
 
         const today = new Date();
-        let todayScheduleHTML = `<div>`;
+        let todayScheduleHTML = `<div id="planInner">`;
 
         for(let i=0; i<scheduleList.length; i++) {
             if(scheduleList.at(i).year == today.getFullYear() && scheduleList.at(i).month == today.getMonth()+1
                 && scheduleList.at(i).day == today.getDate()) {
                 console.log("if문 실행");
-                todayScheduleHTML += `<div>${scheduleList.at(i).title}</div>`;
+                todayScheduleHTML += `<div class="todayPlanItem">${scheduleList.at(i).title}</div>`;
             }
         }
         todayScheduleHTML += `</div><br>`;

@@ -1,93 +1,139 @@
-/*--------------------------------------------------------달력 grid-----------------------------------------------------*/
-.calendar{
+   /*--------------------------------------------------------달력 grid-----------------------------------------------------*/
+   #calendar_wrap{
     display:flex;
     align-items: center;
     justify-content: center;
-}
-table{
-    border-spacing: 0;
-}
-td{
-    border:solid black 1px !important;
-    height:50px;
-    width:70px;
+    flex-direction: column;
+   }
+   table{
+        border-spacing: 0;
+        border:solid gray 0.5px !important;
+    }
+    th{
+        border:solid gray 0.5px;
+    }
+   td{
+    border:solid gray 0.5px !important;
+    height:2.7vw;
+    width:4vw;
     position:relative;
     vertical-align: top;
-}
-.Sat{
-    font-weight: bold;
-    color:blue;
-}
-.Sun{
-    font-weight: bold;
-    color:red;
-}
-.plan_count{
-    border:solid 1px;
-    height:10px;
-    position:relative;
-    top:13px;
-    left:57px;
-    width:10px;
-    border-radius: 100%;
-    background-color: lightgreen;
-    display:none;
+   }
+   .Sat{
+        font-weight: bold;
+        color:blue;
+    }
+    .Sun{
+        font-weight: bold;
+        color:red;
+    }
+    .plan_count{
 
-}
-/*--------------------------------------------------------달력 grid-----------------------------------------------------*/
+        height:10px;
 
 
+        position:absolute;
+        top:2.1vw;
+        width:10px;
+        border-radius: 100%;
+        background-color: rgb(45, 190, 45);
+        border:none;
+        left:3.4vw;
 
 
+    }
+    #planHeader{
+        width:100%;
+        margin:5px 0 10px 0;
 
-/*--------------------------------------------------------오늘의 일정 grid-----------------------------------------------------*/
-#detail_header{
-    border-bottom:solid 1.5px;
-    height:60px; /*이거 변경하면 #year_month_date에서 height도 바꿔주기, 400 - 여기 값만큼*/
-    line-height: 60px;
-}
-#detail_content{
-    display:flex;
-    flex-direction: row;
-}
-#year_month_date{
-    width:50%;
-    height:340px;
-    border-right:solid 1px gray;
-    text-align: center;
+    }
+    #HeaderInner{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin:0 35px 0 35px;
+    }
+    #currentYearMonth{
+        font-size:2rem;
 
-}
-#todayYear_month{
-    display:block;
-    font-size:30px;
-    position:relative;
-    top:80px;
-}
-#todayDate{
-    display: block;
-    font-size:60px;
-    font-weight: bold;
-    position:relative;
-    top:100px;
-}
-#plan_div{
-    width:50%;
-}
-#today_plan{
-    font-size:25px;
-    margin-left:10px;
-    font-weight: 1000;
-    font-family: 'Gong';
-}
-/*--------------------------------------------------------오늘의 일정 grid-----------------------------------------------------*/
+
+        /*margin-left:30px;*/
+    }
+
+    .calendarBtn{
+        background-color:#fff;
+        color:black;
+
+        cursor: pointer;
+        height:25px;
+        width:25px;
+        border-radius: 100%;
+        text-align: center;
+        border:solid 1px;
+
+
+    }
+    .calendarBtn:hover{
+        background-color: #b3b5b6;
+        color:black;
+    }
+    
+   /*--------------------------------------------------------달력 grid-----------------------------------------------------*/
 
 
 
 
 
+   /*--------------------------------------------------------오늘의 일정 grid-----------------------------------------------------*/
+    #detail_header{
+        border-bottom:solid 1.5px;
+        height:60px; /*이거 변경하면 #year_month_date에서 height도 바꿔주기, 400 - 여기 값만큼*/
+        line-height: 60px;
+    }
+    #detail_content{
+        display:flex;
+        flex-direction: row;
+    }
+    #year_month_date{
+        width:50%;
+        height:340px;
+        border-right:solid 1px gray;
+        text-align: center;
+        
+    }
+    #todayYear_month{
+        display:block;
+        font-size:30px;
+        position:relative;
+        top:80px;
+    }
+    #todayDate{
+        display: block;
+        font-size:60px;
+        font-weight: bold;
+        position:relative;
+        top:100px;
+    }
+    #plan_div{
+        width:50%;
+    }
+    #today_plan{
+        font-size:25px;
+        margin-left:10px;
+        font-weight: 1000;
+        font-family: 'Gong';
+    }
+   /*--------------------------------------------------------오늘의 일정 grid-----------------------------------------------------*/
 
 
 
 
 
+   
+    
 
+
+
+
+ 

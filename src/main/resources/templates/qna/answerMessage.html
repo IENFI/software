@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/message.css">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div id="message_category">
+    <div id="message_header">
+        <div id="m_h_inner">
+            <li><a href="/messages/received" class="m_h_item">받은 쪽지</a></li>
+            <li><a href="/messages/sent" class="m_h_item">보낸 쪽지</a></li>
+            <li><a href="/qna/question" class="m_h_item">문의</a></li>
+            <li><a href="/qna/answer" class="m_h_item" style="color: red;"><strong>답변</strong></a></li>
+        </div>
+    </div>
+
+    <!--    <div id="color_header">-->
+    <!--        <input type="checkbox" id="allCheckbox" class="color_item">-->
+    <!--        <div id="list" class="color_item">번호</div>-->
+    <!--        <div id="name" class="color_item">이름</div>-->
+    <!--        <div id="content" class="color_item">내용</div>-->
+    <!--        <div id="date" class="color_item">날짜</div>-->
+    <!--    </div>-->
+
+    <div id="message_content">
+        <form id="deleteForm" th:action="@{/messages/deleteReceivedMessage}" th:method="post">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>번호</th>
+                    <th>상태</th>
+                    <th>제목</th>
+                    <th>날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="qna, iterStat : ${qnas}">
+                    <td><input type="checkbox" th:name="selectedMessages" th:value="${qna.qnaId}" /></td>
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="|관리자 아이디 : ${qna.adminId} or 관리자라고 고정하기?|"></td>
+                    <td th:text="${qna.title}"></td>
+                    <td th:text="${qna.date}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <div id="message_footer">
+        <div id="footer_inner">
+            <br>
+            <table class="board_page">
+                <tr>
+                    <td class="bottom_first"><a th:href="@{/qna/answer(page=0)}"> << </a></td>
+                    <td class="bottom_prev">
+                        <a th:if="${nowPage > 1}" th:href="@{/qna/answer(page=${nowPage}-1)}"> < </a>
+                        <a th:unless="${nowPage > 1}"> < </a>
+                    </td>
+                    <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
+                        <td class="num" th:if="${page}!=0">
+                            <a th:href="@{/qna/answer(page=${page}-1)}" th:text="${page}"></a>
+                        </td>
+                    </th:each>
+                    <td class="bottom_next">
+                        <a th:if="${nowPage < endPage}" th:href="@{/qna/answer(page=${nowPage})}"> > </a>
+                        <a th:unless="${nowPage < endPage}"> > </a>
+                    </td>
+                    <td class="bottom_last"><a th:href="@{/qna/answer(page=${endPage}-1)}"> >> </a></td>
+                </tr>
+            </table>
+            <div id="footer_button">
+                <button type="button" onclick="submitForm()">삭제 버튼 삭제하기</button>
+                <a href="/messages/writeQnA"><button>문의 작성</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="/javascript/deleteMessage.js"></script>
+<script src="/javascript/messageIndex.js"></script>
+<script src="/javascript/openMessageWrite.js"></script>
+<script>
+    function submitForm() {
+        document.getElementById("deleteForm").submit();
+    }
+</script>
+</html>
