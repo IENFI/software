@@ -25,7 +25,7 @@
         <input type="checkbox" id="masterCheckbox" class="color_item">
         <div id="list" class="color_item">번호</div>
         <div id="name" class="color_item">이름</div>
-        <div id="title" class="color_item">내용</div>
+        <div id="title" class="color_item">제목</div>
         <div id="date" class="color_item">날짜</div>
     </div>
 
@@ -34,7 +34,7 @@
             <div class="message_list" th:each="message, iterStat : ${messages}">
                 <input type="checkbox" th:name="selectedMessages" th:value="${message.messageId}" class="content_item list_checkbox childCheckbox">
                 <div th:text="${iterStat.index + 1}" class="content_item list_number"></div>
-                <div th:text="${message.senderId}" class="content_item list_name"></div>
+                <div th:text="${message.receiverId}" class="content_item list_name"></div>
                 <div class="content_item list_title">
                     <div th:text="${message.title}" id="list_titleInner"></div>
                 </div>
