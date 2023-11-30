@@ -47,7 +47,9 @@
                     <td th:text="${iterStat.index + 1}"></td>
                     <td th:if="${qna.adminId != null}" th:text="답변완료" style="color:red;"></td>
                     <td th:unless="${qna.adminId != null}" th:text="작성완료" style="color:forestgreen;"></td>
-                    <td th:text="${qna.title}"></td>
+                    <a th:href="@{/qna/qnaContent(qnaId=${qna.qnaId})}" class="content_item list_title">
+                        <div th:text="${qna.title}" class="list_titleInner"></div>
+                    </a>
                     <td th:text="${qna.date}"></td>
                 </tr>
                 </tbody>

@@ -89,7 +89,7 @@ public class MessageController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/messages/received")
     public String getReceivedMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
-                                     @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.ASC)
+                                     @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
                                          Pageable pageable)
     {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
@@ -169,7 +169,7 @@ public class MessageController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/messages/sent")
     public String getSentMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
-                                     @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.ASC)
+                                     @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
                                      Pageable pageable)
     {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함

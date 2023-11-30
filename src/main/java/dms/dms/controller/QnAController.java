@@ -91,6 +91,10 @@ public class QnAController {
     @GetMapping("/qna/qnaContent")
     public String qnaContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("qnaId") Long qnaId, Model model) { // 공부 기록 상세 보기
         // qna가 조회되지 않을 때의 알림창 구분하기
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+        if (loginMember == null){
+            return "redirect:/";
+        }
         
         QnA qna = qnaService.findOneQnA(qnaId);
 
@@ -106,11 +110,21 @@ public class QnAController {
     @GetMapping("/qna/ansContent")
     public String ansContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("qnaId") Long qnaId, Model model) { // 공부 기록 상세 보기
         // qna가 조회되지 않을 때의 알림창 구분하기
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+        if (loginMember == null){
+            return "redirect:/";
+        }
 
         QnA qna = qnaService.findOneQnA(qnaId);
 
         if (qna==null){
-            AlertDTO message = new AlertDTO("QnA가 조회되지 않습니다.", "/qna/answeredQuestion", RequestMethod.GET, null);
+            AlertDTO message;
+            if (loginMember.getMemberRole()==MemberRole.USER){
+                message = new AlertDTO("QnA가 조회되지 않습니다.", "/qna/answer", RequestMethod.GET, null);
+            }
+            else {
+                message = new AlertDTO("QnA가 조회되지 않습니다.", "/qna/answeredQuestion", RequestMethod.GET, null);
+            }
             return showMessageAndRedirect(message, model);
         }
         model.addAttribute("qna", qna);

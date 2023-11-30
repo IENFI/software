@@ -46,7 +46,9 @@
                     <td><input type="checkbox" th:name="selectedMessages" th:value="${qna.qnaId}" /></td>
                     <td th:text="${iterStat.index + 1}"></td>
                     <td th:text="|관리자 아이디 : ${qna.adminId} or 관리자라고 고정하기?|"></td>
-                    <td th:text="${qna.title}"></td>
+                    <a th:href="@{/qna/ansContent(qnaId=${qna.qnaId})}" class="content_item list_title">
+                        <div th:text="${qna.title}" class="list_titleInner"></div>
+                    </a>
                     <td th:text="${qna.date}"></td>
                 </tr>
                 </tbody>
