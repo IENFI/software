@@ -70,6 +70,7 @@
 <body>
 
 <form id="writeMessageForm" th:action="|@{/qna/writeAnswer}|" method="post" th:object="${qna}">
+    <input type="hidden" >
     <div id="writeMessageInner">
         <div id="messageTitle_div" class="item_div">
             <label for="messageTitle">제목</label>
