@@ -7,6 +7,10 @@ function sendCode() {
     code.onload = function () {
         if(code.status === 200) {
             returnCode = code.responseText;
+            alert("인증번호가 전송되었습니다.");
+        }
+        else {
+            alert("인증번호가 전송에 실패했습니다.");
         }
     }
     code.send();
