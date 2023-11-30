@@ -112,7 +112,25 @@
 <!--<script src="/javascript/calendarIndex.js"></script>-->
 <script src="/javascript/fetchMainHF.js"></script>
 <script src="/javascript/indexToday.js"></script>
-<script src="/javascript/openMessage.js"></script>
+<!--<script src="/javascript/openMessage.js"></script>-->
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    let role = [[${role}]];
+    function openGetMessage(){
+        var windowFeatures = 'width=750,height=535,resizable=yes';
+
+        if(role == 0){
+            var newWindow = window.open('/messages/received', 'NoteListWindow', windowFeatures);
+        }
+        else {
+            var newWindow = window.open('/qna/question', 'NoteListWindow', windowFeatures);
+        }
+        if (newWindow === null) {
+            alert('팝업이 차단되었습니다. 팝업 차단을 해제하고 다시 시도하세요.');
+        }
+    }
+    /* ]]> */
+</script>
 <script th:inline="javascript">
     /* <![CDATA[ */
     let Error = [[${login_error}]];

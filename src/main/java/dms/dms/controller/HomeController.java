@@ -34,6 +34,7 @@ public class HomeController {
 
         if(loginMember != null) {
             model.addAttribute("home_button", true);
+            model.addAttribute("role",loginMember.getMemberRole());
             System.out.println("home_button : true");
             System.out.println("loginMember : "+ loginMember);
         }

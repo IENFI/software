@@ -46,6 +46,31 @@ public class QnAService {
     }
 
     @Transactional
+    public QnA findOneQnA(Long qnaId){
+        return qnaRepository.findQnAByQnaId(qnaId);
+    }
+
+    // admin 쪽 함수
+    @Transactional
+    public Page<QnA> findAllQnA(Pageable pageable){
+        // 답변이 되지 않은 QNA 전부 반환하는 함수
+        return qnaRepository.findQnASByAdminIsNull(pageable);
+    }
+
+    public Page<QnA> findQnAByAdminId(String memberId, Pageable pageable){
+        Optional<MemberEntity> memberEntityOptional = memberRepository.findByMemberId(memberId);
+
+        if (memberEntityOptional.isPresent()){
+            return qnaRepository.findQnAByAdmin(memberEntityOptional.get(), pageable);
+        }
+        else {
+            return Page.empty();
+        }
+    }
+
+    
+    // user 쪽 함수
+    @Transactional
     public Page<QnA> findQnAByUserId(String memberId, Pageable pageable){
         Optional<MemberEntity> memberEntityOptional = memberRepository.findByMemberId(memberId);
 

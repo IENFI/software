@@ -2,6 +2,8 @@ package dms.dms.controller;
 
 import dms.dms.domain.MemberEntity;
 import dms.dms.domain.MemberRole;
+import dms.dms.domain.QnA;
+import dms.dms.domain.Study;
 import dms.dms.dto.AlertDTO;
 import dms.dms.dto.MessageDTO;
 import dms.dms.dto.QnADTO;
@@ -52,6 +54,21 @@ public class QnAController {
         }
     }
 
+    @GetMapping("/qna/qnaContent")
+    public String qnaContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("qnaId") Long qnaId, Model model) { // 공부 기록 상세 보기
+        // qna가 조회되지 않을 때의 알림창 구분하기
+        
+        QnA qna = qnaService.findOneQnA(qnaId);
+
+        if (qna==null){
+            AlertDTO message = new AlertDTO("QnA가 조회되지 않습니다.", "/qna/question", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        model.addAttribute("qna", qna);
+
+        return "/qna/qnaContent";
+    }
+
     @PostMapping("/qna/writeQuestion")
     public String writeQuestion(@SessionAttribute(name = "memberId", required = false) String memberId,
                                 @ModelAttribute QnADTO qnaDTO, Model model){
@@ -86,37 +103,105 @@ public class QnAController {
             return "redirect:/";
         }
 
-        Page<QnADTO> list = qnaService.findQnAByUserId(memberId, pageable).map(qna -> {
-            QnADTO qnaDTO = new QnADTO();
-            qnaDTO.setQnaId(qna.getQnaId());
-            qnaDTO.setQuestionContent(qna.getQuestionContent());
-            qnaDTO.setTitle(qna.getTitle());
-            qnaDTO.setUserId(qna.getUser().getMemberId());
-            qnaDTO.setDate(qna.getDate());
-            if(qna.getAdmin()==null){
-                // 답변이 없을 경우 답변 란, 답변한 관리자 아이디 null로 반환
-                qnaDTO.setAnswerContent(null);
-                qnaDTO.setAdminId(null);
-            }
-            else {
-                // 답변이 있을 경우 답변 란, 답변한 관리자 아이디 입력
-                qnaDTO.setAnswerContent(qna.getAnswerContent());
-                qnaDTO.setAdminId(qnaDTO.getAdminId());
-            }
-            return qnaDTO;
-        });
+        if (loginMember.getMemberRole() == MemberRole.USER){
+            Page<QnADTO> list = qnaService.findQnAByUserId(memberId, pageable).map(qna -> {
+                QnADTO qnaDTO = new QnADTO();
+                qnaDTO.setQnaId(qna.getQnaId());
+                qnaDTO.setQuestionContent(qna.getQuestionContent());
+                qnaDTO.setTitle(qna.getTitle());
+                qnaDTO.setUserId(qna.getUser().getMemberId());
+                qnaDTO.setDate(qna.getDate());
+                if(qna.getAdmin()==null){
+                    // 답변이 없을 경우 답변 란, 답변한 관리자 아이디 null로 반환
+                    qnaDTO.setAnswerContent(null);
+                    qnaDTO.setAdminId(null);
+                }
+                else {
+                    // 답변이 있을 경우 답변 란, 답변한 관리자 아이디 입력
+                    qnaDTO.setAnswerContent(qna.getAnswerContent());
+                    qnaDTO.setAdminId(qnaDTO.getAdminId());
+                }
+                return qnaDTO;
+            });
 
-        int nowPage = list.getPageable().getPageNumber()+1;
-        int startPage = Math.max(nowPage-4,1);
-        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+            int nowPage = list.getPageable().getPageNumber()+1;
+            int startPage = Math.max(nowPage-4,1);
+            int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
-        model.addAttribute("qnas", list);
-        model.addAttribute("nowPage", nowPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+            model.addAttribute("qnas", list);
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
 
 //        return new Response("성공", "받은 쪽지를 불러왔습니다.", messageService.receivedMessage(memberEntity));
-        return "/qna/questionMessage";
+            return "/qna/questionMessage";
+        }
+
+        else {
+            Page<QnADTO> list = qnaService.findAllQnA(pageable).map(qna -> {
+                QnADTO qnaDTO = new QnADTO();
+                qnaDTO.setQnaId(qna.getQnaId());
+                qnaDTO.setQuestionContent(qna.getQuestionContent());
+                qnaDTO.setTitle(qna.getTitle());
+                qnaDTO.setUserId(qna.getUser().getMemberId());
+                qnaDTO.setDate(qna.getDate());
+                qnaDTO.setAnswerContent(null);
+                qnaDTO.setAdminId(null);
+                return qnaDTO;
+            });
+
+            int nowPage = list.getPageable().getPageNumber()+1;
+            int startPage = Math.max(nowPage-4,1);
+            int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
+            model.addAttribute("qnas", list);
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+
+            return "/qna/adminQuestionMessage";
+        }
+    }
+
+    @GetMapping("/qna/answeredQuestionMessage")
+    public String answeredQuestionMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
+                                  @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.ASC)
+                                  Pageable pageable){
+        System.out.println("QnAController.answeredQuestionMessage");
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+
+        if (loginMember == null){
+            return "redirect:/";
+        }
+
+        if (loginMember.getMemberRole() == MemberRole.USER){
+            return "redirect:/qna/question";
+        }
+
+        else {
+            Page<QnADTO> list = qnaService.findQnAByAdminId(memberId, pageable).map(qna -> {
+                QnADTO qnaDTO = new QnADTO();
+                qnaDTO.setQnaId(qna.getQnaId());
+                qnaDTO.setQuestionContent(qna.getQuestionContent());
+                qnaDTO.setTitle(qna.getTitle());
+                qnaDTO.setUserId(qna.getUser().getMemberId());
+                qnaDTO.setDate(qna.getDate());
+                qnaDTO.setAnswerContent(null);
+                qnaDTO.setAdminId(null);
+                return qnaDTO;
+            });
+
+            int nowPage = list.getPageable().getPageNumber()+1;
+            int startPage = Math.max(nowPage-4,1);
+            int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
+            model.addAttribute("qnas", list);
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+
+            return "/qna/adminQuestionMessage";
+        }
     }
 
     @GetMapping("/qna/answer")
