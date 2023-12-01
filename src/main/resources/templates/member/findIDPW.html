@@ -4,99 +4,273 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/contents.css">
-    <link rel="stylesheet" href="/css/plan.css">
-    <link rel="stylesheet" href="/css/footer.css">
+
+
+    <style>
+        body{
+            display:flex;
+            justify-content: center;
+
+        }
+        #findIDPW{
+            display:flex;
+            flex-direction: row;
+            margin-top:200px;
+
+        }
+        #findID_div, #findPW_div{
+            border-radius: 5px;
+            box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
+            width:500px;
+            height:350px;
+            display:flex;
+            flex-direction: column;
+        }
+        #div_interval{
+            width:100px;
+        }
+        #findID_Header, #findPW_Header{
+            border-bottom: solid 2px #eee;
+            height:15%;
+            font-weight: bold;
+        }
+        .headerInner{
+            height:100%;
+            display:flex;
+            align-items: center;
+            font-size:20px;
+            margin-left:15px;
+        }
+        #findID_Contents, #findPW_Contents{
+            flex:1;
+        }
+        .findInner{
+            margin:10px 0 0 45px;
+        }
+        label{
+            float:left;
+            width:110px;
+        }
+        .find_items{
+            margin:20px 0 15px 0;
+        }
+        .innerBtn{
+            margin-left:20px;
+            background-color: white;
+            color:black;
+            border:1px solid;
+            border-radius: 4px;
+            height:25px;
+            cursor: pointer;
+        }
+        .innerBtn:hover{
+            background-color: black;
+            color:white;
+        }
+        #findID_Footer, #findPW_Footer{
+            height:50px;
+            border-top: solid 2px #eee;
+
+
+
+        }
+        .findBtn{
+            background-color: black;
+            color:white;
+            cursor:pointer;
+            border-radius: 2px;;
+            float:right;
+            margin:12.5px 12.5px 12.5px 0;
+
+
+        }
+        .findBtn:hover{
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .modal{
+            display:none;
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        #formChangePW{
+            background-color: #fefefe;
+            margin:15% auto;
+            padding:0;
+            border:1px solid #888;
+            width:35%;
+            height:300px;
+            border-radius: 4px;
+            display:flex;
+            flex-direction: column;
+        }
+        #changeHeader{
+            border-bottom: solid 2px #eee;
+            /*margin:0;
+            padding:10px;*/
+            height:45px;
+            justify-content: space-between;
+            padding:0 10px 0 10px;
+            display:flex;
+            align-items: center;
+        }
+        #changeContainer{
+            flex:1;
+        }
+        #changeInner{
+            margin:15px 0 0 15px;
+        }
+        .Inner_item{
+            margin-top:10px;
+        }
+        #changePWBtn{
+            border-top: solid 2px #eee;
+            /*margin:0;
+            padding:10px;*/
+            height:43px;
+            display:flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding:0 10px 0 0;
+        }
+        .modalBtn{
+
+            background-color: black;
+            color:white;
+            cursor: pointer;
+            height:25px;
+            border-radius: 4px;
+        }
+        .modalBtn:hover{
+            background-color:rgba(0,0,0,0.7);
+        }
+        .close{
+            float:right;
+            font-weight:bold;
+            color:#aaa;
+
+            display:block;
+            position:relative;
+
+            font-size:20px;
+        }
+        .close:hover, .close:focus{
+            color:black;
+            text-decoration: none;
+            cursor:pointer;
+        }
+        #changeTitle{
+            font-weight:bold;
+        }
+
+
+    </style>
 </head>
 <body>
-<form action="/member/findID" method="post">
-    <div>
-        <span>>> 아이디 찾기 <<</span>
-    </div>
-    <div>
-        <div>
-            <div>
-                <label for="memberName">이름</label>
-                <br>
-                <input type="text" id="memberName" name="memberName" value="">
+<div id="findInner">
+    <div id="findIDPW">
+        <form action="/member/findID" method="post" id="findID_div">
+            <div id="findID_Header">
+                <div class="headerInner">아이디 찾기</div>
             </div>
-            <div>
-                <label for="memberEmail">이메일</label>
-                <br>
-                <input type="text" id="memberEmail" name="memberEmail">
+            <div id="findID_Contents">
+                <div class="findInner">
+                    <div class="find_items">
+                        <label for="memberName">이름</label>
+                        <input type="text" id="memberName" name="memberName" value="">
+                    </div>
+
+                    <div class="find_items">
+                        <label for="memberEmail">이메일</label>
+                        <input type="text" id="memberEmail" name="memberEmail">
+                    </div>
+                </div>
+            </div>
+            <div id="findID_Footer">
+                <button type="submit" class="findBtn">아이디 찾기</button>
+            </div>
+        </form>
+
+        <div id="div_interval"></div>
+        <div id="findPW_div">
+            <div id="findPW_Header">
+                <div class="headerInner">비밀번호 찾기</div>
+            </div>
+            <div id="findPW_Contents">
+                <div class="findInner">
+                    <div class="find_items">
+                        <label for="memberName2">이름</label>
+                        <input type="text" id="memberName2" name="memberName" value="">
+                    </div>
+
+                    <div class="find_items">
+                        <label for="memberID">아이디</label>
+                        <input type="text" id="memberID" name="memberID" value="">
+                    </div>
+                    <div class="find_items">
+                        <!--            <form action="/emailSend" method="post">-->
+                        <label for="memberEmail2">이메일</label>
+                        <input type="email" id="memberEmail2" name="memberEmail" required>
+                        <button type="button" id="email_send" class="checkBtn innerBtn" onclick="checkCode()">인증 메일 전송</button>
+                        <!--            </form>-->
+                    </div>
+                    <div class="find_items">
+                        <label for="memberEmailNum">인증 번호</label>
+
+                        <input type="text" id="memberEmailNum" name="memberEmailNum">
+                        <button type="button" id="checkCode" class="checkBtn innerBtn" onclick="equalCode()">인증</button>
+                    </div>
+                    <div class="find_items">
+                        <input id="check">체크</input>
+                    </div>
+                </div>
+            </div>
+            <div id="findPW_Footer">
+                <button type="submit" onclick="findPW()" class="findBtn">비밀번호 찾기</button>
             </div>
         </div>
     </div>
-    <div id="planWriteFooter">
-        <button type="submit">아이디 찾기</button>
-    </div>
-</form>
-<br>
-<br>
-<br>
 
 
-<div>
-    <span>>> 비밀번호 찾기 <<</span>
-</div>
-<div>
-    <div>
-        <div>
-            <label for="memberName2">이름</label>
-            <br>
-            <input type="text" id="memberName2" name="memberName" value="">
-        </div>
-        <div>
-            <label for="memberID">아이디</label>
-            <br>
-            <input type="text" id="memberID" name="memberID" value="">
-        </div>
-        <div>
-<!--            <form action="/emailSend" method="post">-->
-                <label for="memberEmail2">이메일</label>
-                <br>
-                <input type="email" id="memberEmail2" name="memberEmail" required>
-                <button type="button" id="email_send" onclick="checkCode()">인증 메일 전송</button>
-<!--            </form>-->
-        </div>
-        <div>
-            <label for="memberEmailNum">인증 번호</label>
-            <br>
-            <input type="text" id="memberEmailNum" name="memberEmailNum" placeholder="인증번호를 입력하세요.">
-            <button type="button" id="checkCode" onclick="equalCode()">인증</button>
-        </div>
-        <input id="check">체크</input>
+
+
+
+    <div style="display:none;" id="changePWModal" class="modal">
+        <form id="formChangePW" action="/member/changePW" method="post">
+            <div id="changeHeader">
+                <div id="changeTitle">비밀번호를 변경하세요</div>
+                <div class="close" id="closePlanBtn" onclick="changePWClose()">&times;</div>
+            </div>
+            <div id="changeContainer">
+                <div id="changeInner">
+                    <div class="Inner_item" id="id_item">
+                        <label for="changePW_memberID">아이디</label>
+                        <br>
+                        <input type="text" id="changePW_memberID" name="memberID">
+                    </div>
+                    <div class="Inner_item" id="pw_item">
+                        <label for="memberPW">비밀번호</label>
+                        <br>
+                        <input type="text" id="memberPW" name="memberPW">
+                    </div>
+                    <div class="Inner_item" id="checkPW_item">
+                        <label for="memberPW">비밀번호 확인</label>
+                        <br>
+                        <input type="text" id="memberPWCheck" name="memberPWCheck">
+                    </div>
+                </div>
+            </div>
+            <div id="changePWBtn">
+                <button class="modalBtn" type="submit" onclick="if(!changePW()){return false}">변경</button>
+            </div>
+        </form>
+
     </div>
-</div>
-<div id="planWriteFooter2">
-    <button type="submit" onclick="findPW()">비밀번호 찾기</button>
-</div>
-<button id="changePW" style="display: none" onclick="changePWOpen()">비밀번호 변경</button>
-<div style="display: none" id="changePWModal" class="modal">
-    <form id="formChangePW" action="/member/changePW" method="post">
-        <div>비밀번호를 변경하세요</div>
-        <div>
-            <div>
-                <label for="changePW_memberID">아이디</label>
-                <br>
-                <input type="text" id="changePW_memberID" name="memberID">
-            </div>
-            <div>
-                <label for="memberPW">비밀번호</label>
-                <br>
-                <input type="text" id="memberPW" name="memberPW">
-            </div>
-            <div>
-                <label for="memberPW">비밀번호 확인</label>
-                <br>
-                <input type="text" id="memberPWCheck" name="memberPWCheck">
-            </div>
-        </div>
-        <div id="changePWBtn">
-            <button type="submit" onclick="if(!changePW()){return false}">변경</button>
-        </div>
-    </form>
+
+
 </div>
 </body>
 <script src="/javascript/changePWModal.js"></script>

@@ -147,7 +147,7 @@
                         if(holiday == 0){
                             calendarHTML += `<td id="today"><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
                             for(let s=0; s<abc.length; s++) {
-                                if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
+                                if(dayCounter==abc.at(s).day && (month+1)==abc.at(s).month && year==abc.at(s).year) {
                                     let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
                                     calendarHTML += `<ul><li class="planTitle"><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
                                 }
@@ -157,7 +157,7 @@
                                 let studyYear = studyDate.substring(0, 4);
                                 let studyMonth = studyDate.substring(5,7);
                                 let studyDay = studyDate.substring(8,10);
-                                if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                                if(dayCounter==studyDay && (month+1)==studyMonth && year==studyYear) {
                                     console.log("if문 실행")
                                     calendarHTML += `<ul><li class="studyTitle"><i class="fa-solid fa-book"></i><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
                                 }
@@ -167,7 +167,7 @@
                         else if(holiday == 6){
                             calendarHTML += `<td id="today"><div class="Sat">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
                             for(let s=0; s<abc.length; s++) {
-                                if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
+                                if(dayCounter==abc.at(s).day && (month+1)==abc.at(s).month && year==abc.at(s).year) {
                                     let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
                                     calendarHTML += `<ul><li class="planTitle"><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
                                 }
@@ -177,7 +177,7 @@
                                 let studyYear = studyDate.substring(0, 4);
                                 let studyMonth = studyDate.substring(5,7);
                                 let studyDay = studyDate.substring(8,10);
-                                if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                                if(dayCounter==studyDay && (month+1)==studyMonth && year==studyYear) {
                                     console.log("if문 실행")
                                     calendarHTML += `<ul><li class="studyTitle"><i class="fa-solid fa-book"></i><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
                                 }
@@ -187,7 +187,7 @@
                         else{
                             calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}">`;
                             for(let s=0; s<abc.length; s++) {
-                                if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
+                                if(dayCounter==abc.at(s).day && (month+1)==abc.at(s).month && year==abc.at(s).year) {
                                     let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
                                     calendarHTML += `<ul><li class="planTitle"><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
                                 }
@@ -197,7 +197,7 @@
                                 let studyYear = studyDate.substring(0, 4);
                                 let studyMonth = studyDate.substring(5,7);
                                 let studyDay = studyDate.substring(8,10);
-                                if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                                if(dayCounter==studyDay && (month+1)==studyMonth && year==studyYear) {
                                     console.log("if문 실행")
                                     calendarHTML += `<ul><li class="studyTitle"><i class="fa-solid fa-book"></i><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
                                 }
@@ -208,7 +208,7 @@
                     else if(holiday == 0){
                         calendarHTML += `<td><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
                         for(let s=0; s<abc.length; s++) {
-                            if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
+                            if(dayCounter==abc.at(s).day && (month+1)==abc.at(s).month && year==abc.at(s).year) {
                                 let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
                                 calendarHTML += `<ul><li class="planTitle"><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
                             }
@@ -218,7 +218,7 @@
                             let studyYear = studyDate.substring(0, 4);
                             let studyMonth = studyDate.substring(5,7);
                             let studyDay = studyDate.substring(8,10);
-                            if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                            if(dayCounter==studyDay && (month+1)==studyMonth && year==studyYear) {
                                 console.log("if문 실행")
                                 calendarHTML += `<ul><li class="studyTitle"><i class="fa-solid fa-book"></i><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
                             }
@@ -228,7 +228,7 @@
                     else if(holiday == 6){
                         calendarHTML += `<td><div class="Sat">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
                         for(let s=0; s<abc.length; s++) {
-                            if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
+                            if(dayCounter==abc.at(s).day && (month+1)==abc.at(s).month && year==abc.at(s).year) {
                                 let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
                                 calendarHTML += `<ul><li class="planTitle"><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
                             }
@@ -238,7 +238,7 @@
                             let studyYear = studyDate.substring(0, 4);
                             let studyMonth = studyDate.substring(5,7);
                             let studyDay = studyDate.substring(8,10);
-                            if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                            if(dayCounter==studyDay && (month+1)==studyMonth && year==studyYear) {
                                 console.log("if문 실행")
                                 calendarHTML += `<ul><li class="studyTitle"><i class="fa-solid fa-book"></i><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
                             }
@@ -249,7 +249,7 @@
                     else{
                         calendarHTML += `<td>${dayCounter}<div class="plan_div" id="${dayCounter}">`;
                         for(let s=0; s<abc.length; s++) {
-                            if(dayCounter==abc.at(s).day && month==abc.at(s).month && year==abc.at(s).year) {
+                            if(dayCounter==abc.at(s).day && (month+1)==abc.at(s).month && year==abc.at(s).year) {
                                 let date = `${abc.at(s).year}`+'-'+`${abc.at(s).month}`+'-'+`${abc.at(s).day}`;
                                 calendarHTML += `<ul><li class="planTitle"><a onclick="planContent('${abc.at(s).id}', '${abc.at(s).title}', '${date}')">${abc.at(s).title}</a></li></ul>`;
                             }
@@ -259,7 +259,7 @@
                             let studyYear = studyDate.substring(0, 4);
                             let studyMonth = studyDate.substring(5,7);
                             let studyDay = studyDate.substring(8,10);
-                            if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                            if(dayCounter==studyDay && (month+1)==studyMonth && year==studyYear) {
                                 console.log("if문 실행")
                                 calendarHTML += `<ul><li class="studyTitle"><i class="fa-solid fa-book"></i><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
                             }
@@ -278,14 +278,14 @@
 
         document.getElementById('Calendar_Container').innerHTML = calendarHTML;
 
-<!--        if(month == 0){-->
-<!--            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;-->
-<!--        }-->
-<!--        else{-->
-<!--            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;-->
-<!--        }-->
-document.getElementById('Calendar_Container').innerHTML = calendarHTML;
-    document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;
+        <!--        if(month == 0){-->
+        <!--            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;-->
+        <!--        }-->
+        <!--        else{-->
+        <!--            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;-->
+        <!--        }-->
+        document.getElementById('Calendar_Container').innerHTML = calendarHTML;
+        document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;
 
     }
 
@@ -315,6 +315,7 @@ document.getElementById('Calendar_Container').innerHTML = calendarHTML;
     }
 
     generateCalendar(pos.getFullYear(), pos.getMonth());
+
 
 </script>
 </body>

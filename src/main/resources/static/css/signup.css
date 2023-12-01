@@ -57,13 +57,13 @@ label{
     transition-duration: 0.2s;
 }
 #signup_form{
-    width:550px;
+    width:600px;
     margin-top:80px;
 }
 #signup_border{
     border-radius: 4px;
     /*border:solid 1px;*/
-    height:720px;
+    height:680px;
     box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
 
 }
@@ -125,3 +125,12 @@ label{
     font-size:12px;
 }
 
+#email_div{
+    display:flex;
+    flex-direction: row;
+}
+
+#check_div{
+    margin-top:5px;
+    height:45.67px;
+}

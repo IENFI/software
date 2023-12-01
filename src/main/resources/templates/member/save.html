@@ -67,10 +67,10 @@
             </div>
             <ul>
                 <div id="ID_div" class="ID_tel_code_div">
-                   <li><label for="ID">아이디<img src="/img/ID.png" id="ID_img" class="information_img" style ="height:30px; width:30px;"></label>
-<!--                        <input type="text" id="ID" name="memberId" class="text" placeholder="아이디를 입력해주세요." required>-->
-                       <input type="text" id="ID" th:field="*{memberId}" class="text" placeholder="아이디를 입력해주세요." required>
-                   </li>
+                    <li><label for="ID">아이디<img src="/img/ID.png" id="ID_img" class="information_img" style ="height:30px; width:30px;"></label>
+                        <!--<input type="text" id="ID" name="memberId" class="text" placeholder="아이디를 입력해주세요." required>-->
+                        <input type="text" id="ID" th:field="*{memberId}" class="text" placeholder="아이디를 입력해주세요." required>
+                    </li>
                     <button type="button" id="id_check" class="inner_button" onclick="checkForIdDuplicate()">중복 확인</button>
                 </div>
 
@@ -87,21 +87,27 @@
                     <input type="text" id="User_name" name="memberName" class="text" placeholder="이름을 입력해주세요." required></li>
 
                 <div id="email_div">
-                    <li><label for="email">이메일</label>
-                        <input type="email" id="email" name="memberEmail" class="text" placeholder="이메일을 입력해주세요." required></li>
+                    <li>
+                        <label for="memberEmail2">이메일</label>
+                        <input type="email" id="memberEmail2" name="memberEmail" class="text" placeholder="이메일을 입력해주세요." required>
+                    </li>
                     <button type="button" id="email_check" class="inner_button" onclick="checkForEmailDuplicate()">중복 확인</button>
+                    <button type="button" id="submit_code" class="inner_button" onclick="sendCode()">인증번호 전송</button>
                 </div>
 
-                <div id="tel_div" class="ID_tel_code_div">
-                    <li><label for="tel">전화번호</label>
-                        <input type="tel" id="tel" name="memberPhoneNumber" class="text" placeholder="전화번호를 입력해주세요." required></li>
-                    <button type="submit" id="submit_code" class="inner_button">인증번호 전송</button>
-                </div>
+
 
                 <div id="code_div" class="ID_tel_code_div">
-                    <li><label for="verification_code">인증번호</label>
-                        <input type="text" id="verification_code" name="verification_code" class="text" placeholder="인증번호를 입력해주세요." required></li>
-                    <button id="code_clear" class="inner_button">인증번호 인증</button>
+                    <li><label for="memberEmailNum">인증번호</label>
+                        <input type="text" id="memberEmailNum" name="verification_code" class="text" placeholder="인증번호를 입력해주세요." required>
+                    </li>
+                    <button id="code_clear" class="inner_button" onclick="equalCode()">인증번호 인증</button>
+                </div>
+                <div id="check_div" class="ID_tel_code_div" style="display:none">
+                    <li>
+                        <label for="check">체크</label>
+                        <input id="check" class="text"> <!-- 나중에 hidden 처리 -->
+                    </li>
                 </div>
 
                 <li><label for="school_information">학적정보</label>
@@ -116,15 +122,23 @@
                     </span>
             </ul>
             <span id="last_button">
-                    <button type="reset" id="cancel_button">취소</button>
+                    <button type="button" id="cancel_button" onclick="history()">취소</button>
                     <button type="submit" id="signup_button">회원가입</button>
                 </span>
 
         </div>
     </div>
 </form>
+<script>
+    function history(){
+    console.log("선택됨");
+        window.history.go(-1);
+    }
+
+</script>
 </body>
 <script src="/javascript/signup.js"></script>
+<script src="/javascript/emailSend.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
 
@@ -176,7 +190,7 @@
 
     function checkForEmailDuplicate() {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/check-emailDuplicate?memberEmail=' + encodeURIComponent(document.getElementById('email').value), true);
+        xhr.open('GET', '/check-emailDuplicate?memberEmail=' + encodeURIComponent(document.getElementById('memberEmail2').value), true);
 
         xhr.onload = function () {
             if (xhr.status === 200) {
@@ -200,6 +214,8 @@
     }
 
     /*]]>*/
+
 </script>
+
 
 </html>
