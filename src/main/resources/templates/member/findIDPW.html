@@ -223,7 +223,7 @@
                         <input type="text" id="memberEmailNum" name="memberEmailNum">
                         <button type="button" id="checkCode" class="checkBtn innerBtn" onclick="equalCode()">인증</button>
                     </div>
-                    <div class="find_items">
+                    <div class="find_items" style="display:none;">
                         <input id="check">체크</input>
                     </div>
                 </div>
@@ -246,7 +246,7 @@
             </div>
             <div id="changeContainer">
                 <div id="changeInner">
-                    <div class="Inner_item" id="id_item">
+                    <div class="Inner_item" id="id_item" style="display:none;">
                         <label for="changePW_memberID">아이디</label>
                         <br>
                         <input type="text" id="changePW_memberID" name="memberID">
@@ -285,6 +285,10 @@
         code.onload = function () {
             if(code.status === 200) {
                 returnCode = code.responseText;
+                alert("인증번호가 전송되었습니다.");
+            }
+            else {
+                alert("인증번호가 전송에 실패했습니다.");
             }
         }
         code.send();
