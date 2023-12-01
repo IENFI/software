@@ -2,6 +2,7 @@ package dms.dms.controller;
 
 import dms.dms.domain.MemberEntity;
 import dms.dms.domain.MemberRole;
+import dms.dms.domain.Schedule;
 import dms.dms.dto.AlertDTO;
 import dms.dms.dto.MemberDTO;
 import dms.dms.service.MemberService;
@@ -18,7 +19,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.HTML;
-import java.lang.reflect.Member;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor // MemberService에 대한 멤버를 사용 가능
@@ -146,13 +147,17 @@ public class MemberController {
             System.out.println("member_empty : false");
         }
 
-        System.out.println(bindingResult.hasErrors());
+        System.out.println("bindingResult.hasErrors() : "+bindingResult.hasErrors());
 
         model.addAttribute("login_error", bindingResult.hasErrors());
         model.addAttribute("member_empty", false);
 
         if (bindingResult.hasErrors()){
-            return "redirect:/";
+            // 얘 떄문에 home에 헤더 추가함
+            List<Schedule> schedules = scheduleService.findSchedulesByMemberID(null);
+            model.addAttribute("scheduleList", schedules);
+            AlertDTO message = new AlertDTO("로그인 아이디 또는 비밀번호가 틀렸습니다.", "/", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
         }
 
         System.out.println("login_error : false");

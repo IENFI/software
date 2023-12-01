@@ -2,6 +2,7 @@ package dms.dms.controller;
 
 
 import dms.dms.domain.MemberEntity;
+import dms.dms.domain.MemberRole;
 import dms.dms.domain.Schedule;
 import dms.dms.dto.MemberDTO;
 import dms.dms.service.MemberService;
@@ -10,6 +11,7 @@ import dms.dms.service.StudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -27,12 +29,14 @@ public class HomeController {
         model.addAttribute("loginType", "dms");
         model.addAttribute("pageName", "세션 로그인");
         model.addAttribute("memberDTO", new MemberDTO());
+        model.addAttribute("user", MemberRole.USER);
 
         MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
         model.addAttribute("login_error", false);
 
         if(loginMember != null) {
             model.addAttribute("home_button", true);
+            model.addAttribute("role",loginMember.getMemberRole());
             System.out.println("home_button : true");
             System.out.println("loginMember : "+ loginMember);
         }

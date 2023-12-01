@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@
         <input type="checkbox" id="masterCheckbox" class="color_item">
         <div id="list" class="color_item">번호</div>
         <div id="name" class="color_item">이름</div>
-        <div id="title" class="color_item">내용</div>
+        <div id="title" class="color_item">제목</div>
         <div id="date" class="color_item">날짜</div>
     </div>
 
@@ -49,8 +49,8 @@
         <div id="board_page">
             <span class="bottom_first"><a th:href="@{/messages/sent(page=0)}"><img src="/img/two_left.png" class="pageBtn" style="height:14px;"></a></span>
             <span class="bottom_prev">
-                        <a th:if="${nowPage > 0}" th:href="@{/messages/sent(page=${nowPage}-2)}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
-                        <a th:unless="${nowPage > 0}" th:href="@{/messages/sent(page=${nowPage})}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
+                        <a th:if="${nowPage > 1}" th:href="@{/messages/sent(page=${nowPage}-2)}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
+                        <a th:unless="${nowPage > 1}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
                     </span>
             <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
                         <span class="num" th:if="${page}!=0">
@@ -68,15 +68,36 @@
         <div id="footerBtn_div">
             <div id="footerBtn">
                 <button type="button" onclick="submitForm()" class="footerBtn">삭제</button>
-                <a href="/messages/write"><button class="footerBtn">쪽지쓰기</button></a>
+                <a href="/messages/write"><button class="footerBtn">쪽지 쓰기</button></a>
             </div>
         </div>
 
     </div>
 </div>
-<script src="/javascript/message.js"></script>
-<script src="/javascript/openMessageWrite.js"></script>
-</body>
 
+</body>
+<script src="/javascript/deleteMessage.js"></script>
+<script src="/javascript/messageIndex.js"></script>
+<script src="/javascript/openMessageWrite.js"></script>
+<script>
+    function submitForm() {
+        document.getElementById("deleteForm").submit();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const masterCheckbox = document.getElementById('masterCheckbox');
+
+
+        masterCheckbox.addEventListener('change', function () {
+        const childCheckboxes = document.querySelectorAll('.childCheckbox');
+
+
+        childCheckboxes.forEach(function (checkbox) {
+            checkbox.checked = masterCheckbox.checked;
+            });
+        });
+    });
+</script>
 
 </html>

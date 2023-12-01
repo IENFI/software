@@ -22,6 +22,11 @@ public class MessageService {
     private final MemberRepository memberRepository;
 
     @Transactional
+    public Message findMessageByMessageId(Long messageId){
+        return messageRepository.findMessageByMessageId(messageId);
+    }
+
+    @Transactional
     public MessageDTO write(MessageDTO messageDTO){
         MemberEntity receiver = memberRepository.findByMemberId(messageDTO.getReceiverId()).get();
         MemberEntity sender = memberRepository.findByMemberId(messageDTO.getSenderId()).get();

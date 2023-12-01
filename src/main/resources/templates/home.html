@@ -96,11 +96,11 @@
                 <ul class="login_item">
                     <li><input id="ID" class="item" type="text" placeholder="아이디를 입력하세요." th:field="*{memberId}"></li>
                     <li><input id="PW" class="item" type="password" placeholder="비밀번호를 입력하세요." th:field="*{memberPassword}"></li>
-                    <div th:if="${#fields.hasGlobalErrors()}">
-                        <br/>
-                        <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>
-                    </div>
-                    <br/>
+<!--                    <div th:if="${#fields.hasGlobalErrors()}">-->
+<!--                        <br/>-->
+<!--                        <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>-->
+<!--                    </div>-->
+<!--                    <br/>-->
                     <input id="login_button" class="item" type="submit" value="로그인">
                     <a href="/member/findIDPW" id="find_id_pw">아이디/비밀번호 찾기</a>
                     <a href="/member/save" id="signup_button">회원가입</a>
@@ -114,7 +114,26 @@
 <!--<script src="/javascript/calendarIndex.js"></script>-->
 <script src="/javascript/fetchMainHF.js"></script>
 <script src="/javascript/indexToday.js"></script>
-<script src="/javascript/openMessage.js"></script>
+<!--<script src="/javascript/openMessage.js"></script>-->
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    let role = [[${role}]];
+    let user = [[${user}]];
+    function openGetMessage(){
+        var windowFeatures = 'width=750,height=535,resizable=yes';
+
+        if(role == user){
+            var newWindow = window.open('/messages/received', 'NoteListWindow', windowFeatures);
+        }
+        else {
+            var newWindow = window.open('/qna/question', 'NoteListWindow', windowFeatures);
+        }
+        if (newWindow === null) {
+            alert('팝업이 차단되었습니다. 팝업 차단을 해제하고 다시 시도하세요.');
+        }
+    }
+    /* ]]> */
+</script>
 <script th:inline="javascript">
     /* <![CDATA[ */
     let Error = [[${login_error}]];
