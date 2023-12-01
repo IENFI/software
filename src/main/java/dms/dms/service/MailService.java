@@ -21,7 +21,7 @@ public class MailService {
         number = (int)(Math.random() * (90000000)) + 10000000;// (int) Math.random() * (최댓값-최소값+1) + 최소값
     }
 
-    public MimeMessage CreateMail(String mail) throws MessagingException, UnsupportedEncodingException {
+    public MimeMessage createMail(String mail) throws MessagingException, UnsupportedEncodingException {
         createNumber();
         MimeMessage message = javaMailSender.createMimeMessage();
         message.addRecipients(MimeMessage.RecipientType.TO, mail); // to 보내는 대상
@@ -42,7 +42,7 @@ public class MailService {
     }
 
     public int sendMail(String mail) throws Exception {
-        MimeMessage message = CreateMail(mail);
+        MimeMessage message = createMail(mail);
         javaMailSender.send(message);
         int num = number;
         System.out.println("인증코드"+num);

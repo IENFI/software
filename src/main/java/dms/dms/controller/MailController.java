@@ -23,14 +23,14 @@ public class MailController {
         return number;
     }
 
-    private String showMessageAndRedirect(final AlertDTO params, Model model) {
-        model.addAttribute("params", params);
-        return "alert/alertRedirect";
-    }
+//    private String showMessageAndRedirect(final AlertDTO params, Model model) {
+//        model.addAttribute("params", params);
+//        return "alert/alertRedirect";
+//    }
 
-    @GetMapping("/emailSendComplete")
-    public String find() {
-        return "/member/findIDPW";
-    }
+//    @GetMapping("/emailSendComplete")
+//    public String find() {
+//        return "/member/findIDPW";
+//    }
 
 }

@@ -57,7 +57,7 @@ label{
     transition-duration: 0.2s;
 }
 #signup_form{
-    width:550px;
+    width:600px;
     margin-top:80px;
 }
 #signup_border{
@@ -125,3 +125,12 @@ label{
     font-size:12px;
 }
 
+#email_div{
+    display:flex;
+    flex-direction: row;
+}
+
+#check_div{
+    margin-top:5px;
+    height:45.67px;
+}

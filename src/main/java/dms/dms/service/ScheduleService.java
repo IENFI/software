@@ -38,9 +38,9 @@ public class ScheduleService {
         }
     }
 
-    public Optional<Schedule> findOneSchedule(Long scheduleId) {
-        return scheduleRepository.findById(scheduleId);
-    }
+//    public Optional<Schedule> findOneSchedule(Long scheduleId) {
+//        return scheduleRepository.findById(scheduleId);
+//    }
 
     public String deleteSchedule(Long scheduleID) {
         scheduleRepository.deleteById(scheduleID);
