@@ -86,6 +86,11 @@
 
 
    /*--------------------------------------------------------오늘의 일정 grid-----------------------------------------------------*/
+    #detail_container{
+        display:flex;
+        flex-direction:column;
+        height:100%;
+    }
     #detail_header{
         border-bottom:solid 1.5px;
         height:60px; /*이거 변경하면 #year_month_date에서 height도 바꿔주기, 400 - 여기 값만큼*/
@@ -94,10 +99,11 @@
     #detail_content{
         display:flex;
         flex-direction: row;
+        flex:1;
     }
     #year_month_date{
         width:50%;
-        height:340px;
+
         border-right:solid 1px gray;
         text-align: center;
         
