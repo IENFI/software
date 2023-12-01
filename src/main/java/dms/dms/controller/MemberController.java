@@ -59,7 +59,8 @@ public class MemberController {
 
         memberService.save(memberDTO);
 
-        return "redirect:/";
+        AlertDTO message = new AlertDTO("회원 가입 성공했습니다.", "/", RequestMethod.GET, null);
+        return showMessageAndRedirect(message, model);
     }
 
     @GetMapping("/member/delete")
@@ -74,15 +75,22 @@ public class MemberController {
 
         MemberEntity memberEntity = memberService.getMember(memberId);
         model.addAttribute("memberName", memberEntity.getMemberName());
+        model.addAttribute("password",memberEntity.getMemberPassword());
+        model.addAttribute("memberDTO", new MemberDTO());
         return "/member/delete";
     }
 
     @PostMapping("/member/delete")
-    public String userDelete(@RequestParam("memberPassword") String memberPassword, @SessionAttribute(name = "memberId", required = false) String memberId, Model model) {
+    public String userDelete(@RequestParam("memberPassword") String memberPassword, @Valid @ModelAttribute MemberDTO memberDTO,
+                             @SessionAttribute(name = "memberId", required = false) String memberId, Model model) {
         model.addAttribute("loginType", "dms");
         model.addAttribute("pageName", "세션 로그인");
         MemberEntity memberEntity = memberService.getMember(memberId);
-        model.addAttribute("memberName", memberEntity.getMemberName());
+
+        if (!memberDTO.getMemberPassword().equals(memberDTO.getMemberPasswordCheck())){
+            AlertDTO message = new AlertDTO("비밀번호 입력 오류.", "/member/delete", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
 
         Boolean deleteSuccess = memberService.delete(memberId, memberPassword);
         if (deleteSuccess) {
