@@ -69,6 +69,7 @@ public class MemberService {
                 // entity -> dto 변환 후 리턴
                 return memberEntity;
             } else {
+                System.out.println("login return null");
                 // 비밀번호 불일치
                 return null;
             }

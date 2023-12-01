@@ -1,6 +1,9 @@
 package dms.dms.controller;
 
 import dms.dms.domain.MemberEntity;
+import dms.dms.domain.MemberRole;
+import dms.dms.domain.Message;
+import dms.dms.domain.QnA;
 import dms.dms.dto.AlertDTO;
 import dms.dms.dto.MessageDTO;
 import dms.dms.repository.MemberRepository;
@@ -88,7 +91,7 @@ public class MessageController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/messages/received")
     public String getReceivedMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
-                                     @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.ASC)
+                                     @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
                                          Pageable pageable)
     {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
@@ -102,6 +105,7 @@ public class MessageController {
             return "redirect:/";
         }
 
+        System.out.println("USER 메시지창 진입");
         Page<MessageDTO> list = messageService.findMessageReceiverByMemberId(memberId, pageable).map(message -> {
             MessageDTO messageDTO = new MessageDTO();
             messageDTO.setMessageId(message.getMessageId());
@@ -159,15 +163,11 @@ public class MessageController {
 //        return new Response<>("삭제 성공", "보낸 쪽지인, " + id + "번 쪽지를 삭제했습니다.", messageService.deleteMessageBySender(id, memberEntity));
     }
 
-
-
-
-
     @Operation(summary = "보낸 편지함 읽기", description = "보낸 편지함 확인")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/messages/sent")
     public String getSentMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
-                                     @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.ASC)
+                                     @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
                                      Pageable pageable)
     {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
@@ -180,31 +180,72 @@ public class MessageController {
             return "redirect:/";
         }
 
-        Page<MessageDTO> list = messageService.findMessageSenderByMemberId(memberId, pageable).map(message -> {
-            MessageDTO messageDTO = new MessageDTO();
-            messageDTO.setMessageId(message.getMessageId());
-            messageDTO.setContent(message.getContent());
-            messageDTO.setReceiverId(message.getReceiver().getMemberId());
-            messageDTO.setTitle(message.getTitle());
-            messageDTO.setSenderId(message.getSender().getMemberId());
-            messageDTO.setDate(message.getDate());
-            return messageDTO;
-        });
+        if (loginMember.getMemberRole()==MemberRole.USER){
+            Page<MessageDTO> list = messageService.findMessageSenderByMemberId(memberId, pageable).map(message -> {
+                MessageDTO messageDTO = new MessageDTO();
+                messageDTO.setMessageId(message.getMessageId());
+                messageDTO.setContent(message.getContent());
+                messageDTO.setReceiverId(message.getReceiver().getMemberId());
+                messageDTO.setTitle(message.getTitle());
+                messageDTO.setSenderId(message.getSender().getMemberId());
+                messageDTO.setDate(message.getDate());
+                return messageDTO;
+            });
 
-        int nowPage = list.getPageable().getPageNumber()+1;
-        int startPage = Math.max(nowPage-4,1);
-        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+            int nowPage = list.getPageable().getPageNumber()+1;
+            int startPage = Math.max(nowPage-4,1);
+            int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
-        model.addAttribute("messages", list);
-        model.addAttribute("nowPage", nowPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+            model.addAttribute("messages", list);
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
 
-        return "/messages/sentMessage";
+            return "/messages/sentMessage";
+        }
+        else {
+            return "redirect:/gna/answer";
+        }
 //        return new Response("성공", "보낸 쪽지를 불러왔습니다.", messageService.sentMessage(memberEntity));
     }
 
+    @GetMapping("/messages/sentContent")
+    public String sentContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("messageId") Long messageId, Model model) { // 공부 기록 상세 보기
+        // qna가 조회되지 않을 때의 알림창 구분하기
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+        if (loginMember == null){
+            return "redirect:/";
+        }
 
+        Message message = messageService.findMessageByMessageId(messageId);
+
+        if (message==null){
+            AlertDTO alert = new AlertDTO("쪽지가 조회되지 않습니다.", "/messages/sent", RequestMethod.GET, null);
+            return showMessageAndRedirect(alert, model);
+        }
+        model.addAttribute("message", message);
+
+        return "/messages/sentContent";
+    }
+
+    @GetMapping("/messages/receivedContent")
+    public String receivedContent(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("messageId") Long messageId, Model model) { // 공부 기록 상세 보기
+        // qna가 조회되지 않을 때의 알림창 구분하기
+        MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
+        if (loginMember == null){
+            return "redirect:/";
+        }
+
+        Message message = messageService.findMessageByMessageId(messageId);
+
+        if (message==null){
+            AlertDTO alert = new AlertDTO("쪽지가 조회되지 않습니다.", "/messages/received", RequestMethod.GET, null);
+            return showMessageAndRedirect(alert, model);
+        }
+        model.addAttribute("message", message);
+
+        return "/messages/receivedContent";
+    }
 
     @Operation(summary = "보낸 쪽지 삭제하기", description = "보낸 쪽지를 삭제합니다.")
     @ResponseStatus(HttpStatus.OK)

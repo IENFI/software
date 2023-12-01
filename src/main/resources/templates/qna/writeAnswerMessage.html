@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,10 +32,6 @@
         }
         .textArea{
             width:510px;
-            border:1px solid;
-            border-radius: 3px;
-            font-weight: lighter;
-
         }
         #messageTarget{
 
@@ -48,13 +43,10 @@
 
             padding-top: 10px;
             padding-bottom: 10px;
-            display:flex;
-            flex-direction: row;
         }
         #messageContent{
             height:270px;
             width:510px !important;
-            overflow-wrap: break-word;
 
         }
         .item_interval{
@@ -77,33 +69,36 @@
 </head>
 <body>
 
-<form id="writeMessageForm">
+<form id="writeMessageForm" th:action="|@{/qna/writeAnswer/}+${qna.qnaId}|" method="post" th:object="${qna}">
     <div id="writeMessageInner">
         <div id="messageTitle_div" class="item_div">
             <label for="messageTitle">제목</label>
-            <div id="messageTitle" class="textArea" th:text="${message.title}"></div>
+            <div id="messageTitle" class="textArea" th:text="${qna.title}"></div>
         </div>
         <div class="item_interval">
 
         </div>
         <div id="messageTarget_div" class="item_div">
-            <label for="messageTarget">보낸 사람</label>
-            <div id="messageTarget" class="textArea" th:text="${message.senderId}"></div>
+            <label for="messageTarget">받는 사람</label>
+            <div id="messageTarget" class="textArea" th:text="${qna.getUser().memberId}"></div>
         </div>
         <div class="item_interval">
-
+        </div>
+        <div id="messageQuestion_div" class="item_div">
+            <label for="messageQuestion">문의</label>
+            <div id="messageQuestion" class="textArea" th:text="${qna.questionContent}"></div>
         </div>
         <div id="messageContent_div" class="item_div">
-            <label for="messageContent">내용</label>
-            <div id="messageContent" class="textArea" th:text="${message.content}"></div>
+            <label for="messageContent">답변</label>
+            <textarea id="messageContent" class="textArea" th:field="*{answerContent}" required></textarea>
         </div>
     </div>
     <div id="writeMessageFooter">
-        <button onclick="openGetMessage()">목록보기</button>
+        <a href="/qna/question"><button type="button">목록보기</button></a>
         <button type="submit">전송</button>
     </div>
 </form>
 
-<script src="javascript/openMessage.js"></script>
+<script src="/javascript/openMessage.js"></script>
 </body>
 </html>
