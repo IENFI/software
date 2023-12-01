@@ -88,7 +88,7 @@
         </div>
         <div id="messageTarget_div" class="item_div">
             <label for="messageTarget">보낸 사람</label>
-            <div id="messageTarget" class="textArea" th:text="${message.receiverId}"></div>
+            <div id="messageTarget" class="textArea" th:text="${message.sender.getMemberId()}"></div>
         </div>
         <div class="item_interval">
 
@@ -99,8 +99,8 @@
         </div>
     </div>
     <div id="writeMessageFooter">
-        <button onclick="openGetMessage()">목록보기</button>
-        <button type="submit">전송</button>
+        <a th:href="@{'/messages/received'}" ><button type="button">목록 보기</button></a>
+        <button type="button">전송없애기</button>
     </div>
 </form>
 

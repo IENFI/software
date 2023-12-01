@@ -34,10 +34,10 @@
             <div class="message_list" th:each="message, iterStat : ${messages}">
                 <input type="checkbox" th:name="selectedMessages" th:value="${message.messageId}" class="content_item list_checkbox childCheckbox">
                 <div th:text="${iterStat.index + 1}" class="content_item list_number"></div>
-                <div th:text="${message.senderId}" class="content_item list_name"></div>
-                <div class="content_item list_title">
+                <div th:text="${message.receiverId}" class="content_item list_name"></div>
+                <a th:href="@{/messages/sentContent(messageId=${message.messageId})}" class="content_item list_title">
                     <div th:text="${message.title}" class="list_titleInner"></div>
-                </div>
+                </a>
                 <div th:text="${message.date}" class="content_item list_date"></div>
             </div>
 
