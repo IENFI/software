@@ -8,71 +8,148 @@
     <title>Document</title>
     <style>
         body{
-            display:flex;
-            justify-content: center;
-            background-color: #8B8B8B;
-        }
-        #writeMessageForm{
-            width:700px;
-            border-radius:10px;
-            height:520px;
-            background-color: white;
-            padding:5px 10px 0 10px;
+    display:flex;
+    justify-content: center;
+    background-color: #8B8B8B;
+}
+#writeMessageForm{
+    width:700px;
+    border-radius:10px;
+    height:510px;
+    background-color: white;
+    padding:5px 10px 0 10px;
 
-        }
-        label{
-            float:left;
-            width:100px;
-            margin-left:20px;
-        }
-        #writeMessageInner{
-            position:relative;
-            top:30px;
-            margin:0 auto;
-            width:95%
-        }
-        .textArea{
-            width:510px;
-            border:1px solid;
-            border-radius: 3px;
-            font-weight: lighter;
+}
+label{
+    float:left;
+    width:100px;
+    margin-left:20px;
+}
+#writeMessageInner{
+    position:relative;
+    top:30px;
+    margin:0 auto;
+    width:95%
+}
+.textArea{
+    width:510px;
+}
+#messageTarget{
 
-        }
-        #messageTarget{
+    width:250px;
+}
+.item_div{
+    border-bottom: solid 1px gray;
+    border-top:solid 1px gray;
 
-            width:250px;
-        }
-        .item_div{
-            border-bottom: solid 1px gray;
-            border-top:solid 1px gray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#messageContent{
+    height:270px;
+    width:510px !important;
 
-            padding-top: 10px;
-            padding-bottom: 10px;
-            display:flex;
-            flex-direction: row;
-        }
-        #messageContent{
-            height:270px;
-            width:510px !important;
-            overflow-wrap: break-word;
+}
+.item_interval{
+    height:20px;
 
-        }
-        .item_interval{
-            height:20px;
+}
+#messageTitle_div{
+    border-top:solid 1.5px gray;
+}
+#messageContent_div{
+    border-bottom: solid 1.5px gray;
+}
+#writeMessageFooter{
+    position:relative;
+    top:45px;
+    float:right;
+    right:25px;
+}
+.footerBtn{
+    background-color: rgb(0, 0, 0);
+    color:white;
+    border-radius: 4px;
+    cursor:pointer;
+}
+.footerBtn:hover{
+    background-color:rgba(0,0,0,0.7);
+}
+<!--        body{-->
+<!--            display:flex;-->
+<!--            justify-content: center;-->
+<!--            background-color: #8B8B8B;-->
+<!--        }-->
+<!--        #writeMessageForm{-->
+<!--            width:700px;-->
+<!--            border-radius:10px;-->
+<!--            height:510px;-->
+<!--            background-color: white;-->
+<!--            padding:5px 10px 0 10px;-->
 
-        }
-        #messageTitle_div{
-            border-top:solid 1.5px gray;
-        }
-        #messageContent_div{
-            border-bottom: solid 1.5px gray;
-        }
-        #writeMessageFooter{
-            position:relative;
-            top:45px;
-            float:right;
-            right:25px;
-        }
+<!--        }-->
+<!--        label{-->
+<!--            float:left;-->
+<!--            width:100px;-->
+<!--            margin-left:20px;-->
+<!--        }-->
+<!--        #writeMessageInner{-->
+<!--            position:relative;-->
+<!--            top:30px;-->
+<!--            margin:0 auto;-->
+<!--            width:95%-->
+<!--        }-->
+<!--        .textArea{-->
+<!--            width:510px;-->
+<!--            border:1px solid;-->
+<!--            border-radius: 3px;-->
+<!--            font-weight: lighter;-->
+
+<!--        }-->
+<!--        #messageTarget{-->
+
+<!--            width:250px;-->
+<!--        }-->
+<!--        .item_div{-->
+<!--            border-bottom: solid 1px gray;-->
+<!--            border-top:solid 1px gray;-->
+
+<!--            padding-top: 10px;-->
+<!--            padding-bottom: 10px;-->
+<!--            display:flex;-->
+<!--            flex-direction: row;-->
+<!--        }-->
+<!--        #messageContent{-->
+<!--            height:270px;-->
+<!--            width:510px !important;-->
+<!--            overflow-wrap: break-word;-->
+
+<!--        }-->
+<!--        .item_interval{-->
+<!--            height:20px;-->
+
+<!--        }-->
+<!--        #messageTitle_div{-->
+<!--            border-top:solid 1.5px gray;-->
+<!--        }-->
+<!--        #messageContent_div{-->
+<!--            border-bottom: solid 1.5px gray;-->
+<!--        }-->
+<!--        #writeMessageFooter{-->
+<!--            position:relative;-->
+<!--            top:45px;-->
+<!--            float:right;-->
+<!--            right:25px;-->
+<!--        }-->
+<!--        .footerBtn{-->
+<!--            background-color: rgb(0, 0, 0);-->
+<!--            color:white;-->
+<!--            border-radius: 4px;-->
+<!--            cursor:pointer;-->
+<!--        }-->
+<!--        .footerBtn:hover{-->
+<!--            background-color:rgba(0,0,0,0.7);-->
+<!--        }-->
     </style>
 </head>
 <body>
@@ -99,8 +176,7 @@
         </div>
     </div>
     <div id="writeMessageFooter">
-        <a th:href="@{'/messages/received'}" ><button type="button">목록 보기</button></a>
-        <button type="button">전송없애기</button>
+        <a th:href="@{'/messages/received'}" ><button type="button" class="footerBtn">목록 보기</button></a>
     </div>
 </form>
 

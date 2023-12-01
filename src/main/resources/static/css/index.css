@@ -131,7 +131,13 @@
         font-family: 'Gong';
     }
     #planInner{
-        padding:10px 0 0 10px;
+        padding: 10px 0 0 10px;
+            width: 90%;
+            overflow: auto;
+            /* overflow-y: auto; */
+            overflow-x: hidden;
+            white-space: normal;
+
     }
     #planInner li::before{
         content: '\2022';
@@ -141,6 +147,12 @@
         top:1px;
         margin-right:5px;
     }
+    .todayPlanItem{
+        width: 200px;
+        white-space: normal;
+    }
+
+
    /*--------------------------------------------------------오늘의 일정 grid-----------------------------------------------------*/
 
 

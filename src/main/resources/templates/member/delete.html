@@ -1,29 +1,221 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/html">
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        ul, li{
+            list-style-type: none;
+            padding:0;
+        }
+        ul{
+            position: relative;
+            top:10px;
+        }
+        body{
+            display:flex;
+            justify-content: center;
+        }
+        #deleteForm{
+            box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
+            width:700px;
+            height:330px;
+            position:relative;
+            top:120px;
+            display:flex;
+            flex-direction: column;
+        }
+        label{
+            float:left;
+            width:130px;
+            font-size:15px;
+        }
+        #userDeleteHeader{
+            margin:0 auto;
+            height:120px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        #userDeleteContent{
+            margin:0 auto;
+            width:90%;
+            padding:0;
+
+        }
+
+        #mainHeader{
+            font-size:30px;
+            font-weight: bold;
+            text-align: center;
+        }
+        #subHeader{
+            font-size:15px;
+            margin-top:15px;
+            color:red;
+            font-weight: bold;
+
+            text-align: center;
+        }
+        #userDeleteContent{
+            flex:1;
+        }
+        .delete_Item{
+            margin:30px 0 30px 0;
+            position:relative;
+            left:20px;
+        }
+        #delete_PW{
+            background-color: gray;
+            color:white;
+            width:55px;
+            height:30px;
+            border:1px solid;
+            border-radius: 4px;
+
+            cursor: not-allowed;
+            pointer-events: none;
+            float:right;
+            position:relative;
+            right:20px;
+        }
+
+        #Check_for_Delete_div{
+            display:flex;
+            flex-direction: row;
+        }
+        #caution{
+            position:relative;
+            left:20px;
+            font-size:12px;
+            top:4px;
+        }
+        #userDeleteFooter{
+            height:45px;
+        }
+
+    </style>
 </head>
 <body>
-<div>
+<form method="post" action="/member/delete" id="deleteForm">
+    <div id="userDeleteHeader">
+        <div id="headerInner">
+            <div id="mainHeader" class="Header">[[${memberName}]]님, 정말로 탈퇴 하시겠습니까?</div>
+            <div id="subHeader" class="Header">탈퇴하게 되면, 회원 정보를 되돌릴 수 없습니다.</div>
+
+        </div>
+    </div>
+    <div id="userDeleteContent">
+        <ul>
+            <li id="PW_for_Delete_div" class="delete_Item">
+                <label for="PW_for_Delete">비밀번호</label>
+                <input id="PW_for_Delete" name="memberPassword" type="password" placeholder="비밀번호를 입력해주세요." required>
+            </li>
+            <li id="Check_for_Delete_div" class="delete_Item">
+                <label for="Check_for_Delete">비밀번호 확인</label>
+                <input id="Check_for_Delete" name=memberPasswordCheck type="password" placeholder="비밀번호를 입력해주세요." required>
+                <span id="caution"></span>
+            </li>
+        </ul>
+
+    </div>
+    <div id="userDeleteFooter">
+        <button id ="delete_PW" type="submit" onclick="deleteFunction()">탈퇴</button>
+    </div>
+
+
+</form>
+
+<script th:inline="javascript">
+    const confirmPW = document.getElementById('Check_for_Delete');
+    const firstPW = document.getElementById('PW_for_Delete');
+<!--    const caution_div = document.getElementById('caution');-->
+    var delete_PW = document.getElementById('delete_PW');
+
+    confirmPW.addEventListener("input", function(){
+        if(firstPW.value === confirmPW.value){
+<!--            caution_div.style.color = 'green';-->
+<!--            caution_div.innerHTML = "비밀번호가 일치합니다.";-->
+            delete_PW.style.cursor = "pointer";
+            delete_PW.style.pointerEvents = "auto";
+            delete_PW.style.backgroundColor = "red";
+            // hover 효과 직접 설정
+            delete_PW.addEventListener("mouseenter", function() {
+                delete_PW.style.backgroundColor = "rgba(255,0,0,0.6)";
+            });
+            delete_PW.addEventListener("mouseleave", function() {
+                delete_PW.style.backgroundColor = "red";
+            });
+        }
+        else{
+<!--            caution_div.style.color = 'red';-->
+<!--            caution_div.innerHTML = "비밀번호가 일치하지 않습니다.";-->
+            delete_PW.style.pointerEvents = "none";
+            delete_PW.style.backgroundColor = "gray";
+            // hover 효과 제거
+            delete_PW.removeEventListener("mouseenter", null);
+            delete_PW.removeEventListener("mouseleave", null);
+        }
+    });
+
+<!--    function deleteFunction(){-->
+<!--        var ok = confirm("정말로 탈퇴하시겠습니까?");-->
+
+<!--        if(ok){-->
+<!--            alert("탈퇴되었습니다.");-->
+<!--            document.getElementById('deleteForm').submit();-->
+<!--        }-->
+<!--        else{-->
+<!--            alert("탈퇴가 취소되었습니다.");-->
+<!--            document.getElementById('deleteForm').addEventListener('submit', function(event) {-->
+<!--                event.preventDefault(); // 폼 제출을 막음-->
+<!--                // 추가로 필요한 로직을 여기에 추가할 수 있음-->
+<!--            });-->
+<!--        }-->
+<!--    }-->
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div>
     <h1><a th:href="|/|">[[${pageName}]]</a></h1> <hr/>
     <h2>유저 정보</h2>
     <h3>[[${memberName}]]님 정말로 탈퇴 하시겠습니까?</h3>
     <form method="post" action="/member/delete">
-    <div>
-        <li><label>비밀번호</label>
-            <input type="PW" id = "PW" name="memberPassword" class="text" placeholder="비밀번호를 입력해주세요." required></li>
-        <div id="PW_div">
-            <li><label for="PW_clear">비밀번호 확인</label>
-                <input type="password" id="PW_clear" name=memberPasswordCheck class="text" placeholder="비밀번호를 입력해주세요." required></li>
-            <span id="caution"></span>
+        <div>
+            <li><label>비밀번호</label>
+                <input type="PW" id = "PW" name="memberPassword" class="text" placeholder="비밀번호를 입력해주세요." required></li>
+            <div id="PW_div">
+                <li><label for="PW_clear">비밀번호 확인</label>
+                    <input type="password" id="PW_clear" name=memberPasswordCheck class="text" placeholder="비밀번호를 입력해주세요." required></li>
+                <span id="caution"></span>
+            </div>
+            <button id ="delete_PW" type="submit" color="red">탈퇴</button>
         </div>
-        <button id ="delete_PW" type="submit" color="red">탈퇴</button>
-    </div>
     </form>
 </div>
-</body>
+
+
+
 <script>
     const confirmPW = document.getElementById('PW_clear');
     const firstPW = document.getElementById('PW');
@@ -46,17 +238,18 @@
         }
     })
 </script>
-<!--<script th:inline="javascript">-->
-<!--    /* <![CDATA[ */-->
-<!--    let Error = [[${deleteError}]];-->
-<!--    if(Error == "true"){-->
-<!--        alert('비밀번호가 틀렸습니다.');-->
-<!--    }-->
-<!--    else if (Error == "none"){-->
-<!--    }-->
-<!--    else{-->
-<!--        alert('회원 탈퇴 성공했습니다.');-->
-<!--    }-->
-<!--    /* ]]> */-->
-</script>
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    let Error = [[${deleteError}]];
+    if(Error == "true"){
+        alert('비밀번호가 틀렸습니다.');
+    }
+    else if (Error == "none"){
+    }
+    else{
+        alert('회원 탈퇴 성공했습니다.');
+    }
+    /* ]]> */
+</script>-->
+</body>
 </html>

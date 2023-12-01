@@ -20,17 +20,15 @@
     </div>
 
     <div id="color_header">
-        <input type="checkbox" id="masterCheckbox" class="color_item">
         <div id="list" class="color_item">번호</div>
         <div id="name" class="color_item">이름</div>
-        <div id="title" class="color_item">내용</div>
+        <div id="title" class="color_item">제목</div>
         <div id="date" class="color_item">날짜</div>
     </div>
 
     <div id="message_content">
         <form id="deleteForm" th:action="@{/messages/deleteReceivedMessage}" th:method="post">
             <div class="message_list" th:each="qna, iterStat : ${qnas}">
-                <input type="checkbox" th:name="selectedMessages" th:value="${qna.qnaId}" class="content_item list_checkbox childCheckbox">
                 <div th:text="${iterStat.index + 1}" class="content_item list_number"></div>
                 <div th:text="${qna.userId}" class="content_item list_name"></div>
                 <a th:href="@{/qna/qnaContent(qnaId=${qna.qnaId})}" class="content_item list_title">

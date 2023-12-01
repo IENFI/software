@@ -44,9 +44,9 @@
             margin:40px 0 40px 0;
         }
         #userInformation{
-            height:700px;
+            height:600px;
             border-radius: 4px;
-            width:550px;
+            width:600px;
             margin-top:120px;
             box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
         }
@@ -63,6 +63,28 @@
         #userFooter{
             display:flex;
             justify-content: center;
+        }
+
+        #delete{
+            color:red;
+            font-weight:300;
+
+        }
+
+        .inner_button{
+            margin:0px 5px 0 5px;
+
+            background-color: white;
+            color:black;
+            border:1px solid;
+            border-radius: 4px;
+            cursor:pointer;
+
+        }
+        .inner_button:hover{
+            background-color: black;
+            color:white;
+            transition-duration: 0.2s;
         }
 
     </style>
@@ -91,26 +113,27 @@
                 <label for="userEmail">이메일</label>
                 <div id="userEmail"  class="userItem" th:text="|${member.memberEmail}|"></div>
                 <input type="email" id="userEmailInput" name="memberEmail">
-                <button type="button" onclick="editUserEmail()" class="editBtn" id="editEmailBtn">수정</button>
-                <button type="button" onclick="cancelUserEmail()" class="cancelBtn" id="cancelEmailBtn">취소</button>
-                <button type="button" onclick="doubleCheckEmail()" class="doubleBtn" id="doubleBtn">중복체크</button>
-                <button type="submit" onclick="confirmUserEmail()" class="confirmBtn" id="confirmEmailBtn">확인</button>
+                <button type="button" onclick="editUserEmail()" class="editBtn inner_button" id="editEmailBtn">수정</button>
+                <button type="button" onclick="cancelUserEmail()" class="cancelBtn inner_button" id="cancelEmailBtn">취소</button>
+                <button type="button" onclick="doubleCheckEmail()" class="doubleBtn inner_button" id="doubleBtn">중복체크</button>
+                <button type="submit" onclick="confirmUserEmail()" class="confirmBtn inner_button" id="confirmEmailBtn">확인</button>
             </form>
 
-            <div id="userPhoneNumber_div" class="userContent">
-                <i class="fa-solid fa-phone"></i>
-                <label for="userPhoneNumber">전화번호</label>
-                <div id="userPhoneNumber"  class="userItem"th:text="|${member.memberPhoneNumber}|"></div>
-            </div>
+<!--            <div id="userPhoneNumber_div" class="userContent">-->
+<!--                <i class="fa-solid fa-keyboard"></i>-->
+<!--                <label for="memberEmailNum">인증번호</label>-->
+<!--                <input type="text" id="memberEmailNum" name="verification_code" class="text" placeholder="인증번호를 입력해주세요." required>-->
+<!--                <button id="code_clear" class="inner_button" onclick="equalCode()">인증번호 인증</button>-->
+<!--            </div>-->
 
             <form id="userDept_div" class="userContent" action="/member/editDept" th:method="post">
                 <i class="fa-solid fa-school"></i>
                 <label for="userDept">학적정보</label>
                 <div id="userDept"  class="userItem"th:text="|${member.memberDept}|"></div>
                 <input type="text" id="userDeptInput" name="memberDept">
-                <button type="button" onclick="editUserDept()" class="editBtn" id="editDeptBtn">수정</button>
-                <button type="button" onclick="cancelUserDept()" class="cancelBtn" id="cancelDeptBtn">취소</button>
-                <button type="submit" class="confirmBtn" id="confirmDeptBtn">확인</button>
+                <button type="button" onclick="editUserDept()" class="editBtn inner_button" id="editDeptBtn">수정</button>
+                <button type="button" onclick="cancelUserDept()" class="cancelBtn inner_button" id="cancelDeptBtn">취소</button>
+                <button type="submit" class="confirmBtn inner_button" id="confirmDeptBtn">확인</button>
             </form>
 
             <form id="userInterest_div" class="userContent" action="/member/editInterest" th:method="post">
@@ -118,9 +141,9 @@
                 <label for="userInterest">관심분야</label>
                 <div id="userInterest"  class="userItem"th:text="|${member.memberInterest}|"></div>
                 <input type="text" id="userInterestInput" name="memberInterest">
-                <button type="button" onclick="editUserInterest()" class="editBtn" id="editInterestBtn">수정</button>
-                <button type="button" onclick="cancelUserInterest()" class="cancelBtn" id="cancelInterestBtn">취소</button>
-                <button type="submit" class="confirmBtn" id="confirmInterestBtn">확인</button>
+                <button type="button" onclick="editUserInterest()" class="editBtn inner_button" id="editInterestBtn">수정</button>
+                <button type="button" onclick="cancelUserInterest()" class="cancelBtn inner_button" id="cancelInterestBtn">취소</button>
+                <button type="submit" class="confirmBtn inner_button" id="confirmInterestBtn">확인</button>
             </form>
 
             <div id="userRole_div" class="userContent">
@@ -131,27 +154,13 @@
         </div>
     </div>
     <div id="userFooter">
-        <a href="/member/delete">회원탈퇴</a>
+        <a  id="delete" href="/member/delete">회원탈퇴</a>
     </div>
 </div>
 
 
 
-<!--<div>
-    <h1><a th:href="|/|">[[${pageName}]]</a></h1> <hr/>
-    <h2>유저 정보</h2>
-    <div>
-        <div th:text="|id : ${member.memberId}|"/>
-        <div th:text="|name : ${member.memberName}|"/>
-        <div th:text="|email : ${member.memberEmail}|"/>
-        <div th:text="|dept : ${member.memberDept}|"/>
-        <div th:text="|interest : ${member.memberInterest}|"/>
-        <div th:text="|phoneNumber : ${member.memberPhoneNumber}|"/>
-        <div th:text="|role : ${member.memberRole}|"/>
-        <a href="/member/delete">회원탈퇴</a>
-        <a href="/member/update">회원정보 수정</a>
-    </div>
-</div>-->
+
 
 
 <script>
