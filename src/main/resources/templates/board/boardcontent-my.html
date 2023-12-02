@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/boardcontent.css">
+    <link rel="stylesheet" href="/css/contents1.css">
+    <title>게시판 상세보기 | DMS</title>
+</head>
+<body>
+<header id="header"></header>
+<section id="contents">
+    <div class="inner">
+        <div class="container">
+            <div class="card">
+                <p>공부 기록</p>
+                <div class="card-body">
+                    <div class="sub-category">카테고리 : </div>
+                    <br>
+                    <div class="sub-title">제목</div>
+                    <div class="card-title" th:text="@{${board.title} + ' - ' + ${board.writer}}"></div>
+                    <div class="card-date">
+                        <div class="text-muted" th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></div>
+                    </div>
+                    <br>
+                    <div class="card-text" th:text="${board.content}"></div>
+                    <br>
+                    <br>
+                    <div th:if="${board.fileId != null}">첨부파일 :
+                        <a
+                                class="card-text"
+                                th:href="@{'/download/' + ${board.fileId}}"
+                                th:text="${filename}"
+                        ></a>
+                    </div>
+                    <br>
+                    <div th:if="${board.url != null and board.url != ''}"> 동영상 URL :
+                        <a
+                                class="card-text"
+                                th:href="${board.url}"
+                                th:text="${board.url}"
+                        ></a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row-mt-3">
+                <div class="col-auto mr-auto"></div>
+                <div class="button-group">
+                    <button name="list" class="btn-list" type="button"><a th:href="@{'/board/' + ${board.category}}">목록</a></button>
+                    <br>
+                    <button name="modify" class="btn btn-info" role="button"><a th:href="@{'/board/edit/' + ${board.boardId}}">수정</a></button>
+                    <br>
+                    <button class="btn-delete" type="button" onclick="deleteBoard()">삭제</button>
+                </div>
+            </div>
+            <script th:inline="javascript">
+                let boardId = [[${board.boardId}]]
+                let boardTitle = [[${board.title}]]
+                function deleteBoard() {
+                    if(!confirm(`해당 공부 기록을 삭제하시겠습니까?`+`\n제목: ${boardTitle}`)){
+                        return false;
+                    }
+                    else {
+                        location.href='http://localhost:8080/board/delete?boardId='+boardId;
+                    }
+                }
+            </script>
+            <div class="form-commentInfo">
+                <div class="comment-count">댓글</div>
+                <input class="comment-input" name="content" placeholder="댓글을 입력해 주세요.">
+                <button class="submit" type="submit">등록</button>
+            </div>
+            <div class="eachComment">
+                <input type="hidden" name="_method" value="put" />
+                <div class="name" th:text="${comment.commentId}">아이디***</div>
+                <div class="inputValue" th:text="${comment.content}">댓글 내용</div>
+                <div class="time" th:text="adsfadsf">2023.11.26</div>
+                <!--            <div class="time" th:text="${comment.createdDate}">2023.11.26</div>-->
+                <button class="deleteComment" type="button" onclick=""><a href="/board/{boardId}/comment/delete">삭제</a></button>
+                <button class="updateComment" type="button" onclick=""><a href="/board/{boardId}/comment/edit">수정</a></button>
+            </div>
+            <script type="text/javascript">
+                function comment_delete(){
+                    if(confirm("삭제하시겠습니까?")){
+                        alert("삭제되었습니다.");
+                    }else{
+                        alert("삭제 실패");
+                    }
+                }
+                function submitForm() {
+                    document.getElementById("commentForm").submit();
+                }
+            </script>
+        </div>
+    </div>
+    </div>
+</section>
+<footer id="footer"></footer>
+
+
+<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="/javascript/openMessage.js"></script>
+<script src="/javascript/fetchMainHF1.js"></script>
+</body>
+</html>

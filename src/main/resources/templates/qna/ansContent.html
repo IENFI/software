@@ -32,7 +32,7 @@
         }
         .textArea{
             width:510px;
-            border:1px solid;
+
             border-radius: 3px;
             font-weight: lighter;
 
@@ -66,7 +66,7 @@
             right:25px;
         }
 
-        #messageQuestion, #messageAnswer{
+        #messageQuestion, #messageContent{
             height:120px;
         }
         #Content_div{
@@ -106,9 +106,9 @@
                 <label for="messageQuestion">문의</label>
                 <div id="messageQuestion" class="textArea" th:text="${qna.questionContent}"></div>
             </div>
-            <div id="messageAnswer_div" class="item_div">
-                <label for="messageAnswer">답변</label>
-                <div id="messageAnswer" class="textArea" th:text="${qna.answerContent}"></div>
+            <div id="messageContent_div" class="item_div">
+                <label for="messageContent">답변</label>
+                <div id="messageContent" class="textArea" th:text="${qna.answerContent}"></div>
             </div>
         </div>
     </div>

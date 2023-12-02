@@ -108,7 +108,7 @@
             </div>
             <div id="messageAnswer_div" class="item_div">
                 <label for="messageAnswer">답변</label>
-                <textarea id="messageAnswer" class="textArea" th:text="${qna.answerContent}"></textarea>
+                <textarea id="messageAnswer" class="textArea" th:field="*{answerContent}" required></textarea>
             </div>
         </div>
     </div>

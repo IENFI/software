@@ -7,73 +7,62 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/studylist1.css">
-    <link rel="stylesheet" href="/css/contents1.css">
+    <link rel="stylesheet" href="/css/studylist.css">
     <title>나의 공부기록 | DMS</title>
 </head>
 <body>
 <header id="header"></header>
-<section id="contents">
-    <div class="inner" style="width:100%;">
-        <div class="grid-container">
-            <div class="grid-item">
-                <table class="board_wrap">
-                    <tr class="board_title">
-                        <td>나의 공부기록</td>
-                    </tr>
-                    <table id="studyNum" class="board_list_wrap">
-                        <tbody>
-                        <tr class="board_list">
-                            <th class="num">번호</th>
-                            <th class="title">제목</th>
-                            <th class="date">작성일</th>
-                        </tr>
-                        <tr class="board_list_under" th:each="study : ${studies}">
-                            <td class="num" th:text="${study.id}"></td>
-                            <td class="title">
-                                <a th:if="${study}!=null" th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}">글 제목이 들어갑니다.</a>
-                            </td>
-                            <td class="date" th:text="${study.date}">2023.11.08</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <tr th:if="${studies}==null">현재 공부 기록이 없습니다.</tr><!-- if문, 공부기록이 없으면 뜨는거에요 -->
-
-                    <br>
-
-                    <table class="board_page">
-                        <td class="bottom_first"><a th:href="@{/study/studyHome(page=${startPage}-1)}"> << </a></td>
-                        <td class="bottom_prev"><a th:if="${nowPage}>1" th:href="@{/study/studyHome(page=${nowPage}-2)}"> < </a>
-                            <a th:unless="${nowPage}>1"> < </a></td>
-                        <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
-                            <td class="num" th:if="${page}!=0" >
-                                <a th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}"><script> let page = [[${page}]]</script></a>
-                            </td>
-                        </th:each>
-                        <td class="bottom_next"><a th:if="${nowPage}<${endPage}" th:href="@{/study/studyHome(page=${nowPage})}"> > </a>
-                            <a th:unless="${nowPage}<${endPage}"> > </a></td>
-                        <td class="bottom_last"><a th:href="@{/study/studyHome(page=${endPage}-1)}"> >> </a></td>
-                    </table>
-
-                    <table class="bottom_wrap">
-                        <td class="on"><a href="/study/studyCreate">쓰기</a></td>
-                    </table>
-                </table>
-            </div>
-            <div class="grid-item">
-                <span id="currentYearMonth"></span>
-                <button class="calendar-btn" id="nextBtn" onclick="showCalendar(1)">다음</button>
-                <button class="calendar-btn" id="prevBtn" onclick="showCalendar(-1)">이전</button>
-                <div id="Calendar_Container"></div>
-            </div>
+<table class="board_wrap">
+    <tr class="board_title">
+        <td>나의 공부기록 | DMS</td>
+    </tr>
+    <table id="studyNum" class="board_list_wrap">
+        <tbody>
+        <tr class="board_list">
+            <th class="num">번호</th>
+            <th class="title">제목</th>
+            <th class="date">작성일</th>
+        </tr>
+        <tr class="board_list_under" th:each="study : ${studies}">
+            <td class="num" th:name="studyId">0</td>
+            <td class="title">
+                <a th:if="${study}!=null" th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}">글 제목이 들어갑니다.</a>
+            </td>
+            <td class="date" th:text="${study.date}">2023.11.08</td>
+        </tr>
+        </tbody>
+    </table>
+    <tr th:if="${studies}==null">현재 공부 기록이 없습니다.</tr><!-- if문, 공부기록이 없으면 뜨는거에요 -->
+    <br>
+        <table class="board_page">
+            <td class="bottom_first"><a th:href="@{/study/studyHome(page=${startPage}-1)}"> << </a></td>
+            <td class="bottom_prev"><a th:if="${nowPage}>1" th:href="@{/study/studyHome(page=${nowPage}-2)}"> < </a>
+            <a th:unless="${nowPage}>1"> < </a></td>
+            <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
+                <td class="num" th:if="${page}!=0" >
+                    <a th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}"><script> let page = [[${page}]]</script></a>
+                </td>
+            </th:each>
+            <td class="bottom_next"><a th:if="${nowPage}<${endPage}" th:href="@{/study/studyHome(page=${nowPage})}"> > </a>
+            <a th:unless="${nowPage}<${endPage}"> > </a></td>
+            <td class="bottom_last"><a th:href="@{/study/studyHome(page=${endPage}-1)}"> >> </a></td>
+        </table>
+    <table class="bottom_wrap">
+        <td class="on"><a href="/study/studyCreate">쓰기</a></td>
+    </table>
+</table>
+<div>
+    <div>
+        <div>
+            <span id="currentYearMonth"></span>
+            <div id="Calendar_Container"> 달력 </div>
         </div>
     </div>
-</section>
-<footer id="footer"></footer>
+</div>
+
 <!--<script src="/javascript/fetchMainHF1.js">ss</script>-->
-<script src="/javascript/fetchMainHF1.js"></script>
 <script src="/javascript/openMessage.js"></script>
+<script src="/javascript/planModal.js"></script>
 </body>
 </html>
 
@@ -87,7 +76,7 @@
             studyNum++;
         }
     }
-
+    studyNumSet();
 
     function generateCalendar(year, month){
 
@@ -252,5 +241,5 @@
     }
 
     generateCalendar(pos.getFullYear(), pos.getMonth());
-    studyNumSet();
+
 </script>
