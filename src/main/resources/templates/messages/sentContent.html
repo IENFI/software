@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+    <style>
+        body{
+            display:flex;
+            justify-content: center;
+            background-color: #8B8B8B;
+        }
+        #writeMessageForm{
+            width:700px;
+            border-radius:10px;
+            height:510px;
+            background-color: white;
+            padding:5px 10px 0 10px;
+
+        }
+        label{
+            float:left;
+            width:100px;
+            margin-left:20px;
+        }
+        #writeMessageInner{
+            position:relative;
+            top:30px;
+            margin:0 auto;
+            width:95%
+        }
+        .textArea{
+            width:510px;
+
+            border-radius: 3px;
+            font-weight: lighter;
+
+        }
+        #messageTarget{
+
+            width:250px;
+        }
+        .item_div{
+            border-bottom: solid 1px gray;
+            border-top:solid 1px gray;
+
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display:flex;
+            flex-direction: row;
+        }
+        #messageContent{
+            height:260px;
+            width:510px !important;
+            overflow-wrap: break-word;
+
+        }
+        .item_interval{
+            height:20px;
+
+        }
+        #messageTitle_div{
+            border-top:solid 1.5px gray;
+        }
+        #messageContent_div{
+            border-bottom: solid 1.5px gray;
+        }
+        #writeMessageFooter{
+            position:relative;
+            top:45px;
+            float:right;
+            right:25px;
+        }
+        .footerBtn{
+            background-color: rgb(0, 0, 0);
+            color:white;
+            border-radius: 4px;
+            cursor:pointer;
+        }
+        .footerBtn:hover{
+            background-color:rgba(0,0,0,0.7);
+        }
+    </style>
+</head>
+<body>
+
+<form id="writeMessageForm">
+    <div id="writeMessageInner">
+        <div id="messageTitle_div" class="item_div">
+            <label for="messageTitle">제목</label>
+            <div id="messageTitle" class="textArea" th:text="${message.title}"></div>
+        </div>
+        <div class="item_interval">
+
+        </div>
+        <div id="messageTarget_div" class="item_div">
+            <label for="messageTarget">받은 사람</label>
+            <div id="messageTarget" class="textArea" th:text="${message.receiver.memberId}"></div>
+        </div>
+        <div class="item_interval">
+
+        </div>
+        <div id="messageContent_div" class="item_div">
+            <label for="messageContent">내용</label>
+            <div id="messageContent" class="textArea" th:text="${message.content}"></div>
+        </div>
+    </div>
+    <div id="writeMessageFooter">
+        <a th:href="@{'/messages/sent'}" ><button type="button" class="footerBtn">목록 보기</button></a>
+    </div>
+</form>
+
+<script src="javascript/openMessage.js"></script>
+</body>
+</html>

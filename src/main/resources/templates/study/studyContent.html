@@ -1,0 +1,69 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/studycontent1.css">
+    <link rel="stylesheet" href="/css/contents1.css">
+    <title>공부 기록 상세 보기</title>
+</head>
+<body>
+<header id="header"></header>
+<section id="contents">
+    <div class="inner">
+        <div class="content-group">
+            <p>공부 기록 상세 보기</p>
+            <div class="study-detail">
+                <div class="sub-title">제목</div>
+                <div class="study-title" th:text="${studyTitle}">제목</div>
+                <div class="study-date" th:text="${studyDate}">작성일</div>
+                <br>
+                <br>
+                <div type="text" id="content" name="study-content" th:text="${studyContent}"></div>
+                <br>
+
+                <div th:if="${studyUrl} != null"> <!-- if문 입니다. url이 저장되어 있으면 뜨고 아니면 안 떠요! -->
+                    <div class="url">동영상url</div>
+                    <a class="study-url" th:href="${studyUrl}"><div th:text="${studyUrl}"/></a>
+                    <br>
+                </div>
+
+                <div th:if="${studyFileName} != null"> <!-- if문 입니다 -->
+                    <div class="file">첨부파일</div>
+                    <div>
+                        <a class="study-file" th:href="@{/download(studyId=${studyId})}"><div th:text="${studyFileName}"/></a>
+                    </div>
+                </div>
+                <br>
+                <div class="button-group">
+                    <button class="btn-list" type="button" onclick="location.href='/study/studyHome'">목록</button>
+                    <button class="btn-update" type="button" th:onclick="|location.href='@{/study/studyUpdate(id=${studyId})}'|">수정</button>
+                    <button class="btn-delete" type="button" onclick="deleteStudy()">삭제</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+<footer id="footer"></footer>
+
+<script src="/javascript/fetchMainHF1.js"></script>
+<script src="/javascript/openMessage.js"></script>
+<script th:inline="javascript">
+    let studyId = [[${studyId}]]
+    let sutdyTitle = [[${studyTitle}]]
+    function deleteStudy() {
+        if(!confirm(`해당 공부 기록을 삭제하시겠습니까?`+`\n제목: ${sutdyTitle}`)){
+            return false;
+        }
+        else {
+            location.href='http://localhost:8080/study/studyDelete?id='+studyId;
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+.content-group {
+    margin-left : 25%;
+    margin-right:25%;
+    margin-top:100px;
+}
+
+.content-group p {
+    font-size:30px;
+    border-bottom : 2px solid #ddd;
+}
+
+.sub-category {
+    border-bottom:1px solid #ddd;
+}
+
+.sub-title {
+    font-size:25px;
+}
+
+.board-title {
+    margin-top:10px;
+    font-size:18px;
+}
+
+.board-date {
+    font-size:18px;
+    float:right;
+}
+
+.board-detail textarea[name="board-content" ] {
+    margin-top : 10px;
+    font-size : 25px;
+    width : 950px;
+    border : 1px solid black;
+    height : 850px;
+}
+
+.board-detail {
+    margin-bottom : 150px;
+}
+
+.button-group {
+    float : right;
+}
+
+.form-commentInfo{
+    margin-top:100px;
+}
+
+.comment-count{
+    margin-bottom: 10px; 
+}
+
+.comment-input{
+    width:85%;
+    height: 3.3em;
+    font-size:15px;
+}
+
+.submit{
+    background-color: black;
+    width: 10%;
+    height: 3.3em;
+    font-size: 15px;
+    font-weight: bold;
+    color: aliceblue;
+    float:right;
+}
+
+.comments{
+    margin-top: 10px;
+}
+
+.eachComment{   
+    width :95%; 
+    margin: 10px;  
+    padding: 0.5em; 
+    border-bottom: 1px solid #c1bcba;
+}
+
+.eachComment .name{
+    font-size: 23px;
+    font-weight: bold;
+    margin-bottom: 0.3em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.eachComment .inputValue{
+    font-size: 20px;
+    font-style: italic;    
+}
+
+.eachComment .time{
+    font-size: 12px;
+    color: #c1bcba;
+    font-style: oblique;
+    margin-top: 0.5em;
+    margin-bottom: 20px;
+    
+}
+
+.eachComment .deleteComment{
+    background-color: black;
+    color: aliceblue;
+    float:right;
+    height: 2em;
+    margin-bottom:10px;
+}

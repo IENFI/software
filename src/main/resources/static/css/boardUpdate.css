@@ -1,0 +1,49 @@
+.form-group {
+    font-size:18px;
+    margin-left : 25%;
+    margin-right:25%;
+    margin-top:100px;
+}
+
+.form-group p {
+    font-size:30px;
+    border-bottom : 2px solid #ddd;
+}
+
+.form-group input[type="category"] {
+    width : 150px;
+    height:20px;
+    font-size:18px;
+}
+
+.form-group input[name="title"] {
+    margin-top : 20px;
+    width : 500px;
+    height:20px;
+    font-size:18px;
+}
+
+.form-group textarea[name="content"] {
+    margin-top:20px;
+    font-size:25px;
+    width:950px;
+    height:800px; 
+    float : right;
+}
+
+.form-group input[id="url"] {
+    margin-top:20px;
+    width : 500px;
+    height:20px;
+    font-size:18px;
+}
+
+.form-group .file_input{
+    margin-top:20px;
+}
+
+.button {
+    float : right;
+    font-size:18px;
+    margin-bottom:150px;
+}

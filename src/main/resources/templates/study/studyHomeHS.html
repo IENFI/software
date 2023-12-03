@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/studylist.css">
+    <title>나의 공부기록 | DMS</title>
+</head>
+<body>
+<header id="header"></header>
+<table class="board_wrap">
+    <tr class="board_title">
+        <td>나의 공부기록 | DMS</td>
+    </tr>
+    <table id="studyNum" class="board_list_wrap">
+        <tbody>
+        <tr class="board_list">
+            <th class="num">번호</th>
+            <th class="title">제목</th>
+            <th class="date">작성일</th>
+        </tr>
+        <tr class="board_list_under" th:each="study : ${studies}">
+            <td class="num" th:name="studyId">0</td>
+            <td class="title">
+                <a th:if="${study}!=null" th:href="@{/study/studyContent(id=${study.id})}" th:text="${study.title}">글 제목이 들어갑니다.</a>
+            </td>
+            <td class="date" th:text="${study.date}">2023.11.08</td>
+        </tr>
+        </tbody>
+    </table>
+    <tr th:if="${studies}==null">현재 공부 기록이 없습니다.</tr><!-- if문, 공부기록이 없으면 뜨는거에요 -->
+    <br>
+        <table class="board_page">
+            <td class="bottom_first"><a th:href="@{/study/studyHome(page=${startPage}-1)}"> << </a></td>
+            <td class="bottom_prev"><a th:if="${nowPage}>1" th:href="@{/study/studyHome(page=${nowPage}-2)}"> < </a>
+            <a th:unless="${nowPage}>1"> < </a></td>
+            <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
+                <td class="num" th:if="${page}!=0" >
+                    <a th:href="@{/study/studyHome(page=${page}-1)}" th:text="${page}"><script> let page = [[${page}]]</script></a>
+                </td>
+            </th:each>
+            <td class="bottom_next"><a th:if="${nowPage}<${endPage}" th:href="@{/study/studyHome(page=${nowPage})}"> > </a>
+            <a th:unless="${nowPage}<${endPage}"> > </a></td>
+            <td class="bottom_last"><a th:href="@{/study/studyHome(page=${endPage}-1)}"> >> </a></td>
+        </table>
+    <table class="bottom_wrap">
+        <td class="on"><a href="/study/studyCreate">쓰기</a></td>
+    </table>
+</table>
+<div>
+    <div>
+        <div>
+            <span id="currentYearMonth"></span>
+            <div id="Calendar_Container"> 달력 </div>
+        </div>
+    </div>
+</div>
+
+<!--<script src="/javascript/fetchMainHF1.js">ss</script>-->
+<script src="/javascript/openMessage.js"></script>
+<script src="/javascript/planModal.js"></script>
+</body>
+</html>
+
+<script th:inline="javascript">
+    let page = [[${nowPage}]];
+    function studyNumSet() {
+        let studyNum = 1;
+
+        for(let i=1; i<=10; i++) {
+            document.getElementById("studyNum").getElementsByTagName("tr")[i].getElementsByTagName("td")[0].innerHTML = (page-1)*10 + studyNum;
+            studyNum++;
+        }
+    }
+    studyNumSet();
+
+    function generateCalendar(year, month){
+
+        let def = [[${studyList}]]
+        console.log(def.length)
+        const today = new Date();
+        const dayInMonth = new Date(year, month, 0).getDate(); //달의 일수
+        const firstDay = new Date(year, month - 1, 1).getDay(); //달의 첫 요일
+
+        let calendarHTML = '<table>';
+        calendarHTML += '<tr id="calendarDate"><th class="Sun">일요일</th><th>월요일</th><th>화요일</th><th>수요일</th><th>목요일</th><th>금요일</th><th class="Sat">토요일</th></tr>'
+        let dayCounter = 1;
+
+        for(let i = 0; i < 6; i++) {
+
+            calendarHTML += '<tr>';
+
+            for(let j = 0; j < 7; j++) {
+                const holiday = new Date(year, month - 1, dayCounter).getDay();
+                if(i == 0 && j < firstDay){
+                    calendarHTML += '<td></td>';
+                }
+                else if(dayCounter > dayInMonth){
+                    calendarHTML += '<td></td>';
+                }
+                else {
+                    if(dayCounter == today.getDate() && year == today.getFullYear() && month == today.getMonth() + 1){
+                        //calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
+                        if(holiday == 0){
+                            calendarHTML += `<td id="today"><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
+                            for(let s=0; s<def.length; s++) {
+                                let studyDate = def.at(s).date;
+                                let studyYear = studyDate.substring(0, 4);
+                                let studyMonth = studyDate.substring(5,7);
+                                let studyDay = studyDate.substring(8,10);
+                                if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                                    console.log("if문 실행")
+                                    calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                                }
+                            }
+                            calendarHTML += `</div></td>`;
+                        }
+                        else if(holiday == 6){
+                            calendarHTML += `<td id="today"><div class="Sat">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
+                            for(let s=0; s<def.length; s++) {
+                                let studyDate = def.at(s).date;
+                                let studyYear = studyDate.substring(0, 4);
+                                let studyMonth = studyDate.substring(5,7);
+                                let studyDay = studyDate.substring(8,10);
+                                if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                                    console.log("if문 실행")
+                                    calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                                }
+                            }
+                            calendarHTML += `</div></td>`;
+                        }
+                        else{
+                            calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}">`;
+                            for(let s=0; s<def.length; s++) {
+                                let studyDate = def.at(s).date;
+                                let studyYear = studyDate.substring(0, 4);
+                                let studyMonth = studyDate.substring(5,7);
+                                let studyDay = studyDate.substring(8,10);
+                                if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                                    console.log("if문 실행")
+                                    calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                                }
+                            }
+                            calendarHTML += `</div></td>`;
+                        }
+                    }
+                    else if(holiday == 0){
+                        calendarHTML += `<td><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
+                        for(let s=0; s<def.length; s++) {
+                            let studyDate = def.at(s).date;
+                            let studyYear = studyDate.substring(0, 4);
+                            let studyMonth = studyDate.substring(5,7);
+                            let studyDay = studyDate.substring(8,10);
+                            if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                                console.log("if문 실행")
+                                calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                            }
+                        }
+                        calendarHTML += `</div></td>`;
+                    }
+                    else if(holiday == 6){
+                        calendarHTML += `<td><div class="Sat">${dayCounter}</div><div class="plan_div" id="${dayCounter}">`;
+                        for(let s=0; s<def.length; s++) {
+                            let studyDate = def.at(s).date;
+                            let studyYear = studyDate.substring(0, 4);
+                            let studyMonth = studyDate.substring(5,7);
+                            let studyDay = studyDate.substring(8,10);
+                            if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                                console.log("if문 실행")
+                                calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                            }
+                        }
+                        calendarHTML += `</div></td>`;
+                    }
+
+                    else{
+                        calendarHTML += `<td>${dayCounter}<div class="plan_div" id="${dayCounter}">`;
+                        for(let s=0; s<def.length; s++) {
+                            let studyDate = def.at(s).date;
+                            let studyYear = studyDate.substring(0, 4);
+                            let studyMonth = studyDate.substring(5,7);
+                            let studyDay = studyDate.substring(8,10);
+                            if(dayCounter==studyDay && month==studyMonth && year==studyYear) {
+                                console.log("if문 실행")
+                                calendarHTML += `<ul><li><a href="/study/studyContent?id=${def.at(s).id}">${def.at(s).title}</a></li></ul>`;
+                            }
+                        }
+                        calendarHTML += `</div></td>`;
+                    }
+                    dayCounter++;
+                }
+
+            }
+
+            calendarHTML += '</tr>';
+        }
+
+        calendarHTML += '</table>';
+
+        document.getElementById('Calendar_Container').innerHTML = calendarHTML;
+
+        if(month == 0){
+            document.getElementById('currentYearMonth').innerHTML = `${year - 1}년 ${month + 12}월`;
+        }
+        else{
+            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month}월`;
+        }
+
+    }
+
+    const pos = new Date();
+    pos.setMonth(pos.getMonth() + 1);
+
+    //달력 보여주는 함수
+    function showCalendar(change){
+        if(change == -1){
+            prevCalendar(change);
+        }
+        else{
+            nextCalendar(change);
+        }
+    }
+
+    //다음 월 버튼
+    function prevCalendar(change){
+        pos.setMonth(pos.getMonth() + change);
+        generateCalendar(pos.getFullYear(), pos.getMonth());
+        pos += -1;
+
+    }
+
+    //이전 월 버튼
+    function nextCalendar(change){
+        pos.setMonth(pos.getMonth() + change);
+        generateCalendar(pos.getFullYear(), pos.getMonth());
+        pos += 1;
+    }
+
+    generateCalendar(pos.getFullYear(), pos.getMonth());
+
+</script>

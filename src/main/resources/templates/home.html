@@ -1,0 +1,384 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>login</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form action="/member/login" method="post">-->
+<!--    이메일 : <input type="text" name="memberEmail"> <br>-->
+<!--    비밀번호 : <input type="password" name="memberPassword"> <br>-->
+<!--    <input type="submit" value="로그인">-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+<!--&lt;!&ndash; home.html &ndash;&gt;-->
+
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/contents1.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Welcome to DMS</title>
+
+    <style>
+        .error-class{
+            font-size:10px;
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<header id="header"></header>
+<section id="contents">
+    <div class="inner">
+        <div id="contents_container">
+            <div class="detail">
+                <div id="detail_container">
+                    <div id="detail_header">
+                        <span id="today_plan">오늘의 일정</span>
+                    </div>
+                    <div id="detail_content">
+                        <div id="year_month_date">
+                            <span id="todayYear_month"></span>
+                            <span id="todayDate"></span>
+                        </div>
+                        <div id="plan_div">
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calendar">
+                <div id="calendar_wrap">
+                    <div id="planHeader">
+                        <div id="HeaderInner">
+                            <span id="currentYearMonth"></span>
+                            <div id="calendarBtn">
+                                <button class="calendarBtn" onclick="showCalendar(-1)"><</button>
+                                <button class="calendarBtn" onclick="showCalendar(1)">></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="calendarInterval"></div>
+                    <div id="plan_container">
+                        <div id="Calendar_Container"></div>
+
+                    </div>
+                    <div class="calendarInterval"></div>
+                </div>
+            </div>
+            <div class="playing">
+                <p>공모전</p>
+                <table class="board-wrap">
+                    <tbody>
+                    <table class="board_list_wrap">
+                        <tr class="board_list">
+                            <th class="num">번호</th>
+                            <th class="title">제목</th>
+                            <th class="writer">글쓴이</th>
+                            <th class="date">작성일</th>
+                        </tr>
+                        <tr class="text-center" th:each="board : ${boardList}">
+                            <th scope="row">
+                                <span th:text="${board.boardId}"></span>
+                            </th>
+                            <td>
+                                <a th:href="@{'/board/' + ${board.boardId}}">
+                                    <span th:text="${board.title}"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <span th:text="${board.writer}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="board">
+                <p>공지사항</p>
+                <table class="board-wrap">
+                    <tbody>
+                    <table class="board_list_wrap">
+                        <tr class="board_list">
+                            <th class="num">번호</th>
+                            <th class="title">제목</th>
+                            <th class="writer">글쓴이</th>
+                            <th class="date">작성일</th>
+                        </tr>
+                        <tr class="text-center" th:each="board : ${boardList}">
+                            <th scope="row">
+                                <span th:text="${board.boardId}"></span>
+                            </th>
+                            <td>
+                                <a th:href="@{'/board/' + ${board.boardId}}">
+                                    <span th:text="${board.title}"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <span th:text="${board.writer}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <form id="login_form" th:action="|@{/member/login}|" th:method="post" th:object="${memberDTO}">
+        <div class="login_div">
+            <div id="login_inner">
+                <div id="DMS_img">
+                    <img src="/img/DMS.png">
+                </div>
+                <ul class="login_item">
+                    <li><input id="ID" class="item" type="text" placeholder="아이디를 입력하세요." th:field="*{memberId}"></li>
+                    <li><input id="PW" class="item" type="password" placeholder="비밀번호를 입력하세요." th:field="*{memberPassword}"></li>
+<!--                    <div th:if="${#fields.hasGlobalErrors()}">-->
+<!--                        <br/>-->
+<!--                        <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>-->
+<!--                    </div>-->
+<!--                    <br/>-->
+                    <input id="login_button" class="item" type="submit" value="로그인">
+                    <div id="a_tag">
+                        <a href="/member/findIDPW" id="find_id_pw">아이디/비밀번호 찾기</a>
+                        <a href="/member/save" id="signup_button">회원가입</a>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </form>
+</section>
+<footer id="footer"></footer>
+
+<!--<script src="/javascript/calendarIndex.js"></script>-->
+<script src="/javascript/fetchMainHF.js"></script>
+<script src="/javascript/indexToday.js"></script>
+<!--<script src="/javascript/openMessage.js"></script>-->
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    let role = [[${role}]];
+    let user = [[${user}]];
+    function openGetMessage(){
+        var windowFeatures = 'width=750,height=535,resizable=yes';
+
+        if(role == user){
+            var newWindow = window.open('/messages/received', 'NoteListWindow', windowFeatures);
+        }
+        else {
+            var newWindow = window.open('/qna/question', 'NoteListWindow', windowFeatures);
+        }
+        if (newWindow === null) {
+            alert('팝업이 차단되었습니다. 팝업 차단을 해제하고 다시 시도하세요.');
+        }
+    }
+    /* ]]> */
+</script>
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    let Error = [[${login_error}]];
+    let HOME = [[${home_button}]];
+
+    if((HOME==false) && (Error=false)){
+        document.getElementById('login_form').style.display = 'contents';
+    }
+    else if((Error==false) && (HOME==true)){
+        document.getElementById('login_form').style.display = 'none';
+    }
+    else if(Error==true){
+        document.getElementById('login_form').style.display = 'contents';
+        // alert('로그인 실패');
+    }
+    // else {
+    //     document.getElementById('login_form').style.display = 'none';
+    // }
+    /* ]]> */
+</script>
+
+<script th:inline="javascript">
+
+    function generateCalendar(year, month){
+
+        let scheduleList = [[${scheduleList}]];
+        console.log(scheduleList.at(6));
+
+        const today = new Date();
+        const dayInMonth = new Date(year, month + 1, 0).getDate(); //달의 일수
+        const firstDay = new Date(year, month, 1).getDay(); //달의 첫 요일
+
+
+        let calendarHTML = '<table>';
+        calendarHTML += '<tr id="calendarDate"><th class="Sun">일요일</th><th>월요일</th><th>화요일</th><th>수요일</th><th>목요일</th><th>금요일</th><th class="Sat">토요일</th></tr>'
+        let dayCounter = 1;
+
+        for(let i = 0; i < 6; i++) {
+
+            calendarHTML += '<tr>';
+
+            for(let j = 0; j < 7; j++) {
+                const holiday = new Date(year, month, dayCounter).getDay();
+                if(i == 0 && j < firstDay){
+                    calendarHTML += '<td></td>';
+                }
+                else if(dayCounter > dayInMonth){
+                    calendarHTML += '<td></td>';
+                }
+                else {
+
+                    //오늘 날짜 색깔 바꾸는 코드
+                    /*if(dayCounter == today.getDate() && year == today.getFullYear() && (month+1) == today.getMonth() + 1){
+                    calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
+                        if(holiday == 0){
+                            calendarHTML += `<td><div class="Sun">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
+                        }
+                        else if(holiday == 6){
+                            calendarHTML += `<td id="today"><div class="Sat">${dayCounter}</div><div class="plan_div" id="${dayCounter}"></div></td>`;
+                        }
+                        else{
+                            calendarHTML += `<td id="today">${dayCounter}<div class="plan_div" id="${dayCounter}"></div></td>`;
+                        }
+                    }*/
+
+
+                    if(holiday == 0){
+                        calendarHTML += `<td><div class="Sun">${dayCounter}</div>`;
+                        for(let s=0; s<scheduleList.length; s++) {
+                            if(dayCounter==scheduleList.at(s).day && (month+1)==scheduleList.at(s).month && year==scheduleList.at(s).year) {
+                                calendarHTML += `<div class="plan_count"></div>`;
+                                break;
+                            }
+                        }
+                    }
+                    else if(holiday == 6){
+                        calendarHTML += `<td><div class="Sat">${dayCounter}</div>`;
+                        for(let s=0; s<scheduleList.length; s++) {
+                            if(dayCounter==scheduleList.at(s).day && (month+1)==scheduleList.at(s).month && year==scheduleList.at(s).year) {
+                                calendarHTML += `<div class="plan_count"></div>`;
+                                break;
+                            }
+                        }
+                    }
+
+                    else{
+                        calendarHTML += `<td><div>${dayCounter}</div>`;
+                        for(let s=0; s<scheduleList.length; s++) {
+                            if(dayCounter==scheduleList.at(s).day && (month+1)==scheduleList.at(s).month && year==scheduleList.at(s).year) {
+                                calendarHTML += `<div class="plan_count"></div>`;
+                                break;
+                            }
+                        }
+                    }
+                    dayCounter++;
+                }
+
+            }
+
+            calendarHTML += '</tr>';
+        }
+
+        calendarHTML += '</table>';
+
+        document.getElementById('Calendar_Container').innerHTML = calendarHTML;
+        document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;
+
+<!--        if(month == 0){-->
+<!--            document.getElementById('currentYearMonth').innerHTML = `${year - 1}년 ${month + 12}월`;-->
+<!--        }-->
+<!--        else{-->
+<!--            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month}월`;-->
+<!--        }-->
+
+
+    }
+
+
+        var pos = new Date();
+
+
+    //달력 보여주는 함수
+    function showCalendar(change){
+        if(change == -1){
+            prevCalendar(change);
+        }
+        else{
+            nextCalendar(change);
+        }
+    }
+
+    //이전 월 버튼
+    function prevCalendar(change){
+        pos.setMonth(pos.getMonth() + change);
+        generateCalendar(pos.getFullYear(), pos.getMonth());
+    }
+
+    //다음 월 버튼
+    function nextCalendar(change){
+        pos.setMonth(pos.getMonth() + change);
+        generateCalendar(pos.getFullYear(), pos.getMonth());
+    }
+
+    function todaySchedule() {
+        let scheduleList = [[${scheduleList}]];
+
+        const today = new Date();
+        let todayScheduleHTML = `<div id="planInner">`;
+
+        for(let i=0; i<scheduleList.length; i++) {
+            if(scheduleList.at(i).year == today.getFullYear() && scheduleList.at(i).month - 1 == today.getMonth()
+                && scheduleList.at(i).day == today.getDate()) {
+                console.log("if문 실행");
+                todayScheduleHTML += `<li class="todayPlanItem">${scheduleList.at(i).title}</li>`;
+            }
+        }
+        todayScheduleHTML += `</div><br>`;
+
+        document.getElementById('plan_div').innerHTML = todayScheduleHTML;
+    }
+
+    todaySchedule();
+    generateCalendar(pos.getFullYear(), pos.getMonth());
+
+</script>
+
+
+
+<!--<script th:inline="javascript">-->
+<!--    /* <![CDATA[ */-->
+<!--    var loginButton = document.getElementById('login_button');-->
+<!--    loginButton.addEventListener('click', function() {-->
+<!--        let Error = [[${login_error}]];-->
+<!--        if(Error){-->
+<!--            alert("틀림");-->
+<!--        }-->
+<!--        else{-->
+<!--            alert("맞음");-->
+<!--        }-->
+<!--    })-->
+<!--    /* ]]> */-->
+</script>
+</body>
+</html>

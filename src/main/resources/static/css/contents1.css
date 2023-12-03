@@ -1,0 +1,139 @@
+#contents{
+    height:1100px;
+}
+#contents>.inner{
+    margin:10px auto;
+}
+#contents_container{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(2,90%);
+    grid-template-areas:
+    "detail calendar"
+    "playing board";
+    grid-row-gap: 30px;
+    grid-column-gap: 30px;
+    position:relative;
+    top:50px;
+}
+
+.detail{
+    grid-area:detail;
+    border-radius: 10px;
+    box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
+}
+
+.calendar{
+    grid-area:calendar;
+    /*border:solid;*/
+    border-radius: 10px;
+    box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
+}
+.playing{
+    grid-area:playing;
+    box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
+}
+.board{
+    grid-area:board;
+    border-radius: 10px;
+    box-shadow: 0rem 1.1rem 3.5rem 0.2rem rgba(0, 0, 0, 0.14);
+}
+
+.playing p {
+    font-size:18px;
+    margin-left:25px;
+    font-weight:bold;
+}
+
+.board p {
+    font-size:18px;
+    margin-left:25px;
+    font-weight:bold;
+}
+
+.board-wrap tr.board_title {
+  border: 1px solid white;
+}
+
+.board_title {
+    font-size:20px;
+    border-bottom:2px solid #ddd;
+}
+
+.board_list_wrap {
+    width: 100%;
+    border-collapse: collapse;
+    text-align:center;
+    font-size:10px;
+    border-top : 3px solid black;
+    border-bottom : 3px solid black;
+}
+
+.board_list_wrap td.title {
+    text-align:left;
+}
+
+.board_list_wrap td {
+    border-top : 1px solid #ddd;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:3px;
+}
+
+.board_list th {
+    padding: 10px;
+    text-align: center;
+    font-size:15px;
+    border-color: darkgrey;
+    background:darkgray;
+    color: white;
+}
+
+.board_list_under {
+    padding: 10px;
+    text-align: center;
+    font-size:10px;
+}
+
+.board_list td.num {
+    font-weight: bold;
+}
+
+.board_list td.title a {
+    text-decoration: none;
+    color: #333;
+}
+
+.board_list tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.board_list .num {
+    width: 10%;
+}
+
+.board_list .title {
+    width: 30%;
+    text-align: left;
+}
+
+.board_list .top .title {
+    text-align: center;
+}
+
+.board_list .writer {
+    width: 10%;
+}
+
+.board_list .date {
+    width: 10%;
+}
+
+.board_list .count {
+    width: 10%;
+}
+
+
+
+
+

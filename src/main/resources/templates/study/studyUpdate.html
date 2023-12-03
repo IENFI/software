@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/studyupdate1.css">
+    <link rel="stylesheet" href="/css/contents1.css">
+    <title>공부 기록 수정</title>
+</head>
+<body>
+<section id="contents">
+    <div class="inner">
+        <form action="/studyUpdateComplete" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <p>공부 기록 수정</p>
+                <div style="display: none">
+                    <input type="text" id="id" name="id" th:value="${studyId}">
+                    <input type="text" id="memberId" name="memberId" th:value="${studyMemberID}"></div>
+                <label for="title">제목</label>
+                <input type="text" id="title" name="title" th:value="${studyTitle}">
+                <br>
+                <label style="display: none" for="content">내용</label>
+                <textarea type="text" id="content" name="content" th:text="${studyContent}"></textarea>
+                <br>
+                <div style="display: none">
+                    <label for="date">작성일</label>
+                    <input type="text" id="date" name="date" th:value="${studyDate}">
+                    <br>
+                </div>
+                <br>
+                <label for="url">동영상url</label>
+                <input type="text" id="url" name="url" th:value="${studyUrl}">
+                <br>
+                <div>
+                    <div class="file_input">
+                        <input id="fileInput1" th:if="${studyOriginName} != null" type="text" name="fileoriginname" th:value="${studyOriginName}"/>
+                        <input id="fileInput2" th:unless="${studyOriginName} != null" type="text" name="fileoriginname">
+                        <label>
+                            <input type="file" name="files" onchange="selectFile(this);" />
+                        </label>
+                        <button type="button" onclick="deleteFile()">X</button>
+                    </div>
+                </div>
+                <br>
+                <div class="button">
+                    <button type="submit">수정</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script src="/javascript/fetchMainHF1.js"></script>
+<script src="/javascript/openMessage.js"></script>
+<script>
+    // 파일 선택
+    function selectFile(element) {
+
+        const file = element.files[0];
+        const filename = element.closest('.file_input').firstElementChild;
+
+        // 파일 크기가 10MB를 초과하는 경우
+        const fileSize = Math.floor(file.size / 1024 / 1024);
+        if (fileSize > 10) {
+            alert('10MB 이하의 파일로 업로드해 주세요.');
+            filename.value = '';
+            element.value = '';
+            return false;
+        }
+
+        // 파일명 지정
+        filename.value = file.name;
+    }
+    function deleteFile() {
+        document.getElementById('fileInput1').value = null;
+        document.getElementById('fileInput2').value = null;
+    }
+</script>
+</body>
+</html>
