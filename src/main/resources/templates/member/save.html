@@ -54,7 +54,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>회원가입</title>
     <link rel="stylesheet" href="/css/signup.css">
 </head>
 <body>
@@ -146,21 +146,28 @@
     let EmailCheck = false;
 
     function valid(){
-        if(IdCheck && EmailCheck){
-            return true;
-        }
-        else if (IdCheck && !EmailCheck){
-            alert('이메일 중복 체크를 해야합니다.');
-            return false;
-        }
-        else if (!IdCheck && EmailCheck){
-            alert('아이디 중복 체크를 해야합니다.');
-            return false;
+        if(check){
+            if(IdCheck && EmailCheck){
+                return true;
+            }
+            else if (IdCheck && !EmailCheck){
+                alert('이메일 중복 체크를 해야합니다.');
+                return false;
+            }
+            else if (!IdCheck && EmailCheck){
+                alert('아이디 중복 체크를 해야합니다.');
+                return false;
+            }
+            else{
+                alert('아이디/이메일 중복 체크를 해야합니다.');
+                return false;
+            }
         }
         else{
-            alert('아이디/이메일 중복 체크를 해야합니다.');
+            alert('이메일 인증을 해야합니다.')
             return false;
         }
+
     }
     function checkForIdDuplicate() {
         var xhr = new XMLHttpRequest();

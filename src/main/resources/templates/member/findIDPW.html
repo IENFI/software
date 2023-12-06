@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/style.css">
-
+    <title>아이디/비밀번호 찾기</title>
 
     <style>
         body{
@@ -190,7 +188,7 @@
                 </div>
             </div>
             <div id="findID_Footer">
-                <button type="submit" class="findBtn">아이디 찾기</button>
+                <button type="submit" class="findBtn" onclick="if(!nullCheckID()){return false;}">아이디 찾기</button>
             </div>
         </form>
 
@@ -229,7 +227,8 @@
                 </div>
             </div>
             <div id="findPW_Footer">
-                <button type="submit" onclick="findPW()" class="findBtn">비밀번호 찾기</button>
+                <button type="submit" onclick="if(!nullCheckPW()){alert('입력 정보를 모두 입력해주세요.');
+                return false;} else {findPW()}" class="findBtn">비밀번호 찾기</button>
             </div>
         </div>
     </div>
@@ -311,9 +310,9 @@
     function findPW() {
         let xhr = new XMLHttpRequest();
         xhr.open('GET', '/member/findPW?memberID='+encodeURIComponent(document.getElementById('memberID').value)
-                            +'&memberName='+encodeURIComponent(document.getElementById('memberName2').value)
-                            +'&memberEmail='+encodeURIComponent(document.getElementById('memberEmail2').value)
-                            +'&check='+encodeURIComponent(document.getElementById('check').value), true);
+            +'&memberName='+encodeURIComponent(document.getElementById('memberName2').value)
+            +'&memberEmail='+encodeURIComponent(document.getElementById('memberEmail2').value)
+            +'&check='+encodeURIComponent(document.getElementById('check').value), true);
 
         xhr.onload = function () {
             if (xhr.status === 200) {
@@ -329,6 +328,33 @@
             }
         };
         xhr.send();
+    }
+
+    function nullCheckID() {
+        let name = document.getElementById('memberName').value;
+        let email = document.getElementById('memberEmail').value;
+
+        if(name && email) {
+            return true;
+        }
+        else {
+            alert("입력 정보를 모두 입력해주세요.")
+            return false;
+        }
+    }
+
+    function nullCheckPW() {
+        let id = document.getElementById('memberID').value;
+        let name = document.getElementById('memberName2').value;
+        let email = document.getElementById('memberEmail2').value;
+        let emailNum = document.getElementById('memberEmailNum').value;
+
+        if(id && name && email && emailNum) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /*]]>*/

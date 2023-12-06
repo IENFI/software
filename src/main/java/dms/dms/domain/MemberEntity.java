@@ -10,8 +10,6 @@ import lombok.Setter;
 @Getter
 @Table(name = "member") // database에 해당 이름의 테이블 생성
 public class MemberEntity { // table 역할
-    // jpa ==> database를 객체처럼 사용 가능
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long memberSequence;

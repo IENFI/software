@@ -269,7 +269,7 @@ public class MemberController {
 
     @PostMapping("/member/editEmail")
     public String editMemberEmail (@SessionAttribute(name = "memberId", required = false) String memberId,
-                            @RequestParam("memberEmail") String memberEmail, Model model)
+                                   @RequestParam("memberEmail") String memberEmail, Model model)
     {
         System.out.println("MemberController.editEmail");
 
@@ -290,7 +290,7 @@ public class MemberController {
 
     @PostMapping("/member/editDept")
     public String editMemberInterest (@SessionAttribute(name = "memberId", required = false) String memberId,
-                            @RequestParam("memberDept") String memberDept, Model model)
+                                      @RequestParam("memberDept") String memberDept, Model model)
     {
         System.out.println("MemberController.editDept");
 
@@ -389,9 +389,9 @@ public class MemberController {
     @GetMapping("/member/findPW")
     @ResponseBody
     public String findPW(@RequestParam("memberID") String memberID,
-                       @RequestParam("memberName") String memberName,
-                       @RequestParam("memberEmail") String memberEmail,
-                       @RequestParam("check") String check) {
+                         @RequestParam("memberName") String memberName,
+                         @RequestParam("memberEmail") String memberEmail,
+                         @RequestParam("check") String check) {
         String memberID1 = memberService.findMemberID(memberName, memberEmail);
         if(memberID1 != null && memberID != null) {
             if(memberID1.equals(memberID) && check.equals("true")) {

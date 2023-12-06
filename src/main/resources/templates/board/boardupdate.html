@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/boardUpdate.css">
+    <title>게시판 수정 | DMS</title>
+</head>
+<body>
+<header id="header">
+    <div class="inner">
+        <a href="/" id="dms"><img src="/img/DMS.png" height="80" onclick=""></a>
+        <ul class="nav">
+            <li><a href="/board/notice" class="nav_item">게시판</a></li>
+            <li><a href="/study/studyHome" class="nav_item">공부기록</a></li>
+            <li><a href="/schedule/plan" class="nav_item">일정</a></li>
+        </ul>
+        <span id="message"><img src="/img/message.png" id = message_icon onclick="openGetMessage()">
+                    <a href="/messages/received"></a>
+            </span>
+        <span id="profile">
+                       <li><a href="#"><img src="/img/profile.png" id = profile_icon  onclick=""></a>
+                           <ul id="profile_dropdown">
+                              <li><a href="/member/info" class="dropdown_item">내 정보</a></li>
+                              <li><a href="/member/logout" class="dropdown_item">로그아웃</a></li>
+                           </ul>
+                        </li>
+                </span>
+    </div>
+</header>
+<div class="container">
+    <form th:action="@{'/board/edit/' + ${board.boardId}}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="fileId" th:value="${board.fileId}"> <!-- 숨겨놓기 -->
+        <div class="form-group-wrap">
+            <p>게시판 수정</p>
+            <input type="hidden" name="_method" value="put" />
+            <input type="hidden" name="boardId" th:value="${board.boardId}" />
+            <div class="col-sm-10">
+                <label for="inputCategory" class="col-sm-2 col-form-label">카테고리</label>
+                <input
+                        list="category"
+                        type="text"
+                        name="category"
+                        class="form-control"
+                        id="inputCategory"
+                        th:value="${board.category}"
+                />
+                <datalist id="category">
+                    <option value="공지사항"></option>
+                    <option value="공모전"></option>
+                    <option value="자유게시판"></option>
+                </datalist>
+            </div>
+            <br>
+            <div class="col-sm-10">
+                <label for="inputTitle" class="col-sm-2 col-form-label">제목</label>
+                <input
+                        type="text"
+                        name="title"
+                        class="form-control"
+                        id="inputTitle"
+                        th:value="${board.title}"
+                />
+            </div>
+            <br>
+            <label for="inputContent" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+            <textarea
+                    type="text"
+                    name="content"
+                    class="form-control"
+                    id="inputContent"
+                    th:text="${board.content}"
+            ></textarea>
+            </div>
+            <br>
+            <div class="col-sm-10">
+                <label for="inputUrl" class="col-sm-2 col-form-label">동영상 URL</label>
+                <input type="text" name="url" class="form-control" id="inputUrl" th:value="${board.url}">
+            </div>
+            <div class="col-sm-10">
+                <div class="custom-file" id="inputFile">
+                    <label for="inputFile" class="col-sm-2 col-form-label">첨부 파일</label>
+                    <input type="text" name="inputfile" class="custom-file-label" for="customFile" th:placeholder="${filename}"></input>
+                    <input name="file" type="file" class="custom-file-input" id="customFile"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-auto mr-auto"></div>
+                <div class="col-auto">
+                    <input class="btn btn-primary" type="submit" role="button" value="수정" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<footer id="footer">
+    <div class="inner">
+        <div id="footer_container">
+            <div id="mainName" class="items">
+            <span id="D" class="large">
+                D
+            </span>
+                <span class="small">
+                iscover,
+            </span>
+
+                <span id="M" class="large">
+                M
+            </span>
+                <span class="small">
+                aster,
+            </span>
+
+                <span id="S" class="large">
+                S
+            </span>
+                <span class="small">
+                uccesed
+            </span>
+            </div>
+            <div id="person" class="items">
+                안현석, 이재혁, 김동명, 김은지, 하민영
+            </div>
+            <div id="tel_div" class="items">
+            <span id="tel">
+                tel)
+            </span>
+                <span id="tel_number">
+                010-9341-6429
+            </span>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="/javascript/openMessage.js"></script>
+
+<script>
+    $('.custom-file-input').on('change', function () {
+        var filename = $(this).val().split('/').pop();
+        $(this).siblings('.custom-file-label').addClass('selected').html(filename);
+    });
+</script>
+</body>
+</html>

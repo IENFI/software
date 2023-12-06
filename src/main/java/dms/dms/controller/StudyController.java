@@ -28,8 +28,10 @@ import java.util.UUID;
 
 @Controller
 public class StudyController {
-    private final String fileDir = "C:/Users/user/dms_file";
+    private final String fileDir = "/aien0118/tomcat/webapps/download/";
+    //    private final String fileDir = "C:/Users/SEC/Desktop/dms";
 //    private final String fileDir = "D:/YU/3-2/SE/project/dms/dms_file";
+    //private final String fileDir = "C:/Users/user/dms_file/";
     //    각자 변경해야할 부분4
     private final StudyService studyService;
 
@@ -79,7 +81,6 @@ public class StudyController {
         }
 
         Study study = new Study();
-        System.out.println(memberId);
         study.setMemberId(memberId);
         study.setTitle(studyInfo.getTitle());
         study.setContent(studyInfo.getContent());
@@ -96,15 +97,19 @@ public class StudyController {
         String originalName = studyInfo.getFileoriginname();
         if(!originalName.isEmpty()) {
             String uuid = UUID.randomUUID().toString();
-            //String extension = originalName.substring(originalName.lastIndexOf("."));
             String saveName = uuid + originalName;
             String savePath = fileDir + saveName;
+            //String savePath = saveName;
             study.setFileoriginname(originalName);
             study.setFilesavename(saveName);
             study.setFilesavepath(savePath);
 
             File saveFile = new File(savePath);
             files.transferTo(saveFile);
+        } else {
+            study.setFileoriginname("");
+            study.setFilesavename("");
+            study.setFilesavepath("");
         }
 
         studyService.saveStudy(study);
@@ -138,8 +143,8 @@ public class StudyController {
         }
     }
 
-    @GetMapping("/download")
-    public ResponseEntity<InputStreamResource> downloadFile(@SessionAttribute(name = "memberId", required = false) String memberId, @RequestParam("studyId") Long id) throws IOException {
+    @GetMapping("/study/downloads/{studyId}")
+    public ResponseEntity<InputStreamResource> downloadFile(@SessionAttribute(name = "memberId", required = false) String memberId, @PathVariable("studyId") Long id) throws IOException {
 
         Study study = studyService.findOneStudy(id)
                 .orElseThrow(NullPointerException::new);
@@ -217,15 +222,19 @@ public class StudyController {
         String originalName = studyInfo.getFileoriginname();
         if(!originalName.isEmpty()) {
             String uuid = UUID.randomUUID().toString();
-            //String extension = originalName.substring(originalName.lastIndexOf("."));
             String saveName = uuid + originalName;
             String savePath = fileDir + saveName;
+            //String savePath = saveName;
             study.setFileoriginname(originalName);
             study.setFilesavename(saveName);
             study.setFilesavepath(savePath);
 
             File saveFile = new File(savePath);
             files.transferTo(saveFile);
+        } else {
+            study.setFileoriginname("");
+            study.setFilesavename("");
+            study.setFilesavepath("");
         }
 
         String updateCheck = studyService.updateStudy(study);

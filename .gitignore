@@ -35,12 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
-<<<<<<< HEAD
-=======
-### Example user template template
-### Example user template
 
-# IntelliJ project files
+### IntelliJ project files ###
 .idea
 *.iml
 out

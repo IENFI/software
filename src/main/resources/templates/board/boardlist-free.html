@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styleBoard.css">
+    <link rel="stylesheet" href="/css/header.css">
+
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/boardlist-free.css">
+    <link rel="stylesheet" href="/css/contents1.css">
+    <title>게시판(공지사항) | DMS</title>
+
+</head>
+<body>
+<header id="header"></header>
+<section id="contents">
+    <div class="inner">
+        <div class="container">
+            <div class="board-wrap">
+                <div id="board_title">
+                    <span class="notice title_item" name="notice"><a href="/board/notice">공지사항</a> </span>
+                    <span class="contest title_item" name="contest"><a href="/board/contest">공모전</a></span>
+                    <span class="free-board title_item" name="free"><a href="/board/free">자유게시판</a></span>
+                </div>
+                <div id="board_content">
+                    <table class="board_list_wrap">
+                        <tr class="board_list">
+                            <th class="num">번호</th>
+                            <th class="title">제목</th>
+                            <th class="writer">글쓴이</th>
+                            <th class="date">작성일</th>
+                        </tr>
+                        <tr class="text-center" th:each="board : ${boardList}">
+                            <th scope="row">
+                                <span th:text="${board.boardId}"></span>
+                            </th>
+                            <td>
+                                <a th:href="@{'/board/' + ${board.boardId}}">
+                                    <span th:text="${board.title}"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <span th:text="${board.writer}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                </tbody>
+            </div>
+            <div id="boardFooter">
+                <div id="board_page">
+                    <span class="bottom_first"><a th:href="@{/board/free(page=0)}"><img src="/img/two_left.png" class="pageBtn" style="height:14px;"></a></span>
+                    <span class="bottom_prev">
+                            <a th:if="${nowPage > 1}" th:href="@{/board/free(page=${nowPage}-1)}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
+                            <a th:unless="${nowPage > 1}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
+                        </span>
+                    <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
+                            <span class="num" th:if="${page}!=0">
+                                <a th:href="@{/board/free(page=${page}-1)}" th:text="${page}">1</a>
+                            </span>
+                    </th:each>
+                    <span class="bottom_next">
+                            <a th:if="${nowPage < endPage}" th:href="@{/board/free(page=${nowPage})}"><img src="/img/one_right.png" class="pageBtn" style="height:14px;"></a>
+                            <a th:unless="${nowPage < endPage}"><img src="/img/one_right.png" class="pageBtn" style="height:14px;"></a>
+                        </span>
+                    <span class="bottom_last"><a th:href="@{/board/free(page=${endPage}-1)}"><img src="/img/two_right.png" class="pageBtn" style="height:14px;"></a></span>
+
+                </div>
+                <div id="write_div">
+                    <a href="/board/write"><button id="writeBtn">쓰기</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer id="footer"></footer>
+
+
+<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="/javascript/openMessage.js"></script>
+<script src="/javascript/fetchMainHF1.js"></script>
+</body>
+</html>

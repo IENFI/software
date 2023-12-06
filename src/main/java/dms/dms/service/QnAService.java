@@ -83,7 +83,7 @@ public class QnAService {
         }
     }
 
-    
+
     // user 쪽 함수
     @Transactional
     public Page<QnA> findQnAByUserId(String memberId, Pageable pageable){

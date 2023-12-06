@@ -20,10 +20,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/styleHome.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/contents.css">
+    <link rel="stylesheet" href="/css/contents1.css">
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -79,8 +79,70 @@
                     <div class="calendarInterval"></div>
                 </div>
             </div>
-            <div class="playing">공모전</div>
-            <div class="board">게시판</div>
+            <div class="playing">
+                <p>공모전</p>
+                <table class="board-wrap">
+                    <tbody>
+                    <table class="board_list_wrap">
+                        <tr class="board_list">
+                            <th class="num">번호</th>
+                            <th class="title">제목</th>
+                            <th class="writer">글쓴이</th>
+                            <th class="date">작성일</th>
+                        </tr>
+                        <tr class="text-center" th:each="board : ${boardList}">
+                            <th scope="row">
+                                <span th:text="${board.boardId}"></span>
+                            </th>
+                            <td>
+                                <a th:href="@{'/board/' + ${board.boardId}}">
+                                    <span th:text="${board.title}"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <span th:text="${board.writer}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="board">
+                <p>공지사항</p>
+                <table class="board-wrap">
+                    <tbody>
+                    <table class="board_list_wrap">
+                        <tr class="board_list">
+                            <th class="num">번호</th>
+                            <th class="title">제목</th>
+                            <th class="writer">글쓴이</th>
+                            <th class="date">작성일</th>
+                        </tr>
+                        <tr class="text-center" th:each="board : ${boardList}">
+                            <th scope="row">
+                                <span th:text="${board.boardId}"></span>
+                            </th>
+                            <td>
+                                <a th:href="@{'/board/' + ${board.boardId}}">
+                                    <span th:text="${board.title}"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <span th:text="${board.writer}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
@@ -96,11 +158,11 @@
                 <ul class="login_item">
                     <li><input id="ID" class="item" type="text" placeholder="아이디를 입력하세요." th:field="*{memberId}"></li>
                     <li><input id="PW" class="item" type="password" placeholder="비밀번호를 입력하세요." th:field="*{memberPassword}"></li>
-<!--                    <div th:if="${#fields.hasGlobalErrors()}">-->
-<!--                        <br/>-->
-<!--                        <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>-->
-<!--                    </div>-->
-<!--                    <br/>-->
+                    <!--                    <div th:if="${#fields.hasGlobalErrors()}">-->
+                    <!--                        <br/>-->
+                    <!--                        <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>-->
+                    <!--                    </div>-->
+                    <!--                    <br/>-->
                     <input id="login_button" class="item" type="submit" value="로그인">
                     <div id="a_tag">
                         <a href="/member/findIDPW" id="find_id_pw">아이디/비밀번호 찾기</a>
@@ -243,18 +305,18 @@
         document.getElementById('Calendar_Container').innerHTML = calendarHTML;
         document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month + 1}월`;
 
-<!--        if(month == 0){-->
-<!--            document.getElementById('currentYearMonth').innerHTML = `${year - 1}년 ${month + 12}월`;-->
-<!--        }-->
-<!--        else{-->
-<!--            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month}월`;-->
-<!--        }-->
+        <!--        if(month == 0){-->
+        <!--            document.getElementById('currentYearMonth').innerHTML = `${year - 1}년 ${month + 12}월`;-->
+        <!--        }-->
+        <!--        else{-->
+        <!--            document.getElementById('currentYearMonth').innerHTML = `${year}년 ${month}월`;-->
+        <!--        }-->
 
 
     }
 
 
-        var pos = new Date();
+    var pos = new Date();
 
 
     //달력 보여주는 함수

@@ -47,7 +47,7 @@ public class QnAController {
 
     @PostMapping("/qna/writeAnswer/{qnaId}")
     public String writeAnswer(@SessionAttribute(name = "memberId", required = false) String memberId,
-                                @ModelAttribute QnADTO qnaDTO, Model model,
+                              @ModelAttribute QnADTO qnaDTO, Model model,
                               @PathVariable("qnaId") Long qnaId){
         // html에서 넘어오는 건 관리자의 memberId, qnaId와 answerContent밖에 없음
         System.out.println("QnAController.writeAnswer");
@@ -95,7 +95,7 @@ public class QnAController {
         if (loginMember == null){
             return "redirect:/";
         }
-        
+
         QnA qna = qnaService.findOneQnA(qnaId);
 
         if (qna==null){
@@ -229,8 +229,8 @@ public class QnAController {
 
     @GetMapping("/qna/answeredQuestion")
     public String answeredQuestionMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
-                                  @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
-                                  Pageable pageable){
+                                          @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
+                                          Pageable pageable){
         System.out.println("QnAController.answeredQuestionMessage");
         MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
 
@@ -270,8 +270,8 @@ public class QnAController {
 
     @GetMapping("/qna/answer")
     public String answerMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
-                                  @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
-                                  Pageable pageable){
+                                @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
+                                Pageable pageable){
         MemberEntity loginMember = memberService.getLoginUserByLoginId(memberId);
 
         if (loginMember == null){

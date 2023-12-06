@@ -1,0 +1,57 @@
+.content-group {
+    margin-left : 10%;
+    margin-right:10%;
+    margin-top:50px;
+}
+
+.content-group p {
+    font-size:30px;
+    border-bottom : 2px solid #ddd;
+}
+
+.sub-title {
+    font-size : 18px;
+    font-weight:bold;
+}
+
+.study-title {
+    margin-top:10px;
+    font-size:18px;
+}
+
+.study-date {
+    font-size:18px;
+    float:right;
+}
+
+.study-detail textarea[name="study-content" ] {
+    margin-top : 10px;
+    font-size : 25px;
+    width : 950px;
+    border : 1px solid black;
+    height : 850px;
+}
+
+.study-detail {
+    margin-bottom : 150px;
+}
+
+.url {
+    font-weight:bold;
+}
+
+.file {
+    font-weight:bold;
+}
+
+.button-group {
+    float:right;
+}
+
+.button-group button[type="button"] {
+    background-color: black;
+    width: 50px;
+    height: 25px;
+    font-size: 15px;
+    color:white;
+}

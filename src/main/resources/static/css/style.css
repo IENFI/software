@@ -15,6 +15,23 @@ body, html{
     padding:0;
 
 }
+
+body{
+    display:flex;
+    flex-direction: column;
+}
+#header{
+    height:100px;
+}
+#footer{
+    height:300px;
+}
+#contents{
+    flex:1;
+    margin-bottom: 120px;
+}
+
+
 a{
     text-decoration: none;
 }

@@ -25,9 +25,7 @@ public class HomeController {
     private final ScheduleService scheduleService;
 
     @RequestMapping
-    public String dms(Model model, @SessionAttribute(name = "memberId", required = false) String memberId) {
-        model.addAttribute("loginType", "dms");
-        model.addAttribute("pageName", "세션 로그인");
+    public String home(Model model, @SessionAttribute(name = "memberId", required = false) String memberId){
         model.addAttribute("memberDTO", new MemberDTO());
         model.addAttribute("user", MemberRole.USER);
 

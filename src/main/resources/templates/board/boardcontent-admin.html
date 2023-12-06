@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/boardcontent.css">
+    <link rel="stylesheet" href="/css/contents1.css">
+    <title>게시판 상세보기 | DMS</title>
+    <style>
+        .commentInput{
+            display:none;
+        }
+        #cancelBtn, #confirmBtn{
+            display:none;
+        }
+        .commentContents{
+            width:200px;
+        }
+        #editComment{
+            display:flex;
+            flex-direction: row;
+        }
+    </style>
+</head>
+<body>
+<header id="header"></header>
+<section id="contents">
+    <div class="inner">
+        <div class="container">
+            <div class="card">
+                <p>공부 기록</p>
+                <div class="card-body">
+                    <div class="sub-category">카테고리 : </div>
+                    <br>
+                    <div class="sub-title">제목</div>
+                    <div class="card-title" th:text="@{${board.title} + ' - ' + ${board.writer}}"></div>
+                    <div class="card-date">
+                        <div class="text-muted" th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></div>
+                    </div>
+                    <br>
+                    <div class="card-text" th:text="${board.content}"></div>
+                    <br>
+                    <br>
+                    <div th:if="${board.fileId != null}">첨부파일 :
+                        <a
+                                class="card-text"
+                                th:href="@{'/download/' + ${board.fileId}}"
+                                th:text="${filename}"
+                        ></a>
+                    </div>
+                    <br>
+                    <div th:if="${board.url != null and board.url != ''}"> 동영상 URL :
+                        <a
+                                class="card-text"
+                                th:href="${board.url}"
+                                th:text="${board.url}"
+                        ></a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row-mt-3">
+                <div class="col-auto mr-auto"></div>
+                <div class="button-group">
+                    <button name="list" class="btn-list" type="button"><a th:href="@{'/board/' + ${board.category}}">목록</a></button>
+                    <br>
+                    <button class="btn-delete" type="button" onclick="deleteBoard()">삭제</button>
+                </div>
+            </div>
+
+            <form id="commentForm" th:action="@{'/board/' + ${board.boardId}+'/comment'}" method="post">
+                <div class="form-commentInfo">
+                    <div class="comment-count">댓글</div>
+                    <input class="comment-input" name="content" placeholder="댓글을 입력해 주세요.">
+                    <button class="submit" type="submit">등록</button>
+                </div>
+            </form>
+            <table id="comment_contents">
+                <tr class="text-center" th:each="comment : ${commentList}">
+                    <td>
+                        <div class="name" th:text="'작성자 : ' + ${comment.writer}"></div>
+                    </td>
+                    <td >
+                        <form id="editComment" class="comment" th:action="@{'/board/' + ${board.boardId}+'/comment/edit'}" th:method="post">
+                            <span class="commentContents" th:text="${comment.content}"></span>
+                            <input type="text" class="commentInput"  name="content">
+                            <input type="hidden" name="commentId" th:value="${comment.commentId}">
+                            <input type="hidden" th:value="${comment.commentId}" th:id="'comment_id_' + ${comment.commentId}">
+                            <div class="commentBtn" th:if="${comment.writer == loginMember}">
+                                <button type="button" name="editBtn">수정</button>
+                                <button id="cancelBtn" type="button" name="cancelBtn">취소</button>
+                                <button id="confirmBtn" type="submit" name="confirmBtn">확인</button>
+                                <button id="deleteComment" type="button" name="deleteBtn" onclick="deleteComment()">삭제</button>
+                            </div>
+                        </form>
+                    </td>
+
+                </tr>
+            </table>
+            <div id="comment_page">
+                <span class="bottom_first"><a th:href="@{'/board/' +${board.boardId}(page=0)}"><img src="/img/two_left.png" class="pageBtn" style="height:14px;"></a></span>
+                <span class="bottom_prev">
+                        <a th:if="${nowPage > 1}" th:href="@{'/board/' +${board.boardId}(page=${nowPage}-1)}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
+                        <a th:unless="${nowPage > 1}"><img src="/img/one_left.png" class="pageBtn" style="height:14px;"></a>
+                    </span>
+                <th:each th:each="page:${#numbers.sequence(startPage, endPage)}">
+                        <span class="num" th:if="${page}!=0">
+                            <a th:href="@{'/board/' +${board.boardId}(page=${page}-1)}" th:text="${page}">1</a>
+                        </span>
+                </th:each>
+                <span class="bottom_next">
+                        <a th:if="${nowPage < endPage}" th:href="@{'/board/' +${board.boardId}(page=${nowPage})}"><img src="/img/one_right.png" class="pageBtn" style="height:14px;"></a>
+                        <a th:unless="${nowPage < endPage}"><img src="/img/one_right.png" class="pageBtn" style="height:14px;"></a>
+                    </span>
+                <span class="bottom_last"><a th:href="@{'/board/' +${board.boardId}(page=${endPage}-1)}"><img src="/img/two_right.png" class="pageBtn" style="height:14px;"></a></span>
+
+            </div>
+        </div>
+    </div>
+</section>
+<footer id="footer"></footer>
+
+<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="/javascript/openMessage.js"></script>
+<script src="/javascript/fetchMainHF1.js"></script>
+<script th:inline="javascript">
+    let boardId = [[${board.boardId}]]
+    let boardTitle = [[${board.title}]]
+    function deleteBoard() {
+        if(!confirm(`게시글을 삭제하시겠습니까?`+`\n제목: ${boardTitle}`)){
+            return false;
+        }
+        else {
+            let boardDeleteUrl = '/board/' + boardId + '/delete';
+            location.href = boardDeleteUrl;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const commentElements = document.querySelectorAll('#comment_contents tbody .text-center');
+
+        commentElements.forEach((comment, index) => {
+            const commentId = index + 1; // 1부터 시작하도록
+            const inputElement = comment.querySelector('input[name="content"]');
+            const spanElement = comment.querySelector('span');
+            const editButton = comment.querySelector('button[type="button"][name="editBtn"]');
+            const cancelButton = comment.querySelector('button[type="button"][name="cancelBtn"]');
+            const confirmButton = comment.querySelector('button[type="submit"][name="confirmBtn"]');
+            const deleteButton = comment.querySelector('button[type="button"][name="deleteBtn"]');
+
+            // 동적인 아이디 부여
+            inputElement.id = `comment_input_${commentId}`;
+            spanElement.id = `comment_span_${commentId}`;
+
+            // 수정 버튼 클릭 시 이벤트 처리
+            editButton.addEventListener('click', function () {
+                // span 숨기고 input 보이기
+                spanElement.style.display = 'none';
+                inputElement.value=spanElement.innerText;
+                inputElement.style.display = 'inline-block';
+
+                // 버튼 상태 조절
+                editButton.style.display = 'none';
+                cancelButton.style.display = 'inline-block';
+                confirmButton.style.display = 'inline-block';
+                deleteButton.style.display = 'none';
+            });
+
+            // 취소 버튼 클릭 시 이벤트 처리
+            cancelButton.addEventListener('click', function () {
+                // span 보이고 input 숨기기
+                spanElement.style.display = 'inline-block';
+                inputElement.style.display = 'none';
+
+                // 버튼 상태 조절
+                editButton.style.display = 'inline-block';
+                cancelButton.style.display = 'none';
+                confirmButton.style.display = 'none';
+                deleteButton.style.display = 'inline-block';
+            });
+
+
+        });
+    });
+
+    function deleteComment() {
+        if (!confirm('댓글을 삭제하시겠습니까?')) {
+            return false;
+        } else {
+            let commentDeleteUrl = '/board/' + boardId + '/comment/detele';
+            location.href = commentDeleteUrl;
+        }
+    }
+</script>
+</body>
+</html>

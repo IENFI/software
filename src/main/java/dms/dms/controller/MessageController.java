@@ -50,7 +50,7 @@ public class MessageController {
         return "/messages/writeMessage";
     }
 
-// @ApiOperation(value = "쪽지 보내기", notes = "쪽지 보내기") <-- swagger v2
+    // @ApiOperation(value = "쪽지 보내기", notes = "쪽지 보내기") <-- swagger v2
 //    @Operation(summary = "쪽지 보내기", description = "쪽지 보내기")
 //    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/messages/write")
@@ -66,6 +66,11 @@ public class MessageController {
 
         if(receiverMember== null){
             AlertDTO message = new AlertDTO("사용자가 존재하지 않습니다.", "/messages/write", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+
+        if(receiverMember.getMemberRole() == MemberRole.ADMIN){
+            AlertDTO message = new AlertDTO("관리자에게 쪽지를 보낼 수 없습니다.", "/messages/write", RequestMethod.GET, null);
             return showMessageAndRedirect(message, model);
         }
 
@@ -92,7 +97,7 @@ public class MessageController {
     @GetMapping("/messages/received")
     public String getReceivedMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
                                      @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
-                                         Pageable pageable)
+                                     Pageable pageable)
     {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
 //        MemberEntity memberEntity = memberRepository.findByMemberId(memberId).orElseThrow(() -> {
@@ -135,8 +140,8 @@ public class MessageController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/messages/deleteReceivedMessage")
     public String deleteReceivedMessage(@SessionAttribute(name = "memberId", required = false) String memberId,
-                                    @RequestParam(value = "selectedMessages", required = false) List<Long> selectedMessages,
-                                    Model model) {
+                                        @RequestParam(value = "selectedMessages", required = false) List<Long> selectedMessages,
+                                        Model model) {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
 //        MemberEntity memberEntity = memberRepository.findByMemberSequence(Long.valueOf(1)).orElseThrow(() -> {
 //            return new IllegalArgumentException("유저를 찾을 수 없습니다.");
@@ -167,8 +172,8 @@ public class MessageController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/messages/sent")
     public String getSentMessage(@SessionAttribute(name = "memberId", required = false) String memberId, Model model,
-                                     @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
-                                     Pageable pageable)
+                                 @PageableDefault(page = 0, size = 10, sort="date", direction = Sort.Direction.DESC)
+                                 Pageable pageable)
     {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
 //        MemberEntity memberEntity = memberRepository.findByMemberSequence(Long.valueOf(1)).orElseThrow(() -> {
@@ -180,7 +185,7 @@ public class MessageController {
             return "redirect:/";
         }
 
-        if (loginMember.getMemberRole()==MemberRole.USER){
+        if (loginMember.getMemberRole()== MemberRole.USER){
             Page<MessageDTO> list = messageService.findMessageSenderByMemberId(memberId, pageable).map(message -> {
                 MessageDTO messageDTO = new MessageDTO();
                 messageDTO.setMessageId(message.getMessageId());
@@ -251,7 +256,7 @@ public class MessageController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/messages/deleteSentMessage")
     public String deleteSentMessage(@SessionAttribute(name = "memberId", required = false) String memberId,
-                                         @RequestParam(value = "selectedMessages", required = false) List<Long> selectedMessages,
+                                    @RequestParam(value = "selectedMessages", required = false) List<Long> selectedMessages,
                                     Model model) {
         // 임의로 유저 정보를 넣었지만, JWT 도입하고 현재 로그인 된 유저의 정보를 넘겨줘야함
 //        MemberEntity memberEntity = memberRepository.findByMemberSequence(Long.valueOf(1)).orElseThrow(() -> {

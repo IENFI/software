@@ -1,5 +1,5 @@
 let returnCode;
-let check;
+let check=false;
 function sendCode() {
     let code = new XMLHttpRequest();
     code.open('GET', '/emailSend?memberEmail=' + encodeURIComponent(document.getElementById('memberEmail2').value), true);
@@ -19,12 +19,12 @@ function sendCode() {
 function equalCode() {
     let code = document.getElementById('memberEmailNum').value;
     if(code == returnCode) {
-        check = 'true';
+        check = true;
         alert("이메일 인증에 성공했습니다.");
-        document.getElementById('check').value = check
+        document.getElementById('check').value = check;
     }
     else {
-        check='false';
+        check=false;
         alert("이메일 인증에 실패했습니다.");
         document.getElementById('check').value = check;
     }
