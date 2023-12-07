@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/studycreate.css">
+    <link rel="stylesheet" href="/css/study/studycreate.css">
     <title>공부 기록 작성 | DMS</title>
 
 </head>
@@ -63,7 +63,9 @@
             </div>
             <br>
             <div class="button">
-                <button type="submit">등록</button>
+                <button type="submit" onclick="if(!document.getElementById('title').value){
+                            alert('공부 기록의 제목을 작성해주세요.');
+                            return false;}">등록</button>
             </div>
 
         </div>

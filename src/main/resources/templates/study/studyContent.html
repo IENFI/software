@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/contents1.css">
+    <link rel="stylesheet" href="/css/board/contents1.css">
     <title>공부 기록 상세보기 | DMS</title>
 
 </head>
@@ -33,7 +33,7 @@
                 </span>
     </div>
 </header>
-<link rel="stylesheet" href="/css/studycontent.css">
+<link rel="stylesheet" href="/css/study/studycontent.css">
 <div class="content-group">
     <p>공부 기록 상세 보기</p>
     <div class="study-detail">
@@ -45,13 +45,13 @@
         <div type="text" id="content" name="study-content" th:text="${studyContent}"></div>
         <br>
 
-        <div th:if="${studyUrl} != null"> <!-- if문 입니다. url이 저장되어 있으면 뜨고 아니면 안 떠요! -->
+        <div th:if="${studyUrl} != null or ${studyUrl} != ''"> <!-- if문 입니다. url이 저장되어 있으면 뜨고 아니면 안 떠요! -->
             <div class="url">동영상url</div>
             <a class="study-url" th:href="${studyUrl}"><div th:text="${studyUrl}"/></a>
             <br>
         </div>
 
-        <div th:if="${studyFileName} != null"> <!-- if문 입니다 -->
+        <div th:if="${studyFileName} != null or ${studyFileName} != ''"> <!-- if문 입니다 -->
             <div class="file">첨부파일</div>
             <div>
                 <a class="study-file" th:href="'/study/downloads/'+${studyId}"><div th:text="${studyFileName}"/></a>

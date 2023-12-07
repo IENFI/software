@@ -1,3 +1,12 @@
+#contents {
+    margin-bottom:100px;
+}
+
+.container {
+    margin-left : 20%;
+    margin-right:20%;
+    margin-top:50px;
+}
 
 .card p {
     font-size:30px;
@@ -13,9 +22,19 @@
     font-weight:bold;
 }
 
+.card-category {
+    margin-top:10px;
+    font-size:18px;
+}
+
 .card-title {
     margin-top:10px;
     font-size:18px;
+}
+
+.card-text {
+    font-size:20px;
+    margin-top:10px;
 }
 
 .card-date {
@@ -80,6 +99,16 @@
     color:white;
 }
 
+.submit{
+    background-color: black;
+    width: 10%;
+    height: 3.3em;
+    font-size: 15px;
+    font-weight: bold;
+    color: aliceblue;
+    float:right;
+}
+
 .form-commentInfo{
     margin-top:100px;
 }
@@ -94,102 +123,52 @@
     font-size:15px;
 }
 
-.submit{
-    background-color: black;
-    width: 10%;
-    height: 3.3em;
-    font-size: 15px;
-    font-weight: bold;
-    color: aliceblue;
-    float:right;
-}
-
 .comments{
     margin-top: 10px;
 }
 
-.eachComment{
-    width :95%;
+.comment_contents {
+    width: 95%;
     margin: 10px;
     padding: 0.5em;
     border-bottom: 1px solid #c1bcba;
 }
 
-.eachComment .name{
+.text-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    margin-top:10px;
+}
+
+.text-center .name {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 0.3em;
-    display: flex;
-    justify-content: space-between;
 }
 
-.eachComment .comment-content{
+.text-center .commentContents {
     font-size: 20px;
     font-style: italic;
+    width : 500px;
+    text-align:left;
 }
 
-/* .eachComment .time{
-    font-size: 12px;
-    color: #c1bcba;
-    font-style: oblique;
+.commentBtn {
+    display: flex;
+    justify-content: flex-end;
     margin-top: 0.5em;
-    margin-bottom: 20px;
-
-} */
-
-
-.eachComment .deleteComment{
-    background-color: black;
-    float:right;
-    height: 2em;
-    margin-bottom:10px;
 }
 
-.eachComment .deleteComment a {
+.commentBtn button {
+    background-color: black;
+    height: 2em;
+    margin-left: 5px;
     color: white;
 }
 
-.eachComment .updateComment{
-    background-color: black;
-    float:right;
-    height: 2em;
-    margin-bottom:10px;
-}
-
-.eachComment .updateComment a {
-    color: white;
-}
-
-#footer{
-    width:100%;
-    height:300px;
-    background: #F1F2F3;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-#footer_container{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.items{
+.comment-page {
     text-align: center;
-    margin:20px 0 20px 0;
+    margin-top: 20px;
 }
-.large{
-    font-size: 50px;
-    font-weight: bold;
-
-}
-.small{
-    font-size: 40px;
-    color:gray;
-}
-#Main{
-    letter-spacing: 30px;
-    font-size: 50px;
-    font-weight: bold;
-    margin:20px 0 10px 0;
-}
-

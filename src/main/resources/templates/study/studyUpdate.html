@@ -32,7 +32,7 @@
                 </span>
     </div>
 </header>
-<link rel="stylesheet" href="/css/studyupdate.css">
+<link rel="stylesheet" href="/css/study/studyupdate.css">
 <form action="/studyUpdateComplete" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <p>공부 기록 수정</p>
@@ -66,7 +66,9 @@
         </div>
         <br>
         <div class="button">
-            <button type="submit">수정</button>
+            <button type="submit" onclick="if(!document.getElementById('title').value){
+                            alert('공부 기록의 제목을 작성해주세요.');
+                            return false;}">수정</button>
         </div>
     </div>
 

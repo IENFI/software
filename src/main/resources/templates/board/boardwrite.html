@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/boardcreate.css">
-    <link rel="stylesheet" href="/css/contents1.css">
+    <link rel="stylesheet" href="/css/board/boardcreate.css">
+    <link rel="stylesheet" href="/css/board/contents1.css">
     <title>게시판 작성 | DMS</title>
 
 </head>
@@ -22,11 +22,11 @@
                     <p>게시판</p>
                     <div class="col-sm-10">
                         <label for="inputCategory" class="col-sm-2 col-form-label">카테고리</label>
-                        <input type="category" list="category" name="category" placeholder="카테고리 선택" class="form-control" id="inputCategory" />
+                        <select type="category" list="category" name="category" placeholder="카테고리 선택" class="form-control" id="inputCategory" />
                         <datalist id="category">
+                            <option value="free">자유게시판</option>
                             <option value="notice">공지사항</option>
                             <option value="contest">공모전</option>
-                            <option value="free">자유게시판</option>
                         </datalist>
                     </div>
                     <br>
@@ -48,7 +48,7 @@
                     <div class="col-sm-10">
                         <div class="custom-file" id="inputFile">
                             <label for="inputFile" class="col-sm-2 col-form-label">첨부 파일</label>
-                            <input type="text" name="inputfile" class="custom-file-label" for="customFile"></input>
+                            <label type="text" name="inputfile" class="custom-file-label" for="customFile"></label>
                             <input name="file" type="file" class="custom-file-input" id="customFile" />
                         </div>
                     </div>

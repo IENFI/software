@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/studylist1.css">
-    <link rel="stylesheet" href="/css/contents1.css">
+    <link rel="stylesheet" href="/css/study/studylist1.css">
+    <link rel="stylesheet" href="/css/board/contents1.css">
     <title>나의 공부기록 | DMS</title>
 </head>
 <body>
@@ -26,6 +26,7 @@
                     <th class="title">제목</th>
                     <th class="date">작성일</th>
                 </tr>
+                <tr class="board_list_under" th:if="${studyList.isEmpty()}">현재 공부 기록이 없습니다.</tr><!-- if문, 공부기록이 없으면 뜨는거에요 -->
                 <tr class="board_list_under" th:each="study : ${studies}">
                     <td class="num" th:text="${study.id}"></td>
                     <td class="title">
@@ -36,7 +37,7 @@
                 </tbody>
             </table>
 
-            <tr th:if="${studies}==null">현재 공부 기록이 없습니다.</tr><!-- if문, 공부기록이 없으면 뜨는거에요 -->
+
 
             <br>
 
