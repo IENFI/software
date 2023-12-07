@@ -1,0 +1,89 @@
+.content-group {
+    margin-left : 20%;
+    margin-right:20%;
+    margin-top:50px;
+}
+
+.content-group p {
+    font-size:30px;
+    border-bottom : 2px solid #ddd;
+}
+
+.sub-title {
+    font-size : 18px;
+    font-weight:bold;
+}
+
+.study-title {
+    margin-top:10px;
+    font-size:18px;
+}
+
+.study-date {
+    font-size:18px;
+    float:right;
+}
+
+.study-detail textarea[name="study-content" ] {
+    margin-top : 10px;
+    font-size : 25px;
+    width : 950px;
+    border : 1px solid black;
+    height : 850px;
+}
+
+.study-detail {
+    margin-bottom : 150px;
+}
+
+.url {
+    font-weight:bold;
+}
+
+.file {
+    font-weight:bold;
+}
+
+.button-group {
+    float:right;
+}
+
+.button-group button[type="button"] {
+    background-color: black;
+    width: 50px;
+    height: 25px;
+    font-size: 15px;
+    color:white;
+}
+
+#footer{
+    height:300px;
+    background: #F1F2F3;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+#footer_container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.items{
+    text-align: center;
+    margin:20px 0 20px 0;
+}
+.large{
+    font-size: 50px;
+    font-weight: bold;
+
+}
+.small{
+    font-size: 40px;
+    color:gray;
+}
+#Main{
+    letter-spacing: 30px;
+    font-size: 50px;
+    font-weight: bold;
+    margin:20px 0 10px 0;
+}

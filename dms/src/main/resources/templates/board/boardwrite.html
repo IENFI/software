@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/boardcreate.css">
+    <link rel="stylesheet" href="/css/contents1.css">
+    <title>게시판 작성 | DMS</title>
+
+</head>
+<body>
+<header id="header"></header>
+<section id="contents">
+    <div class="inner">
+        <div class="container">
+            <form action="/board/write" method="post" enctype="multipart/form-data">
+                <div class="form-group-wrap">
+                    <p>게시판</p>
+                    <div class="col-sm-10">
+                        <label for="inputCategory" class="col-sm-2 col-form-label">카테고리</label>
+                        <input type="category" list="category" name="category" placeholder="카테고리 선택" class="form-control" id="inputCategory" />
+                        <datalist id="category">
+                            <option value="notice">공지사항</option>
+                            <option value="contest">공모전</option>
+                            <option value="free">자유게시판</option>
+                        </datalist>
+                    </div>
+                    <br>
+                    <div class="col-sm-10">
+                        <label for="inputTitle" class="col-sm-2 col-form-label">제목</label>
+                        <input type="text" name="title" placeholder="제목을 입력하세요." class="form-control" id="inputTitle" />
+                    </div>
+                    <br>
+                    <div class="col-sm-10">
+                        <label for="inputContent" class="col-sm-2 col-form-label"></label>
+                        <textarea type="text" name="content" placeholder="내용을 입력하세요." class="form-control" id="inputContent"></textarea>
+                    </div>
+                    <br>
+                    <div class="col-sm-10">
+                        <label for="inputUrl" class="col-sm-2 col-form-label">동영상 URL</label>
+                        <input type="text" name="url" class="form-control" id="inputUrl">
+                        <label class="custom-url-label" for="customFile"></label>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="custom-file" id="inputFile">
+                            <label for="inputFile" class="col-sm-2 col-form-label">첨부 파일</label>
+                            <input type="text" name="inputfile" class="custom-file-label" for="customFile"></input>
+                            <input name="file" type="file" class="custom-file-input" id="customFile" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto mr-auto"></div>
+                        <div class="col-auto">
+                            <input class="btn btn-primary" type="submit" role="button" value="등록" />
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
+<footer id="footer"></footer>
+
+
+<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="/javascript/openMessage.js"></script>
+<script src="/javascript/fetchMainHF1.js"></script>
+<script>
+    $('.custom-file-input').on('change', function () {
+        var filename = $(this).val().split('/').pop();
+        $(this).siblings('.custom-file-label').addClass('selected').html(filename);
+    });
+</script>
+</body>
+</html>
