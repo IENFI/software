@@ -38,7 +38,7 @@ public class CommentController {
 
         String URL = "/board/"+boardId;
         if (commentDto.getContent().isEmpty()) {
-            AlertDTO message = new AlertDTO("본문 내용을 적어야합니다.", "/board/write", RequestMethod.GET, null);
+            AlertDTO message = new AlertDTO("댓글 내용을 적어야합니다.", URL, RequestMethod.GET, null);
             return showMessageAndRedirect(message, model);
         }
 
