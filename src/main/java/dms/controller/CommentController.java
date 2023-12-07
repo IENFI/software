@@ -36,7 +36,12 @@ public class CommentController {
 
         MemberEntity memberEntity = memberRepository.findByMemberId(memberId).orElse(null);
 
-        String URL = "/board/" + boardId;
+        String URL = "/board/"+boardId;
+        if (commentDto.getContent().isEmpty()) {
+            AlertDTO message = new AlertDTO("본문 내용을 적어야합니다.", "/board/write", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+
         if (commentService.commentWrite(boardId, commentDto, memberEntity)!=null){
             AlertDTO message = new AlertDTO("댓글이 등록되었습니다.", URL, RequestMethod.GET, null);
             return showMessageAndRedirect(message, model);
@@ -47,10 +52,17 @@ public class CommentController {
     }// 댓글 작성
 
     @PostMapping("/board/{boardId}/comment/{commentId}/edit")
-    public String commentEdit(@ModelAttribute CommentDto commentDto, @PathVariable("boardId") Long boardId, @PathVariable("commentId") Long commentId, @SessionAttribute(name = "memberId", required = false) String memberId) {
+    public String commentEdit(@ModelAttribute CommentDto commentDto, @PathVariable("boardId") Long boardId, @PathVariable("commentId") Long commentId, @SessionAttribute(name = "memberId", required = false) String memberId, Model model) {
         MemberEntity memberEntity = memberRepository.findByMemberId(memberId).get();// 현재 로그인한 아이디
         BoardDto boardDto = new BoardDto();
         boardDto.toDto(boardRepository.findById(boardId).get());// null 고려해야함
+
+        String URL = "/board/"+boardId;
+        if (commentDto.getContent().isEmpty()) {
+            AlertDTO message = new AlertDTO("본문 내용을 적어야합니다.", "/board/write", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+
         commentService.commentEdit(boardId, commentId, commentDto);
         return "redirect:/board/{boardId}";
     }// 댓글 수정
